@@ -11,12 +11,19 @@ sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
 sudo apt-get update && sudo apt-get dist-upgrade
 
 #Firewall 
-sudo enable ufw
+sudo ufw enable
 sudo ufw allow 22
 sudo ufw allow 80
 
 #Services
-echo "Welcome to the services section" #Choose wether to disable certain services or overpass skip over them and keep them
+echo "Running services on this computer" #List's all services running
+
+sudo service --status-all
+
+echo "Continue to common service removal section..." #Choose wether to keep or disable telnet and apache2
+read IDEA
+echo
+
 echo "1. Disable telnet?"
 echo "2. Keep telnet?"
 read IDEA
@@ -26,12 +33,25 @@ if [[ $IDEA == 1 ]]; then
   sudo service rm telnet
 elif [[ $IDEA == 2 ]]; then
   echo "Continue operation..."
+read IDEA
+echo
 
-# New feature remove root SSH login
-# blah blah pretend this is the code that does that
-if [[ 1 -eq 2 ]]; then   # This is never true so it will never be executed
-    echo "blah"
-    echo "blah"
-    echo "blah"
-    echo "blah"
+echo "1. Disable apache2?"
+echo "2. Keep apache2?"
+read IDEA
+echo
+
+if [[ $IDEA == 1 ]]; then
+  sudo service rm apache2
+elif [[ $IDEA == 2 ]]; then
+  echo "Continue operation..."
+read IDEA
+echo
+
 fi
+
+#Backdoor checking
+sudo netstat -tulpna
+echo "Continue..." #Pause time to check the backdoors then to move down script
+read IDEA
+echo
