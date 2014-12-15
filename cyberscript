@@ -4,16 +4,25 @@
 
 #Disabling the guest account
 sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
-#allow-guest=false to disable account
+#allow-guest=false to disable account and THEN greeter-hide-users=true
+
+#Minimum password age
+sudo gedit /etc/login.defs #Max days, 150. Min days, 10. Pass_Warn_Age, 7.
+
+#Password Policy
+sudo gedit /etc/pam.d/common-password #ENTER AT THE END OF THE COMPETITION
+#At end of file, " auth required pam_tally2.so deny =10 onerr=failunlock_time=1800
 
 
 #Updates
 sudo apt-get update && sudo apt-get dist-upgrade
+sudo APT::Periodic::Update-Package-Lists "1";
 
 #Firewall 
 sudo ufw enable
 sudo ufw allow 22
 sudo ufw allow 80
+sudo ufw default deny
 
 #Services
 echo "Running services on this computer" #List's all services running
