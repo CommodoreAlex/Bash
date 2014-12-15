@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#v0.1
+
+#Disabling the guest account
+sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
+#allow-guest=false to disable account
+
+
+#Updates
+sudo apt-get update && sudo apt-get dist-upgrade
+
+#Firewall 
+sudo enable ufw
+sudo ufw allow 22
+sudo ufw allow 80
+
+#Services
+echo "Welcome to the services section" #Choose wether to disable certain services or overpass skip over them and keep them
+echo "1. Disable telnet?"
+echo "2. Keep telnet?"
+read IDEA
+echo
+
+if [[ $IDEA == 1 ]]; then 
+  sudo service rm telnet
+elif [[ $IDEA == 2 ]]; then
+  echo "Continue operation..."
+
+
