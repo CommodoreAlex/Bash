@@ -27,4 +27,11 @@ if [[ $IDEA == 1 ]]; then
 elif [[ $IDEA == 2 ]]; then
   echo "Continue operation..."
 
-
+# New feature remove root SSH login
+# blah blah pretend this is the code that does that
+if [[ 1 -eq 2 ]]; then   # This is never true so it will never be executed
+    echo "blah"
+    echo "blah"
+    echo "blah"
+    echo "blah"
+fi
