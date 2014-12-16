@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v0.1
+#v0.4
 
 #Disabling the guest account
 sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
