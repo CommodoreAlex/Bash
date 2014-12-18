@@ -3,7 +3,7 @@
 #v0.5
 
 #Change insecure root password
-#su #Un-note later
+su 
 
 #Limit root access
 #cat /etc/groups
@@ -17,9 +17,9 @@ read IDEA
 echo
 
 #Audit Policies #DEBATING ON IF TO KEEP OR REMOVE
-#sudo apt-get install auditd
-#sudo auditctl -e 1
-#sudo gedit /etc/audit/auditd.conf
+sudo apt-get install auditd
+sudo auditctl -e 1
+sudo gedit /etc/audit/auditd.conf
 
 #Disabling the guest account
 sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
@@ -105,7 +105,7 @@ echo
 
 #Backdoor checking
 sudo netstat -tulpna
-echo "Continue..." #Pause time to check the backdoors then to move down script
+echo "Continue Operation..." #Pause time to check the backdoors then to move down script
 read IDEA
 echo
 
@@ -120,8 +120,15 @@ read IDEA
 echo
 
 #Files with prohibited Extensions
-#sudo find / -name "*" #Un-note this later
-#sudo find / -name "*"
-#sudo find / -name "*"
-#sudo find / -name "*"
-#sudo find / -name "*"
+sudo find / -name "*.mp3"
+sudo find / -name "*.wav"
+sudo find / -name "*.wma"
+sudo find / -name "*.aac"
+sudo find / -name "*.mp4"
+sudo find / -name "*.mov"
+sudo find / -name "*.avi"
+sudo find / -name "*.gif"
+sudo find / -name "*.jpg"
+sudo find / -name "*.jpeg"
+sudo find / -name "*.png"
+sudo find / -name "*.bmp"
