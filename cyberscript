@@ -61,7 +61,6 @@ sudo gedit /etc/pam.d/common-password #ENTER AT THE END OF THE COMPETITION
 
 #Updates
 sudo apt-get update && sudo apt-get dist-upgrade
-sudo APT::Periodic::Update-Package-Lists "1";
 
 #Firewall 
 sudo ufw enable
@@ -126,5 +125,3 @@ echo
 #sudo find / -name "*"
 #sudo find / -name "*"
 #sudo find / -name "*"
-
-fi
