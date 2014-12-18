@@ -1,10 +1,55 @@
 #!/bin/bash
 
-#v0.4
+#v0.5
+
+#Change insecure root password
+#su #Un-note later
+
+#Limit root access
+#cat /etc/groups
+#sudo gedit /etc/groups #DEBATING ON IF TO KEEP OR REMOVE
+#Remove unnecessary users from admin group
+
+#Disable SSH root login if not supposed to be enabled
+sudo gedit /etc/ssh/sshd_config #Change line permitrootlogin "yes" to no
+echo "Press any key to continue..."
+read IDEA
+echo
+
+#Audit Policies #DEBATING ON IF TO KEEP OR REMOVE
+#sudo apt-get install auditd
+#sudo auditctl -e 1
+#sudo gedit /etc/audit/auditd.conf
 
 #Disabling the guest account
 sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
 #allow-guest=false to disable account and THEN greeter-hide-users=true
+
+#Password for all non-administrators
+#sudo passwd  #Put username of user after "passwd" , UN-NOTE THESE WITH USERS FOR COMPETITION
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd
+#sudo passwd 
+
+#Install OpenSSH
+#Sudo apt-get install OpenSSH-server #Un-note these to process through the script
+
+#Shadow passwords and groups
+sudo gedit /etc/group
+echo "Continue..."
+read IDEA
+echo
+
+sudo gedit /etc/shadow
+echo "Continue..."
+read IDEA
+echo
 
 #Minimum password age
 sudo gedit /etc/login.defs #Max days, 150. Min days, 10. Pass_Warn_Age, 7.
@@ -38,7 +83,8 @@ echo "2. Keep telnet?"
 read IDEA
 echo
 
-if [[ $IDEA == 1 ]]; then 
+if [[ $IDEA == 1 ]]; then
+  sudo service telnet stop 
   sudo service rm telnet
 elif [[ $IDEA == 2 ]]; then
   echo "Continue operation..."
@@ -51,16 +97,34 @@ read IDEA
 echo
 
 if [[ $IDEA == 1 ]]; then
+  sudo service apache2 stop
   sudo service rm apache2
 elif [[ $IDEA == 2 ]]; then
   echo "Continue operation..."
 read IDEA
 echo
 
-fi
-
 #Backdoor checking
 sudo netstat -tulpna
 echo "Continue..." #Pause time to check the backdoors then to move down script
 read IDEA
 echo
+
+sudo grep -r 'nc' /*
+echo "Continue Operation..."
+read IDEA
+echo
+
+sudo gedit /etc/cron*
+echo "Continue Operation..."
+read IDEA
+echo
+
+#Files with prohibited Extensions
+#sudo find / -name "*" #Un-note this later
+#sudo find / -name "*"
+#sudo find / -name "*"
+#sudo find / -name "*"
+#sudo find / -name "*"
+
+fi
