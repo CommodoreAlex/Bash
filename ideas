@@ -1,0 +1,66 @@
+#!/bin/bash
+
+if [[ 1 -e 2 ]]; then # This is never true, so it acts as a block comment.
+
+#So, you can use the 'sed' command to be able edit files without opening them.
+#For example, if you know that in /etc/ssh/sshd_config there will be the line
+#"PermitRootLogin yes", then you can use 'sed' to substitute that phrase to
+#something else.
+
+#sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+#This command will substitute in the file, everwhere it sees "PermitRootLogin yes"
+#and it will replace it with "PermitRootLogin no"
+
+#Now for user accounts (changing passwords)
+
+################################################################################
+# This will search through /etc/passwd searching for users
+# If the user is in the list of approved users, it will tell you
+# Otherwise, it will change the password to Cyb3rP4tr10t5, and
+# set the password policy with chage. Also, it will append the
+# legitimate users to a file called ./final_users.
+
+#users="$(cat /etc/passwd | grep bash | awk -F: '{ print $1 }')"
+#for i in $users; do
+#if grep -Fxq "$i" ./allowed_users; then
+#        # This is if the user is in the list of allowed users
+#        echo "$i:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
+#        # chage password policy stuff
+#        chage -E 01/01/2016 -m 5 -M 90 -I 30 -W 14 $i
+#        echo "$i" >> ./final_users
+#        echo "[+] $i - Password changed and password policy set"
+#    else
+#        if [ "$i" != "root" ]; then
+#            echo "[!] Warning! $i is not in list of approved users."
+#            echo "[!] You should run '$ userdel $i' if this is a rogue user!"
+#        fi
+#    fi
+#done
+################################################################################
+#What this will do, is you will make a file called 'allowed_users' in the same
+#directory as the script. This will contain user accounts that are allowed 
+#based on the README. ex:
+
+#connor
+#alex
+#jack
+#leon
+#nick
+
+#That would be in that file.
+#Then, it will search through /etc/password looking for all the users, and it will
+#compare to your list. Any that are on your list will change their passwords, and
+#also it will use chage to change password policy stuff. Any users that are not
+#approved will tell you to examine the user manually and possibly delete them.
+
+#echo "$i"'blahblahblah' | chpasswd -e
+#will change the password for the user ($i) in the loop, to the hash which right
+#now is set to "Cyb3rP4tr10t5".
+
+#Hopefully with this you can automate a lot more stuff. Also, look at my script
+#for more ideas. I'm going to be trying to rewrite stuff in python for everything
+#too.
+
+#Good job so far!!
+
+fi
