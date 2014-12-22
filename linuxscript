@@ -1,20 +1,23 @@
 #!/bin/bash
 
 #v0.5
+#v0.6 Coming soon with automations, multiple fixes and some deletion
 
 #Change insecure root password
-su 
+su root                     #FIX THIS
 
 #Limit root access
 #cat /etc/groups
 #sudo gedit /etc/groups #DEBATING ON IF TO KEEP OR REMOVE
 #Remove unnecessary users from admin group
 
-#Disable SSH root login if not supposed to be enabled
-sudo gedit /etc/ssh/sshd_config #Change line permitrootlogin "yes" to no
-echo "Press any key to continue..."
-read IDEA
-echo
+#Disable SSH root login if not supposed to be enabled #NOT FINISHED
+#sudo gedit /etc/ssh/sshd_config #Change line permitrootlogin "yes" to no
+#echo "Press any key to continue..."
+#read IDEA
+#echo                                 #Un-note and FINISH AUTOMATING
+
+#sudo sed i's/etc/ssh/sshd_config 
 
 #Audit Policies #DEBATING ON IF TO KEEP OR REMOVE
 sudo apt-get install auditd
@@ -59,6 +62,7 @@ sudo gedit /etc/pam.d/common-password #ENTER AT THE END OF THE COMPETITION
 #At end of file, " auth required pam_tally2.so deny =10 onerr=failunlock_time=1800
 
 
+
 #Updates
 sudo apt-get update && sudo apt-get dist-upgrade
 
@@ -69,39 +73,33 @@ sudo ufw allow 80
 sudo ufw default deny
 
 #Services
-echo "Running services on this computer" #List's all services running
+echo "List all of the running services on this image/machine
 
 sudo service --status-all
 
-echo "Continue to common service removal section..." #Choose wether to keep or disable telnet and apache2
-read IDEA
-echo
-
-echo "1. Disable telnet?"
-echo "2. Keep telnet?"
+echo "1. Disable Telnet"
+echo "2. Continue Operationsɢ
 read IDEA
 echo
 
 if [[ $IDEA == 1 ]]; then
-  sudo service telnet stop 
-  sudo service rm telnet
-elif [[ $IDEA == 2 ]]; then
-  echo "Continue operation..."
-read IDEA
-echo
+sudo service stop telnet
+sudo service rm telnet
 
-echo "1. Disable apache2?"
-echo "2. Keep apache2?"
+elif [[ $IDEA == 2 ]]; then
+echo "Moving onɢ
+
+echo "1. Disable Apache"
+echo "2. Continue Operationsɢ
 read IDEA
 echo
 
 if [[ $IDEA == 1 ]]; then
-  sudo service apache2 stop
-  sudo service rm apache2
+sudo service stop apache
+sudo service rm apache
+
 elif [[ $IDEA == 2 ]]; then
-  echo "Continue operation..."
-read IDEA
-echo
+echo "Continue Operationsɢ
 
 #Backdoor checking
 sudo netstat -tulpna
@@ -120,15 +118,29 @@ read IDEA
 echo
 
 #Files with prohibited Extensions
-sudo find / -name "*.mp3"
+sudo find / -name "*.mp3"        #In testing
+#sudo rm .mp3
 sudo find / -name "*.wav"
+#sudo rm .wav
 sudo find / -name "*.wma"
+#sudo rm .wma
 sudo find / -name "*.aac"
+#sudo rm .aac
 sudo find / -name "*.mp4"
+#sudo rm .mp4
 sudo find / -name "*.mov"
+#sudo rm .mov
 sudo find / -name "*.avi"
+#sudo rm .avi
 sudo find / -name "*.gif"
+#sudo rm .gif
 sudo find / -name "*.jpg"
+#sudo rm .jpg
 sudo find / -name "*.jpeg"
+#sudo rm .jpeg
 sudo find / -name "*.png"
+#sudo rm .png
 sudo find / -name "*.bmp"
+#sudo rm .bmp
+sudo find / -name "*.exe"
+#sudo rm .exe
