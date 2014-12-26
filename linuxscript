@@ -1,6 +1,6 @@
 #!/bin/bash
  
-#v0.6 automations, multiple fixes and some deletion also system logs
+#v0.6 automations, multiple fixes and some deletion also system logs section
  
 #System logs
 sudo apt-get install gnome
