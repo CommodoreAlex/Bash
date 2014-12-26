@@ -1,33 +1,38 @@
 #!/bin/bash
-
-#v0.5
-#v0.6 Coming soon with automations, multiple fixes and some deletion
-
+sudo ./script
+ 
+#v0.6 automations, multiple fixes and some deletion also system logs
+ 
+#System logs
+sudo apt-get install gnome
+gnome-system-logs
+echo "Continue..."
+read IDEA
+echo
+ 
 #Change insecure root password
-su root                     #FIX THIS
-
+passwd
+#Cyb3rP4tr10t5 or cyber34 for the password
+ 
 #Limit root access
 #cat /etc/groups
 #sudo gedit /etc/groups #DEBATING ON IF TO KEEP OR REMOVE
 #Remove unnecessary users from admin group
-
-#Disable SSH root login if not supposed to be enabled #NOT FINISHED
-#sudo gedit /etc/ssh/sshd_config #Change line permitrootlogin "yes" to no
-#echo "Press any key to continue..."
-#read IDEA
-#echo                                 #Un-note and FINISH AUTOMATING
-
-#sudo sed i's/etc/ssh/sshd_config 
-
+ 
+#Disable SSH root login automatically
+sudo sed i'sPermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+#This will substitute no for every SSH root login
+ 
 #Audit Policies #DEBATING ON IF TO KEEP OR REMOVE
 sudo apt-get install auditd
-sudo auditctl -e 1
-sudo gedit /etc/audit/auditd.conf
-
-#Disabling the guest account
-sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
-#allow-guest=false to disable account and THEN greeter-hide-users=true
-
+auditctl -e 1
+gedit /etc/audit/auditd.conf
+ 
+#Disabling the guest account and hiding users from the login screen
+#sudo gedit /etc/lightdm/lightdm.conf
+sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+#allow-guest=false and then do greeter-users-hide=true
+ 
 #Password for all non-administrators
 #sudo passwd  #Put username of user after "passwd" , UN-NOTE THESE WITH USERS FOR COMPETITION
 #sudo passwd
@@ -39,108 +44,68 @@ sudo gedit /etc/lightdm/lightdm.conf #Brings you to the lightdm txt area
 #sudo passwd
 #sudo passwd
 #sudo passwd 
-
+ 
 #Install OpenSSH
-#Sudo apt-get install OpenSSH-server #Un-note these to process through the script
-
+#sudo apt-get install OpenSSH-server #Un-note these to process through the script
+ 
 #Shadow passwords and groups
 sudo gedit /etc/group
 echo "Continue..."
 read IDEA
 echo
-
+ 
 sudo gedit /etc/shadow
 echo "Continue..."
 read IDEA
 echo
-
+ 
 #Minimum password age
 sudo gedit /etc/login.defs #Max days, 150. Min days, 10. Pass_Warn_Age, 7.
-
+ 
 #Password Policy
 sudo gedit /etc/pam.d/common-password #ENTER AT THE END OF THE COMPETITION
-#At end of file, " auth required pam_tally2.so deny =10 onerr=failunlock_time=1800
-
-
-
+#At the end of the file, auth required pam_tally.so deny=5 onerr=failunlock_time=1800
+ 
 #Updates
 sudo apt-get update && sudo apt-get dist-upgrade
-
+echo "Machine is up to date"
+ 
 #Firewall 
 sudo ufw enable
-sudo ufw allow 22
-sudo ufw allow 80
 sudo ufw default deny
-
+ 
 #Services
-echo "List all of the running services on this image/machine
-
+echo "All running services on this machine/image"
+ 
 sudo service --status-all
-
-echo "1. Disable Telnet"
-echo "2. Continue Operationsɢ
-read IDEA
-echo
-
-if [[ $IDEA == 1 ]]; then
-sudo service stop telnet
-sudo service rm telnet
-
-elif [[ $IDEA == 2 ]]; then
-echo "Moving onɢ
-
-echo "1. Disable Apache"
-echo "2. Continue Operationsɢ
-read IDEA
-echo
-
-if [[ $IDEA == 1 ]]; then
-sudo service stop apache
-sudo service rm apache
-
-elif [[ $IDEA == 2 ]]; then
-echo "Continue Operationsɢ
-
+ 
 #Backdoor checking
 sudo netstat -tulpna
 echo "Continue Operation..." #Pause time to check the backdoors then to move down script
 read IDEA
 echo
-
+ 
 sudo grep -r 'nc' /*
 echo "Continue Operation..."
 read IDEA
 echo
-
+ 
 sudo gedit /etc/cron*
 echo "Continue Operation..."
 read IDEA
 echo
-
+ 
 #Files with prohibited Extensions
-sudo find / -name "*.mp3"        #In testing
-#sudo rm .mp3
-sudo find / -name "*.wav"
-#sudo rm .wav
-sudo find / -name "*.wma"
-#sudo rm .wma
-sudo find / -name "*.aac"
-#sudo rm .aac
-sudo find / -name "*.mp4"
-#sudo rm .mp4
-sudo find / -name "*.mov"
-#sudo rm .mov
-sudo find / -name "*.avi"
-#sudo rm .avi
-sudo find / -name "*.gif"
-#sudo rm .gif
-sudo find / -name "*.jpg"
-#sudo rm .jpg
-sudo find / -name "*.jpeg"
-#sudo rm .jpeg
-sudo find / -name "*.png"
-#sudo rm .png
-sudo find / -name "*.bmp"
-#sudo rm .bmp
-sudo find / -name "*.exe"
-#sudo rm .exe
+find / -name "*.mp3"
+find / -name "*.wav"
+find / -name "*.wma"
+find / -name "*.aac"
+find / -name "*.mp4"
+find / -name "*.mov"
+find / -name "*.avi"
+find / -name "*.gif"
+find / -name "*.jpg"
+find / -name "*.jpeg"
+find / -name "*.png"
+find / -name "*.bmp"
+find / -name "*.exe"
