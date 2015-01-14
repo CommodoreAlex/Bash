@@ -1,7 +1,7 @@
-
 #!/bin/bash
 
-#mkdir CYBERSTEM #Creates the CYBERSTEM DIRECTORY                      #LATER CREATE FOLDERS IN THIS DIRECTORY HOLDING TXT FILES
+#mkdir CYBERSTEM #Creates the CYBERSTEM DIRECTORY   #(Command BELOW) Creates directory and two .txt files WILL BE EXTENDED etc
+mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
 #rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
 
 echo "Which operation would you like to run...?"
@@ -40,8 +40,4 @@ echo "Which lesson would you like to begin...?"
 read IDEA
 echo
 
-if [[ $IDEA == 1 ]]; then    #The idea of this area is to have a directory created with text files that are opened to teach u
-  
-
-
-
+if [[ $IDEA == 1 ]]; then    #The idea of this area is to have a directory created with text files that are opened to teach
