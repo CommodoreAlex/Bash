@@ -1,0 +1,47 @@
+
+#!/bin/bash
+
+#mkdir CYBERSTEM #Creates the CYBERSTEM DIRECTORY                      #LATER CREATE FOLDERS IN THIS DIRECTORY HOLDING TXT FILES
+#rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
+
+echo "Which operation would you like to run...?"
+echo "1. Start"
+echo "2. Exit"
+read IDEA
+echo
+
+if [[ $IDEA == 1 ]]; then
+  echo "Continue..."
+
+elif [[ $IDEA == 2 ]]; then
+  echo "exit"
+else
+  echo "Invalid input..."
+fi
+
+echo "###############################################"
+  echo "Welcome to the Linux training course!"
+  echo "This course will teach you the bare essentials of BASH!"
+  echo "During this tutorial you press "ENTER" to continue. "
+echo "###############################################"
+read IDEA
+echo
+
+echo "###############################################"
+echo "Which lesson would you like to begin...?"
+  echo "1. Navigation"
+  echo "2. NOTHINGYET"
+  echo "3. NOTHINGYET"
+  echo "4. NOTHINGYET"
+  echo "5. NOTHINGYET"
+  echo "6. NOTHINGYET"
+  echo "7. NOTHINGYET"
+  echo "8. NOTHINGYET"
+read IDEA
+echo
+
+if [[ $IDEA == 1 ]]; then    #The idea of this area is to have a directory created with text files that are opened to teach u
+  
+
+
+
