@@ -1,100 +1,86 @@
 #!/bin/bash
- 
-#v0.6 automations, multiple fixes and some deletion also system logs section
- 
+
+#v0.7 Whole re-write of the script but cleaner
+
 #System logs
-sudo apt-get install gnome
+apt-get install gnome
 gnome-system-logs
-echo "Continue..."
-read IDEA
-echo
- 
-#Change insecure root password
-passwd
-#Cyb3rP4tr10t5 or cyber34 for the password
- 
-#Limit root access
+
+#Change insecure root passwd
+#passwd
+
+#Limit Root Access
 #cat /etc/groups
-#sudo gedit /etc/groups #DEBATING ON IF TO KEEP OR REMOVE
-#Remove unnecessary users from admin group
- 
+#gedit /etc/groups
+#Remove unnecessary users from administrative positions
+
 #Disable SSH root login automatically
-sudo sed i'sPermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-#This will substitute no for every SSH root login
- 
-#Audit Policies #DEBATING ON IF TO KEEP OR REMOVE
-sudo apt-get install auditd
+sed i'sPermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+#This will substitute every yes with a no where root SSH is permitted
+
+#Audit Policies
+apt-get install auditd
 auditctl -e 1
 gedit /etc/audit/auditd.conf
- 
-#Disabling the guest account and hiding users from the login screen
-#sudo gedit /etc/lightdm/lightdm.conf
-sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
-#allow-guest=false and then do greeter-users-hide=true
- 
-#Password for all non-administrators
-#sudo passwd  #Put username of user after "passwd" , UN-NOTE THESE WITH USERS FOR COMPETITION
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd
-#sudo passwd 
- 
-#Install OpenSSH
-#sudo apt-get install OpenSSH-server #Un-note these to process through the script
- 
+
+#Disabling the guest account as well as hiding users from login prompt
+#gedit /etc/lightdm/lightdm.conf
+#sed i's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm/.conf
+#allow-guest=false + greeter-users-hide=true
+
+#Password change for non-administrators
+#sudo <NameHere> passwd
+
+#Install Open-SSH
+#apt-get install OpenSSH-server
+
 #Shadow passwords and groups
-sudo gedit /etc/group
+#gedit /etc/group
 echo "Continue..."
 read IDEA
 echo
- 
-sudo gedit /etc/shadow
+
+#gedit /etc/shadow
 echo "Continue..."
 read IDEA
 echo
- 
-#Minimum password age
-sudo gedit /etc/login.defs #Max days, 150. Min days, 10. Pass_Warn_Age, 7.
- 
-#Password Policy
-sudo gedit /etc/pam.d/common-password #ENTER AT THE END OF THE COMPETITION
-#At the end of the file, auth required pam_tally.so deny=5 onerr=failunlock_time=1800
- 
-#Updates
-sudo apt-get update && sudo apt-get dist-upgrade
-echo "Machine is up to date"
- 
-#Firewall 
-sudo ufw enable
-sudo ufw default deny
- 
+
+#Minimum password age existing
+gedit /etc/pam.d/login.defs
+echo "Continue..."
+read IDEA
+echo
+
+#gedit /etc/pam.d/common-password
+#auth-required pam_tally.so deny=5 onerr=failunlock_time=1800 #Do not un-note this while running script
+
+#System Update
+apt-get update && apt-get dist-upgrade
+
+#Firewall
+ufw enable
+ufw default deny
+
 #Services
-echo "All running services on this machine/image"
- 
-sudo service --status-all
- 
-#Backdoor checking
-sudo netstat -tulpna
-echo "Continue Operation..." #Pause time to check the backdoors then to move down script
+service --status-all
+echo "Continue..."
 read IDEA
 echo
- 
-sudo grep -r 'nc' /*
-echo "Continue Operation..."
-read IDEA
-echo
- 
-sudo gedit /etc/cron*
-echo "Continue Operation..."
-read IDEA
-echo
- 
-#Files with prohibited Extensions
+
+echo "1. Telnet"
+echo "2. Apache"
+
+if [[ $IDEA == 1 ]]; then
+  service rm telnet
+
+elif [[ $IDEA == 2 ]]; then
+  serivce rm apache2
+else
+  echo "What?"
+
+echo "Moving on..."
+
+#Files with prohibited extensions
 find / -name "*.mp3"
 find / -name "*.wav"
 find / -name "*.wma"
@@ -108,3 +94,6 @@ find / -name "*.jpeg"
 find / -name "*.png"
 find / -name "*.bmp"
 find / -name "*.exe"
+echo "Continue..."
+read IDEA
+echo
