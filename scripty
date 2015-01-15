@@ -3,7 +3,8 @@
 #Linux CYBERSTEM interactive manual
 
 echo "Which operation would you like to run...?"   #Startup menu
-echo "Answer this by either `1` or `2` any other input is considered invalid..."
+echo "Answer this by either 1 or 2 any other input is considered invalid..."
+
 echo "1. Start"
 echo "2. Exit"
 read IDEA
@@ -14,7 +15,7 @@ if [[ $IDEA == 1 ]]; then
 while [ true ]
 do
 echo "Loading..."
-sleep 2s
+sleep 2
 clear
 break
 done
@@ -26,9 +27,9 @@ else                       #If the user puts an invalid input into the terminal 
   echo "Invalid input..."
 while [ true ]
 do
-sleep 2s
+sleep 2
 echo "Shutting down..."  #To inform the user it's shutting down
-sleep 2s
+sleep 2
 exit
 done
 fi
@@ -38,7 +39,7 @@ fi
 echo "Creating Directories, etc..."
 while [ true ]
 do
-sleep 1s
+sleep 1
 clear
 break
 done
@@ -54,7 +55,7 @@ echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r)   #List the
 #Put here to tell the user what they are running.
 while [ true ]
 do
-sleep 3s
+sleep 3
 clear
 break
 done
@@ -63,7 +64,7 @@ echo "Confirm directory tree contains ~CYBERSTEM~ then continue..."   #Do not re
 #Put here just incase something happens, so basically just to make sure it's there.
 while [ true ]
 do
-sleep 2s
+sleep 2
 clear
 break
 done
@@ -79,7 +80,7 @@ read IDEA  #Reads the input of the keyboard
 echo  #Prints anything a user commands it to
 while [ true ]
 do
-sleep 1s
+sleep 1
 clear
 break
 done
@@ -99,7 +100,7 @@ read IDEA
 echo
 while [ true ]
 do
-sleep 2s
+sleep 2
 clear
 break
 done
