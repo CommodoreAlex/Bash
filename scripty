@@ -1,33 +1,90 @@
 #!/bin/bash
 
-#mkdir CYBERSTEM #Creates the CYBERSTEM DIRECTORY   #(Command BELOW) Creates directory and two .txt files WILL BE EXTENDED etc
-mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
-#rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
+#Linux CYBERSTEM interactive manual
 
-echo "Which operation would you like to run...?"
-  echo "1. Start"
-  echo "2. Exit"
+echo "Which operation would you like to run...?"   #Startup menu
+echo "Answer this by either `1` or `2` any other input is considered invalid..."
+echo "1. Start"
+echo "2. Exit"
 read IDEA
 echo
 
 if [[ $IDEA == 1 ]]; then
-  echo "Continue..."
+  echo " "
+while [ true ]
+do
+echo "Loading..."
+sleep 2s
+clear
+break
+done
 
 elif [[ $IDEA == 2 ]]; then
   echo "exit"
-else
+exit 
+else                       #If the user puts an invalid input into the terminal then it shuts down.
   echo "Invalid input..."
+while [ true ]
+do
+sleep 2s
+echo "Shutting down..."  #To inform the user it's shutting down
+sleep 2s
+exit
+done
 fi
 
-echo "###############################################"
+#mkdir CYBERSTEM #Creates the CYBERSTEM DIRECTORY   #(Command BELOW) Creates directory and two .txt files WILL BE EXTENDED etc
+
+echo "Creating Directories, etc..."
+while [ true ]
+do
+sleep 1s
+clear
+break
+done
+
+mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
+#^ Creates the directory and creates a .txt file in the directory and then moves onto more etc
+sudo apt-get install geany
+ls -1R > dir-tree.list
+#rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
+#rm -r dir-tree.list
+
+echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r)   #List the OS version etc
+#Put here to tell the user what they are running.
+while [ true ]
+do
+sleep 3s
+clear
+break
+done
+
+echo "Confirm directory tree contains ~CYBERSTEM~ then continue..."   #Do not remove anything in the tree
+#Put here just incase something happens, so basically just to make sure it's there.
+while [ true ]
+do
+sleep 2s
+clear
+break
+done
+
+nano dir-tree.list  #Views the tree
+
+echo "###############################################"           #Introduction
   echo "Welcome to the Linux training course!"
   echo "This course will teach you the bare essentials of BASH!"
   echo "During this tutorial you press "ENTER" to continue. "
 echo "###############################################"
-read IDEA
-echo
+read IDEA  #Reads the input of the keyboard
+echo  #Prints anything a user commands it to
+while [ true ]
+do
+sleep 1s
+clear
+break
+done
 
-echo "###############################################"
+echo "###############################################"   #Lesson selection menu
 echo "Which lesson would you like to begin...?"
   echo "1. Navigation"
   echo "2. NOTHINGYET"
@@ -37,7 +94,20 @@ echo "Which lesson would you like to begin...?"
   echo "6. NOTHINGYET"
   echo "7. NOTHINGYET"
   echo "8. NOTHINGYET"
+echo "###############################################"
 read IDEA
 echo
+while [ true ]
+do
+sleep 2s
+clear
+break
+done
 
-if [[ $IDEA == 1 ]]; then    #The idea of this area is to have a directory created with text files that are opened to teach
+if [[ $IDEA == 1 ]]; then    #Open the file through the CYBERSTEM directory
+  cd CYBERSTEM
+  nano Navigation.txt
+
+#if [[ $IDEA == 2 ]]; then
+  #cd CYBERSTEM
+  #nano Nothing.txt
