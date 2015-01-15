@@ -2,38 +2,44 @@
 
 #Linux CYBERSTEM interactive manual
 
-echo "Which operation would you like to run...?"   #Startup menu
-echo "Answer this by either 1 or 2 any other input is considered invalid..."
+start()
+{ #This is the start of a function
+        echo "Starting program..."
+}
 
-echo "1. Start"
-echo "2. Exit"
-read IDEA
-echo " "
+menu()
+{
+        printf "Which operation would you like to run...?\n"
+        echo "1. Start"
+        echo "2. Exit"
+        read START_MENU
 
-if [[ $IDEA == 1 ]]; then
-  echo " "
-while [ true ]
-do
-echo "Loading..."
-sleep 2
-clear
-break
-done
 
-elif [[ $IDEA == 2 ]]; then
-echo "Shutting down..."
-sleep 1
-exit 
-else                       #If the user puts an invalid input into the terminal then it shuts down.
-  echo "Invalid input..."
-while [ true ]
-do
-sleep 2
-echo "Shutting down..."  #To inform the user it's shutting down
-sleep 2
-exit
-done
-fi
+        case $START_MENU in
+        1)
+                echo "Loading..."
+                sleep 1
+                start
+
+                 ;;
+
+        2)
+                echo "Exiting program..."
+                sleep 2
+                exit
+
+                ;;
+
+        *)
+                echo "Invaid input, redirecting..."
+                sleep 2
+                menu
+                ;;
+
+        esac
+}
+
+menu
 
 echo "Creating Directories, etc..."
 while [ true ]
