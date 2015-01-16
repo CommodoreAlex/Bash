@@ -2,51 +2,51 @@
 
 #Linux CYBERSTEM interactive manual
 
-start()
-{ #This is the start of a function
+start() #Starts the function
+{
         echo "Starting program..."
 }
 
-menu()
+menu() #Starting of the menu
 {
-        printf "Which operation would you like to run...?\n"
-        echo "1. Start"
+        printf "Which operation would you like to run...?\n" #printf is a better way of printing rather than echo, \n makes a new line blank etc.
+        echo "1. Start" #Shows the option of 1 or 2 to be processed
         echo "2. Exit"
-        read START_MENU
+        read START_MENU #Reads the input of the keyboard and then the variable
 
 
         case $START_MENU in
         1)
                 echo "Loading..."
-                sleep 1
-                start
+                sleep 1 #Pauses for one second
+                start #Moves on with the rest
 
                  ;;
 
         2)
                 echo "Exiting program..."
                 sleep 2
-                exit
+                exit #Closes the script, overall
 
                 ;;
 
-        *)
+        *) #Asterisk to bring it back
                 echo "Invaid input, redirecting..."
                 sleep 2
-                menu
+                menu #Refers to the menu options
                 ;;
 
-        esac
+        esac #Closing area
 }
 
-menu
+menu #Refers the menu outside of the function
 
-echo "Creating Directories, etc..."
+echo "Creating Directories, etc..." #Creates CYBERSTEM directory and creates files inside of it
 while [ true ]
-do
-sleep 1
-clear
-break
+	do
+	sleep 1
+	clear
+	break
 done
 
 mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
@@ -59,19 +59,19 @@ ls -1R > dir-tree.list
 echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r) #List the OS version etc
 #Put here to tell the user what they are running.
 while [ true ]
-do
-sleep 3
-clear
-break
+	do
+	sleep 2
+	clear
+	break
 done
 
 echo "Confirm directory tree contains ~CYBERSTEM~ then continue..." #Do not remove anything in the tree
 #Put here just incase something happens, so basically just to make sure it's there.
 while [ true ]
-do
-sleep 2
-clear
-break
+	do
+	sleep 1
+	clear
+	break
 done
 
 nano dir-tree.list  #Views the tree
@@ -84,37 +84,51 @@ echo "###############################################"
 read IDEA  #Reads the input of the keyboard
 echo " " #Prints anything a user commands it to
 while [ true ]
-do
-sleep 1
-clear
-break
+	do
+	sleep 1
+	clear
+	break
 done
 
-echo "###############################################"  #Lesson selection menu
-echo "Which lesson would you like to begin...?"
-  echo "1. Navigation"
-  echo "2. NOTHINGYET"
-  echo "3. NOTHINGYET"
-  echo "4. NOTHINGYET"
-  echo "5. NOTHINGYET"
-  echo "6. NOTHINGYET"
-  echo "7. NOTHINGYET"
-  echo "8. NOTHINGYET"
-echo "###############################################"
-read IDEA
-echo " "
+start ()
+{
+	echo "Loading lesson selection..."
+}
 
-while [ true ]
-do
-sleep 2
-clear
-break
-done
+menu ()
+{
 
-if [[ $IDEA == 1 ]]; then #Open the file through the CYBERSTEM directory
-  cd CYBERSTEM
-  nano Navigation.txt
+	echo "###############################################"  #Lesson selection menu
+	echo "Which lesson would you like to begin...?"
+  	echo "1. Navigation"
+  	echo "2. NOTHINGYET"
+  	echo "3. NOTHINGYET"
+  	echo "4. NOTHINGYET"
+  	echo "5. NOTHINGYET"
+  	echo "6. NOTHINGYET"
+  	echo "7. NOTHINGYET"
+  	echo "8. NOTHINGYET"
+	echo "###############################################"
+	read START_MENU2
 
-#if [[ $IDEA == 2 ]]; then
-  #cd CYBERSTEM
-  #nano Nothing.txt
+	case $START_MENU2 in
+	1)
+		echo "Loading..."
+		sleep 1
+		clear
+		start
+
+		;;
+
+	*)
+		echo "Invalid input,redirecting..."
+		sleep 1
+		clear
+		menu
+		;;
+
+	esac
+
+}
+
+menu
