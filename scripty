@@ -2,6 +2,8 @@
 
 #Linux CYBERSTEM interactive manual
 
+clear
+
 start() #Starts the function
 {
         echo "Starting program..."
@@ -50,8 +52,7 @@ while [ true ]
 done
 
 mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
-#^ Creates the directory and creates a .txt file in the directory and then moves onto more etc
-#sudo apt-get install geany
+#^ Creates the directory and creates a .txt file in the directory and then moves onto more eth
 ls -1R > dir-tree.list
 #rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
 #rm -r dir-tree.list
@@ -85,7 +86,6 @@ read IDEA  #Reads the input of the keyboard
 echo " " #Prints anything a user commands it to
 while [ true ]
 	do
-	sleep 1
 	clear
 	break
 done
@@ -98,7 +98,7 @@ start ()
 menu ()
 {
 
-	echo "###############################################"  #Lesson selection menu
+	printf "###############################################\n"  #Lesson selection menu
 	echo "Which lesson would you like to begin...?"
   	echo "1. Navigation"
   	echo "2. NOTHINGYET"
@@ -107,16 +107,33 @@ menu ()
   	echo "5. NOTHINGYET"
   	echo "6. NOTHINGYET"
   	echo "7. NOTHINGYET"
-  	echo "8. NOTHINGYET"
+  	printf  "8. NOTHINGYET\n"
+	echo "8. Exit"
 	echo "###############################################"
 	read START_MENU2
 
 	case $START_MENU2 in
 	1)
-		echo "Loading..."
+		echo "Loading..." #Directs user to the Navgiation.txt
+		while [ $START_MENU2 == true ] #While $START_MENU2 is true run navigation.txt...?
+			do
+			cd CYBERSTEM
+			nano Navigation.txt
+			sleep 1
+			clear
+			break
+		done
+		#sleep 1
+		#clear
+		
+
+		;;
+
+	8)
+		echo "Shutting down..."
 		sleep 1
 		clear
-		start
+		exit
 
 		;;
 
