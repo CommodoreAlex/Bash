@@ -7,7 +7,7 @@ apt-get install gnome
 gnome-system-logs
 
 #Change insecure root passwd
-#passwd
+#sudo passwd root
 
 #Limit Root Access
 #cat /etc/groups
@@ -29,7 +29,7 @@ gedit /etc/audit/auditd.conf
 #allow-guest=false + greeter-users-hide=true
 
 #Password change for non-administrators
-#sudo <NameHere> passwd
+#sudo passwd <user>
 
 #Install Open-SSH
 #apt-get install OpenSSH-server
