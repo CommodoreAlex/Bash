@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Linux CYBERSTEM interactive manual
+#Linux CYBERSTEM interactive manual, V0.2
 
 clear
 
@@ -51,11 +51,13 @@ while [ true ]
 	break
 done
 
-mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Nothing.txt
+mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administrators.txt
 #^ Creates the directory and creates a .txt file in the directory and then moves onto more eth
-ls -1R > dir-tree.list
+grep da * 2> grep-errors.txt
+cat grep-errors.txt
+read ERROR_IDENTIFICATION
+echo
 #rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
-#rm -r dir-tree.list
 
 echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r) #List the OS version etc
 #Put here to tell the user what they are running.
@@ -65,17 +67,6 @@ while [ true ]
 	clear
 	break
 done
-
-echo "Confirm directory tree contains ~CYBERSTEM~ then continue..." #Do not remove anything in the tree
-#Put here just incase something happens, so basically just to make sure it's there.
-while [ true ]
-	do
-	sleep 1
-	clear
-	break
-done
-
-nano dir-tree.list  #Views the tree
 
 echo "###############################################" #Introduction
   echo "Welcome to the Linux training course!"
@@ -92,7 +83,7 @@ done
 
 start ()
 {
-	echo "Loading lesson selection..."
+	echo "Loading lessons"
 }
 
 menu ()
@@ -101,7 +92,7 @@ menu ()
 	printf "###############################################\n"  #Lesson selection menu
 	echo "Which lesson would you like to begin...?"
   	echo "1. Navigation"
-  	echo "2. NOTHINGYET"
+  	echo "2. Administrators"
   	echo "3. NOTHINGYET"
   	echo "4. NOTHINGYET"
   	echo "5. NOTHINGYET"
@@ -149,3 +140,52 @@ menu ()
 }
 
 menu
+
+lesson_one()
+{
+        echo "######################################################################################"
+        echo "Welcome to the first lesson in this manual, we hope it will assist you in learning bash and it's many functions"
+        echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin."
+        echo "######################################################################################"
+
+        read WAIT_FOR_USER
+
+        echo "######################################################################################"
+        echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this"
+        echo "CD Example: cd /home"
+        echo "What we've done above is simply directing ourselves into the home directory. You can also use `cd` to direct yourselves into other directories"
+        echo "Such as, cd Dekstop, cd /bin, cd cd USER. Basically, you can direct yourself into any directory using `cd`."
+        echo "######################################################################################"
+
+        read WAIT_FOR_USER
+
+        echo "######################################################################################"
+        echo "Let's say you'd want to read a text file in your /home directory, you could use `cat`" 
+        echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim."
+        echo "Example of the `cat` command in usage: `cat navigation.txt` Now, all this would do is as said above... print out the contents."
+        echo "######################################################################################"
+
+        read WAIT_FOR_USER
+
+        echo "######################################################################################"
+        echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands."
+        echo "Example of copy in use: `cp test.txt"
+        echo "Example of remove in use: `rm test.txt` There is also a way of removing directores, `rm -r Documents`."
+        echo "Example of move in use: `move test.txt /home/Documents /home/Pictures`"
+        echo "######################################################################################"
+
+        read WAIT_FOR_USER
+
+        echo "######################################################################################"
+        echo "How about you want to see what's inside the directory or folder your in? You could use `ls` or `PWD`"
+        echo "Example of ls: If you want to use ls you could do, `ls`, or `ls -a`"  
+        echo "If you want to see what directory or whatever your in your could just use PWD as `PWD`, nothing more to that."
+        echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." 
+        echo "                                  End of Lesson 1"
+        echo "######################################################################################"
+        read WAIT_FOR_USER   
+}
+ 
+lesson_two()
+{
+        echo "Welcome to the second lesson in this Linux manual. In this we will cover administrative powers"
