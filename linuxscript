@@ -10,49 +10,66 @@ gnome-system-logs
 #sudo passwd root
 
 #Limit Root Access
-#cat /etc/groups
-#gedit /etc/groups
-#Remove unnecessary users from administrative positions
+gedit /etc/group
+read Continue
+echo
+
+gedit /etc/passwd
+read Continue
+echo
+
+gedit /etc/shadow
+read Continue
+echo
+
+#Sudoers file
+sudo visudo
+printf "Continue...\n\n"
+read Continue
+echo
+
+#Running processes on the image
+ps -A #Shows the processes
+printf "Continue...\n\n"
+read Continue
+echo
 
 #Disable SSH root login automatically
-sed i'sPermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-#This will substitute every yes with a no where root SSH is permitted
+sudo gedit /etc/ssh/sshd_config
+#Every yes it to be substitued with no
 
 #Audit Policies
 apt-get install auditd
 auditctl -e 1
 gedit /etc/audit/auditd.conf
+printf "Continue...\n\n"
 
 #Disabling the guest account as well as hiding users from login prompt
-#gedit /etc/lightdm/lightdm.conf
-#sed i's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm/.conf
-#allow-guest=false + greeter-users-hide=true
+#gedit /etc/lightdm/lightdm.conf #For Ubuntu 12
+#cd /usr/share/lightdm/lightdm.conf.d #For Ubuntu 14
+#gedit 50-ubuntu.conf
 
 #Password change for non-administrators
 #sudo passwd <user>
-
-#Install Open-SSH
-#apt-get install OpenSSH-server
-
-#Shadow passwords and groups
-#gedit /etc/group
-echo "Continue..."
-read IDEA
-echo
-
-#gedit /etc/shadow
-echo "Continue..."
-read IDEA
-echo
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
+#sudo passwd <user>
 
 #Minimum password age existing
 gedit /etc/pam.d/login.defs
-echo "Continue..."
-read IDEA
+printf "Continue...\n\n"
+read Continue
 echo
 
-#gedit /etc/pam.d/common-password
-#auth-required pam_tally.so deny=5 onerr=failunlock_time=1800 #Do not un-note this while running script
+#Account lockout policy
+gedit /etc/pam.d/common-password
+#auth-required pam_tally.so deny=5 onerr=failunlock_time=1800 #DO NOT UN-NOTE
+printf "Continue...\n\n"
 
 #System Update
 apt-get update && apt-get dist-upgrade
@@ -61,39 +78,17 @@ apt-get update && apt-get dist-upgrade
 ufw enable
 ufw default deny
 
-#Services
-service --status-all
-echo "Continue..."
-read IDEA
-echo
-
-echo "1. Telnet"
-echo "2. Apache"
-
-if [[ $IDEA == 1 ]]; then
-  service rm telnet
-
-elif [[ $IDEA == 2 ]]; then
-  serivce rm apache2
-else
-  echo "What?"
-
-echo "Moving on..."
-
 #Files with prohibited extensions
 find / -name "*.mp3"
 find / -name "*.wav"
 find / -name "*.wma"
-find / -name "*.aac"
 find / -name "*.mp4"
 find / -name "*.mov"
 find / -name "*.avi"
 find / -name "*.gif"
 find / -name "*.jpg"
-find / -name "*.jpeg"
 find / -name "*.png"
-find / -name "*.bmp"
 find / -name "*.exe"
 echo "Continue..."
-read IDEA
+read Continue
 echo
