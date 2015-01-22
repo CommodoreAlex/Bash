@@ -55,16 +55,14 @@ mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administrat
 #^ Creates the directory and creates a .txt file in the directory and then moves onto more eth
 grep da * 2> grep-errors.txt
 cat grep-errors.txt
+echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r)
 read ERROR_IDENTIFICATION
 echo
 #rm -r CYBERSTEM #OPTIONAL REMOVAL OF DIRECTORY
-
-echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r) #List the OS version etc
-#Put here to tell the user what they are running.
 while [ true ]
 	do
-	sleep 2
-	clear
+	echo "Loading..."
+	sleep 1
 	break
 done
 
