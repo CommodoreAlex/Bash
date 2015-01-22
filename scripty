@@ -82,6 +82,7 @@ done
 start ()
 {
 	echo "Loading lessons"
+	clear #Will this work?
 }
 
 menu ()
@@ -92,11 +93,11 @@ menu ()
   	echo "1. lesson_one"
   	echo "2. lesson_two"
   	echo "3. lesson_three"
-  	echo "4. NOTHINGYET"
-  	echo "5. NOTHINGYET"
-  	echo "6. NOTHINGYET"
-  	echo "7. NOTHINGYET"
-  	printf  "8. NOTHINGYET\n"
+  	echo "4. lesson_four"
+  	echo "5. lesson_five"
+  	echo "6. lesson_six"
+  	echo "7. lesson_seven"
+  	echo "8. lesson_eight"
 	echo "8. Exit"
 	echo "###############################################"
 	read START_MENU2
@@ -107,13 +108,11 @@ menu ()
 		while [ $START_MENU2 == true ] #While $START_MENU2 is true run navigation.txt...?
 			do
 			cd CYBERSTEM
-			nano Navigation.txt
+			cat lesson_one() #In testing here
 			sleep 1
 			clear
 			break
 		done
-		#sleep 1
-		#clear
 		
 
 		;;
