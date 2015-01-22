@@ -153,33 +153,33 @@ lesson_one()
         echo "######################################################################################"
         echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this"
         echo "CD Example: cd /home"
-        echo "What we've done above is simply directing ourselves into the home directory. You can also use `cd` to direct yourselves into other directories"
-        echo "Such as, cd Dekstop, cd /bin, cd cd USER. Basically, you can direct yourself into any directory using `cd`."
+        echo "What we've done above is simply directing ourselves into the home directory. You can also use cd to direct yourselves into other directories"
+        echo "Such as, cd Dekstop, cd /bin, cd cd USER. Basically, you can direct yourself into any directory using cd."
         echo "######################################################################################"
 
         read WAIT_FOR_USER
 
         echo "######################################################################################"
-        echo "Let's say you'd want to read a text file in your /home directory, you could use `cat`" 
+        echo "Let's say you'd want to read a text file in your /home directory, you could use cat" 
         echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim."
-        echo "Example of the `cat` command in usage: `cat navigation.txt` Now, all this would do is as said above... print out the contents."
+        echo "Example of the cat command in usage: cat navigation.txt Now, all this would do is as said above... print out the contents."
         echo "######################################################################################"
 
         read WAIT_FOR_USER
 
         echo "######################################################################################"
         echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands."
-        echo "Example of copy in use: `cp test.txt"
-        echo "Example of remove in use: `rm test.txt` There is also a way of removing directores, `rm -r Documents`."
-        echo "Example of move in use: `move test.txt /home/Documents /home/Pictures`"
+        echo "Example of copy in use: cp test.txt"
+        echo "Example of remove in use: rm test.txt There is also a way of removing directores, rm -r Documents."
+        echo "Example of move in use: move test.txt /home/Documents /home/Pictures"
         echo "######################################################################################"
 
         read WAIT_FOR_USER
 
         echo "######################################################################################"
-        echo "How about you want to see what's inside the directory or folder your in? You could use `ls` or `PWD`"
-        echo "Example of ls: If you want to use ls you could do, `ls`, or `ls -a`"  
-        echo "If you want to see what directory or whatever your in your could just use PWD as `PWD`, nothing more to that."
+        echo "How about you want to see what's inside the directory or folder your in? You could use ls or PWD"
+        echo "Example of ls: If you want to use ls you could do, ls, or ls -a"  
+        echo "If you want to see what directory or whatever your in your could just use PWD as PWD, nothing more to that."
         echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." 
         echo "                                  End of Lesson 1"
         echo "######################################################################################"
@@ -191,7 +191,7 @@ lesson_two()
         echo "######################################################################################"
         echo "Welcome to the second lesson in this Linux manual. In this we will cover administrative powers""
         echo "We will go over the multiple ways in how it is used etc."
-        echo "######################################################################################"
+        echo "#######################################################################################
 
         read WAIT_FOR_USER
 
