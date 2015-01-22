@@ -89,9 +89,9 @@ menu ()
 
 	printf "###############################################\n"  #Lesson selection menu
 	echo "Which lesson would you like to begin...?"
-  	echo "1. Navigation"
-  	echo "2. Administrators"
-  	echo "3. NOTHINGYET"
+  	echo "1. lesson_one"
+  	echo "2. lesson_two"
+  	echo "3. lesson_three"
   	echo "4. NOTHINGYET"
   	echo "5. NOTHINGYET"
   	echo "6. NOTHINGYET"
