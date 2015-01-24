@@ -200,7 +200,7 @@ lesson_three()
  		lesson_three
  		;;
  	*)
- 		echo "Invalid input, redirecting..."
+ 		echo Invalid input, redirecting...""
  		sleep 2
  		LESSON
  		;;
