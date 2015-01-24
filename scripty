@@ -70,7 +70,7 @@ echo "###############################################" #Introduction
   echo "Welcome to the Linux training course!"
   echo "This manual will go straight from start to finish. "
   echo "This course will teach you the bare essentials of BASH!"
-  echo "During this tutorial you press "ENTER" to continue. "
+  echo "During this tutorial you press -ENTER- to continue. "
 echo "###############################################"
 read IDEA  #Reads the input of the keyboard
 echo " " #Prints anything a user commands it to
@@ -85,9 +85,6 @@ start ()
 	echo "Loading lessons"
 	clear #Will this work?
 }
-
-menu ()
-{
 
 lesson_one()
 {
