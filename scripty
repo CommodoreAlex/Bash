@@ -68,6 +68,7 @@ done
 
 echo "###############################################" #Introduction
   echo "Welcome to the Linux training course!"
+  echo "This manual will go straight from start to finish. "
   echo "This course will teach you the bare essentials of BASH!"
   echo "During this tutorial you press "ENTER" to continue. "
 echo "###############################################"
@@ -87,56 +88,6 @@ start ()
 
 menu ()
 {
-
-	printf "###############################################\n"  #Lesson selection menu
-	echo "Which lesson would you like to begin...?"
-  	echo "1. lesson_one"
-  	echo "2. lesson_two"
-  	echo "3. lesson_three"
-  	echo "4. lesson_four"
-  	echo "5. lesson_five"
-  	echo "6. lesson_six"
-  	echo "7. lesson_seven"
-  	echo "8. lesson_eight"
-	echo "8. Exit"
-	echo "###############################################"
-	read START_MENU2
-
-	case $START_MENU2 in
-	1)
-		echo "Loading..." #Directs user to the Navgiation.txt
-		while [ $START_MENU2 == true ] #While $START_MENU2 is true run navigation.txt...?
-			do
-			cd CYBERSTEM
-			cat lesson_one() #In testing here
-			sleep 1
-			clear
-			break
-		done
-		
-
-		;;
-
-	8)
-		echo "Shutting down..."
-		sleep 1
-		clear
-		exit
-
-		;;
-
-	*)
-		echo "Invalid input,redirecting..."
-		sleep 1
-		clear
-		menu
-		;;
-
-	esac
-
-}
-
-menu
 
 lesson_one()
 {
@@ -221,3 +172,46 @@ lesson_two()
 lesson_three()
 {
 
+	echo "######################################################################################"
+        echo "Welcome to the third lesson of this manual."
+        echo "In this section we will be covering services of a Linux machine."
+        echo "######################################################################################"
+        
+        read WAIT_FOR_USER
+        
+        echo "######################################################################################"
+        echo "Services run in the background you of your computer per say."
+        echo "Basically what starts on startup, whats running etc."
+        echo "If you were to want to examine the services running on your Linux machine you'd do the following.."
+        echo "######################################################################################"
+        
+        read WAIT_FOR_USER
+        
+        echo "######################################################################################"
+        echo "<service --status-all>"
+        echo "What this will do is bring up a list of all running services on the machine."
+        echo "Now that you can see all the services running, you could start,restart, remove or stop one."
+        echo "######################################################################################"
+        
+        read WAIT_FOR_USER
+        
+        echo "######################################################################################"
+        echo "If you wanted to stop a service for example you'd do..."
+        echo "<sudo service SERVICENAME stop>"
+        echo "If you were to restart a service you'd do..."
+        echo "<sudo service SERVICENAME restart>"
+        echo "IF you were to start one you'd do..."
+        echo "<sudo service SERVICENAME start>"
+        echo "And if you wanted to remove one you'd do..."
+        echo "<sudo service rm SERVICENAME>"
+        echo "######################################################################################"
+        
+        read WAIT_FOR_USER
+        
+}
+
+lesson_four()
+{
+	echo "######################################################################################"
+	echo "Welcome to the fourth lesson in this manual."
+	echo "For this section we will be talking a little bit about ports etc."
