@@ -92,8 +92,10 @@ lesson_one()
         echo "Welcome to the first lesson in this manual, we hope it will assist you in learning bash and it's many functions"
         echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin."
         echo "######################################################################################"
-
+	
         read WAIT_FOR_USER
+        
+        ;;
 
         echo "######################################################################################"
         echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this"
@@ -102,25 +104,31 @@ lesson_one()
         echo "Such as, cd Dekstop, cd /bin, cd cd USER. Basically, you can direct yourself into any directory using cd."
         echo "######################################################################################"
 
-        read WAIT_FOR_USER
-
+	 read WAIT_FOR_USER
+	
+	;;
+	
         echo "######################################################################################"
         echo "Let's say you'd want to read a text file in your /home directory, you could use cat" 
         echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim."
         echo "Example of the cat command in usage: cat navigation.txt Now, all this would do is as said above... print out the contents."
         echo "######################################################################################"
 
-        read WAIT_FOR_USER
+	read WAIT_FOR_USER
 
+	;;
+	
         echo "######################################################################################"
         echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands."
         echo "Example of copy in use: cp test.txt"
         echo "Example of remove in use: rm test.txt There is also a way of removing directores, rm -r Documents."
         echo "Example of move in use: move test.txt /home/Documents /home/Pictures"
         echo "######################################################################################"
-
+        
         read WAIT_FOR_USER
-
+       
+       ;;
+        
         echo "######################################################################################"
         echo "How about you want to see what's inside the directory or folder your in? You could use ls or PWD"
         echo "Example of ls: If you want to use ls you could do, ls, or ls -a"  
@@ -128,7 +136,11 @@ lesson_one()
         echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." 
         echo "                                  End of Lesson 1"
         echo "######################################################################################"
+       
         read WAIT_FOR_USER   
+       
+        ;;
+        
 }
  
 lesson_two()
@@ -136,10 +148,12 @@ lesson_two()
         echo "######################################################################################"
         echo "Welcome to the second lesson in this Linux manual. In this we will cover administrative powers""
         echo "We will go over the multiple ways in how it is used etc."
-        echo "#######################################################################################
-
+        echo "#######################################################################################""
+       
         read WAIT_FOR_USER
 
+	;;
+	
         echo "######################################################################################"
         echo "The command to be used as root but yet not root is called SUDO"
         echo "To use SUDO, for example we'd do something such as this."
@@ -147,9 +161,11 @@ lesson_two()
         echo "sudo visudo is a way to check the sudo configurations etc."
         echo "A default sudoer file should not be edited at all, use common sense to find edits"
         echo "######################################################################################"
-
-        read WAIT_FOR_USER
-
+	
+	 read WAIT_FOR_USER
+	
+	;;
+	
         echo "######################################################################################"
         echo "Sudo is mainly used to authorize administrative commands"
         echo "An insecure sudo password should be changed, to do so do this."
@@ -158,12 +174,16 @@ lesson_two()
 
         read WAIT_FOR_USER
 
+	;;
+	
         echo "######################################################################################"
         echo "Sudo is used for administrators, root should not be used unless under a special circumstance"
         echo "Sudo is as root yet at a lower level of authority."
         echo "######################################################################################"
+        
         read WAIT_FOR_USER
-
+	;;
+	
 }
 
 lesson_three()
@@ -175,6 +195,9 @@ lesson_three()
         echo "######################################################################################"
         
         read WAIT_FOR_USER
+      
+        ;;
+        
         
         echo "######################################################################################"
         echo "Services run in the background you of your computer per say."
@@ -184,6 +207,8 @@ lesson_three()
         
         read WAIT_FOR_USER
         
+        ;;
+        
         echo "######################################################################################"
         echo "<service --status-all>"
         echo "What this will do is bring up a list of all running services on the machine."
@@ -191,6 +216,8 @@ lesson_three()
         echo "######################################################################################"
         
         read WAIT_FOR_USER
+       
+        ;;
         
         echo "######################################################################################"
         echo "If you wanted to stop a service for example you'd do..."
@@ -204,11 +231,8 @@ lesson_three()
         echo "######################################################################################"
         
         read WAIT_FOR_USER
+        ;;
+        
+        esac
         
 }
-
-lesson_four()
-{
-	echo "######################################################################################"
-	echo "Welcome to the fourth lesson in this manual."
-	echo "For this section we will be talking a little bit about ports etc."
