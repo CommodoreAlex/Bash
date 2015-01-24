@@ -7,42 +7,43 @@ apt-get install gnome
 gnome-system-logs
 
 #Change insecure root passwd
-#sudo passwd root
+passwd root
 
-#Limit Root Access
+#Groups
 gedit /etc/group
 read Continue
 echo
 
+#Users
 gedit /etc/passwd
 read Continue
 echo
 
+#Password hashes
 gedit /etc/shadow
 read Continue
 echo
 
 #Sudoers file
 sudo visudo
-printf "Continue...\n\n"
 read Continue
 echo
 
 #Running processes on the image
 ps -A #Shows the processes
-printf "Continue...\n\n"
 read Continue
 echo
 
 #Disable SSH root login automatically
-sudo gedit /etc/ssh/sshd_config
+gedit /etc/ssh/sshd_config
 #Every yes it to be substitued with no
 
 #Audit Policies
 apt-get install auditd
 auditctl -e 1
 gedit /etc/audit/auditd.conf
-printf "Continue...\n\n"
+read Continue
+echo
 
 #Disabling the guest account as well as hiding users from login prompt
 #gedit /etc/lightdm/lightdm.conf #For Ubuntu 12
@@ -77,6 +78,8 @@ apt-get update && apt-get dist-upgrade
 #Firewall
 ufw enable
 ufw default deny
+#ufw allow 80 #Uh? Forgot
+#ufw allow 22 #This is SSH
 
 #Files with prohibited extensions
 find / -name "*.mp3"
