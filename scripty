@@ -86,7 +86,7 @@ start()
 	clear
 }
 
-menu()
+menu2()
 {
 
 	printf "######Lesson Selection Menu################################\n"
@@ -196,7 +196,7 @@ menu()
 	*)
 		echo "Invalid Input, Redirecting..."
 		sleep 1
-		menu
+		menu2
 		;;
 	
 	esac
