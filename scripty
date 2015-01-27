@@ -5,12 +5,12 @@
 start() #Starts the function
 {
         echo "Starting program..."
-        clear
-        sleep 1
+        
 }
 
 menu() #Starting of the menu
 {
+	clear
         printf "Which operation would you like to run...?\n" #printf is a better way of printing rather than echo, \n makes a new line blank etc.
         echo "[1]. Start" #Shows the option of 1 or 2 to be processed
         echo "[2]. Exit"
@@ -21,6 +21,7 @@ menu() #Starting of the menu
         1)
                 echo "Loading..."
                 sleep 1 #Pauses for one second
+                clear
                 start #Moves on with the rest
 
                  ;;
