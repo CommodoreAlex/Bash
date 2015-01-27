@@ -1,3 +1,4 @@
 # Alex-s-Linoox-stuff
-Linoox!
-The main focus of everything here are just a bunch of Linux projects.
+Most of the stuff that is posted here is just a bunch of written scripts in BASH.
+I do this for me to learn and for those who are interested to take a look at my work.
+:)
