@@ -66,6 +66,57 @@ while [ true ]
 	break
 done
 
+echo "###########################################################################################################################################" > Navigation.txt
+echo "Welcome to the first lesson in this manual, we hope it will assist you in learning bash and it's many functions" >> Navigation.txt
+echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin." >> Navigation.txt
+echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this" >> Navigation.txt
+echo "CD Example: <cd /home>" >> Navigation.txt
+echo "What we've seen above is simply directing ourselves into the home directory. You can also use cd to direct yourselves into other directories" >> Navigation.txt
+echo "Such as, <cd Dekstop>, <cd /bin>, <cd USER>. Basically, you can direct yourself into any directory using <cd>." >> Navigation.txt
+echo "Let's say you'd want to read a text file in your /home directory, you could use cat" >> Navigation.txt
+echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim." >> Navigation.txt
+echo "Example of the cat command in usage: cat navigation.txt Now, all this would do is as said above... print out the contents." >> Navigation.txt
+echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands." >> Navigation.txt
+echo "Example of copy in use: <cp test.txt>" >> Navigation.txt
+echo "Example of remove in use: <rm test.txt> There is also a way of removing directores, <rm -r Documents>" >> Navigation.txt
+echo "Example of move in use: move test.txt /home/Documents /home/Pictures" >> Navigation.txt
+echo "How about you want to see what's inside the directory or folder your in? You could use <ls> or <PWD>" >> Navigation.txt
+echo "Example of ls: If you want to use ls you could do, <ls>, or <ls -a>" >> Navigation.txt
+echo "If you want to see what directory or whatever your in your could just use PWD as PWD, nothing more to that." >> Navigation.txt
+echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." >> Navigation.txt
+echo "                                  End of Lesson 1" >> Navigation.txt
+echo "###########################################################################################################################################" >> Navigation.txt
+
+echo "###########################################################################################################################################" > Administration.txt
+echo "Welcome to the second lesson in this Linux manual. In this we will cover administrative powers" >> Administration.txt
+echo "We will go over the multiple ways in how it is used etc." >> Administration.txt
+echo "The command to be used as root but yet not root is called SUDO" >> Administration.txt
+echo "To use SUDO, for example we'd do something such as this." >> Administration.txt
+echo "Example: <sudo apt-get cowsay>" >> Administration.txt
+echo "sudo apt-get cowsay is simply saying GET cowsay." >> Administration.txt
+echo "Sudo is mainly just used to authorize certain commands." >> Administration.txt
+echo "Sudo is something only Administrators should have access too." >> Administration.txt
+echo "###########################################################################################################################################" >> Administration.txt
+
+echo "###########################################################################################################################################" > Service.txt
+echo "Welcome to the third lesson of this manual." >> Service.txt
+echo "In this section we will be covering services of a Linux machine." >> Service.txt
+echo "Services run in the background you of your computer per say." >> Service.txt
+echo "Basically what starts on startup, whats running etc." >> Service.txt
+echo "If you were to want to examine the services running on your Linux machine you'd do the following.." >> Service.txt
+echo "<service --status-all>" >> Service.txt
+echo "What this will do is bring up a list of all running services on the machine." >> Service.txt
+echo "Now that you can see all the services running, you could start,restart, remove or stop one." >> Service.txt
+echo "If you wanted to stop a service for example you'd do..." >> Service.txt
+echo "<sudo service SERVICENAME stop>" >> Service.txt
+echo "If you were to restart a service you'd do..." >> Service.txt
+echo "<sudo service SERVICENAME restart>" >> Service.txt
+echo "IF you were to start one you'd do..." >> Service.txt
+echo "<sudo service SERVICENAME start>" >> Service.txt
+echo "And if you wanted to remove one you'd do..." >> Service.txt
+echo "<sudo service rm SERVICENAME>" >> Service.txt
+echo "###########################################################################################################################################" >> Service.txt
+
 printf "##########################################################\n" #Introduction
   echo "Welcome to the Linux training course!"
   echo "This manual will go straight from start to finish. "
