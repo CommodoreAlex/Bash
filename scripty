@@ -51,10 +51,7 @@ done
 
 mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administration.txt && touch CYBERSTEM/Service.txt && touch CYBERSTEM/SecUpdates.txt && touch CYBERSTEM/GuestandRoot.txt && touch CYBERSTEM/PolicyAccount.txt && touch CYBERSTEM/ProcFile.txt && touch CYBERSTEM/UsrGroup.txt && touch CYBERSTEM/Accounts.txt && touch CYBERSTEM/Visudo&Passwd.txt && touch CYBERSTEM/SysLog.txt
 #Creates the CYBERSTEM directory and creates text files in the directory
-grep da * 2> grep-errors.txt
-cat grep-errors.txt
-echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r)
-read ERROR_IDENTIFICATION
+echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 
 while [ true ]
 	do
@@ -81,8 +78,6 @@ done
 begin()
 {
 	echo "Loading Lesson Selection..."
-	sleep 1
-	clear
 }
 
 menu2()
@@ -100,14 +95,16 @@ menu2()
 	printf "[9] User Accounts\n"
 	printf "[10] Sudoers file and Insecure Root Password\n"
 	printf "[11] System Log Checking\n"
+	printf "[12] Exit Program\n"
 	echo "  ##########################################################"
-	read USER_INPUT
+	read begin_menu2
 
-	case $USER_INPUT in
+
+	case $begin_menu2 in
 	1)
 		echo "Loading Lesson..."
-		gedit Navigation.txt
 		sleep 1
+		gedit Navigation.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -115,8 +112,8 @@ menu2()
 		
 	2)
 		echo "Loading Lesson..."
-		gedit Administration.txt
 		sleep 1
+		gedit Administration.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -124,8 +121,8 @@ menu2()
 		
 	3)
 		echo "Loading Lesson..."
-		gedit Service.txt
 		sleep 1
+		gedit Service.txt
 		read WAIT_FOR_USER
 		clear
 	
@@ -133,8 +130,8 @@ menu2()
 		
 	4)
 		echo "Loading Lesson..."
-		gedit SecUpdates.txt
 		sleep 1
+		gedit SecUpdates.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -142,8 +139,8 @@ menu2()
 		
 	5)
 		echo "Loading Lesson..."
-		gedit GuestandRoot.txt
 		sleep 1
+		gedit GuestandRoot.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -151,8 +148,8 @@ menu2()
 		
 	6)
 		echo "Loading Lesson..."
-		gedit PolicyAccount.txt
 		sleep 1
+		gedit PolicyAccount.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -160,8 +157,8 @@ menu2()
 	
 	7)
 		echo "Loading Lesson..."
-		gedit ProcFile.txt
 		sleep 1
+		gedit ProcFile.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -169,8 +166,8 @@ menu2()
 		
 	8)
 		echo "Loading Lesson..."
-		gedit UsrGroup.txt
 		sleep 1
+		gedit UsrGroup.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -178,8 +175,8 @@ menu2()
 		
 	9)
 		echo "Loading Lesson..."
-		gedit Accounts.txt
 		sleep 1
+		gedit Accounts.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -187,8 +184,8 @@ menu2()
 		
 	10)
 		echo "Loading Lesson..."
-		gedit Visudo&Passwd.txt
 		sleep 1
+		gedit Visudo&Passwd.txt
 		read WAIT_FOR_USER
 		clear
 		
@@ -196,10 +193,18 @@ menu2()
 		
 	11)
 		echo "Loading Lesson..."
-		gedit SysLog.txt
 		sleep 1
+		gedit SysLog.txt
 		read WAIT_FOR_USER
 		clear
+		
+		;;
+		
+	12)
+		echo "Shutting down..."
+		sleep 1
+		clear
+		exit
 		
 		;;
 		
@@ -211,3 +216,5 @@ menu2()
 	
 	esac
 }
+
+menu2
