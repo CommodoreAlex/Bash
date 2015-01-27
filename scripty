@@ -5,6 +5,8 @@
 start() #Starts the function
 {
         echo "Starting program..."
+        clear
+        sleep 1
 }
 
 menu() #Starting of the menu
