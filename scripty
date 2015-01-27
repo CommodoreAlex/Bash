@@ -54,7 +54,7 @@ while [ true ]
 	break
 done
 
-mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administration.txt && touch CYBERSTEM/Service.txt && touch CYBERSTEM/SecUpdates.txt && touch CYBERSTEM/GuestandRoot.txt && touch CYBERSTEM/PolicyAccount.txt && touch CYBERSTEM/ProcFile.txt && touch CYBERSTEM/UsrGroup.txt && touch CYBERSTEM/Accounts.txt && touch CYBERSTEM/VisudoandPasswd.txt && touch CYBERSTEM/SysLog.txt
+mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administration.txt && touch CYBERSTEM/Service.txt && touch CYBERSTEM/SecUpdates.txt && touch CYBERSTEM/GuestandRoot.txt && touch CYBERSTEM/PolicyAccount.txt && touch CYBERSTEM/ProcFile.txt && touch CYBERSTEM/UsrGroup.txt && touch CYBERSTEM/Accounts.txt && touch CYBERSTEM/VisudoandPasswd.txt && touch CYBERSTEM/SysLog.txt && grep da > errors.txt
 #Creates the CYBERSTEM directory and creates text files in the directory
 echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 
