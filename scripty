@@ -55,7 +55,6 @@ grep da * 2> grep-errors.txt
 cat grep-errors.txt
 echo "You are running " $(lsb_release -sd) "with kernel" $(uname -r)
 read ERROR_IDENTIFICATION
-cd CYBERSTEM
 
 while [ true ]
 	do
@@ -79,7 +78,7 @@ while [ true ]
 	break
 done
 
-start()
+begin()
 {
 	echo "Loading Lesson Selection..."
 	sleep 1
@@ -109,6 +108,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit Navigation.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -117,6 +117,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit Administration.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -125,6 +126,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit Service.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 	
 		;;
@@ -133,6 +135,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit SecUpdates.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -141,6 +144,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit GuestandRoot.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -149,6 +153,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit PolicyAccount.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -157,6 +162,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit ProcFile.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -165,6 +171,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit UsrGroup.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -173,6 +180,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit Accounts.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -181,6 +189,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit Visudo&Passwd.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
@@ -189,6 +198,7 @@ menu2()
 		echo "Loading Lesson..."
 		gedit SysLog.txt
 		sleep 1
+		read WAIT_FOR_USER
 		clear
 		
 		;;
