@@ -10,8 +10,8 @@ start() #Starts the function
 menu() #Starting of the menu
 {
         printf "Which operation would you like to run...?\n" #printf is a better way of printing rather than echo, \n makes a new line blank etc.
-        echo "1. Start" #Shows the option of 1 or 2 to be processed
-        echo "2. Exit"
+        echo "[1]. Start" #Shows the option of 1 or 2 to be processed
+        echo "[2]. Exit"
         read START_MENU #Reads the input of the keyboard and then the variable
 
 
@@ -26,6 +26,7 @@ menu() #Starting of the menu
         2)
                 echo "Exiting program..."
                 sleep 2
+                clear
                 exit #Closes the script, overall
 
                 ;;
@@ -33,6 +34,7 @@ menu() #Starting of the menu
         *) #Asterisk to bring it back
                 echo "Invaid input, redirecting..."
                 sleep 2
+                clear
                 menu #Refers to the menu options
                 ;;
 
@@ -56,7 +58,7 @@ echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 while [ true ]
 	do
 	echo "Loading..."
-	sleep 1
+	sleep 2
 	clear
 	break
 done
@@ -211,6 +213,7 @@ menu2()
 	*)
 		echo "Invalid Input, Redirecting..."
 		sleep 1
+		clear
 		menu2
 		;;
 	
