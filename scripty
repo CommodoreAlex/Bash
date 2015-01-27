@@ -12,8 +12,8 @@ menu() #Starting of the menu
 {
 	clear
         printf "Which operation would you like to run...?\n" #printf is a better way of printing rather than echo, \n makes a new line blank etc.
-        echo "[1]. Start" #Shows the option of 1 or 2 to be processed
-        echo "[2]. Exit"
+        echo "[1] Start" #Shows the option of 1 or 2 to be processed
+        echo "[2] Exit"
         read START_MENU #Reads the input of the keyboard and then the variable
 
 
@@ -140,7 +140,7 @@ menu2()
 {
 
 	printf "######Lesson Selection Menu################################\n"
-	printf "If editable, DO NOT EDIT ANY TEXT FILES!"
+	printf "~If editable, DO NOT EDIT ANY TEXT FILES!~\n"
 	printf "[1] Basic Linux Navigation\n"
 	printf "[2] Administrative Capabilities\n"
 	printf "[3] Service Management\n"
@@ -159,8 +159,8 @@ menu2()
 
 	case $begin_menu2 in
 	1)
-		echo "Loading Lesson..."
-		sleep 1
+		echo "Loading Lesson..."   #What this does is pause for a second, view the file, clear the stuff there, then
+		sleep 1                    #Bring you back to the menu again but clean
 		gedit Navigation.txt
 		clear
 		menu2
@@ -171,7 +171,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit Administration.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -181,7 +180,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit Service.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 	
@@ -191,7 +189,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit SecUpdates.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -201,7 +198,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit GuestandRoot.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -211,7 +207,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit PolicyAccount.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -221,7 +216,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit ProcFile.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -231,7 +225,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit UsrGroup.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -241,7 +234,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit Accounts.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -251,7 +243,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit VisudoandPasswd.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -261,7 +252,6 @@ menu2()
 		echo "Loading Lesson..."
 		sleep 1
 		gedit SysLog.txt
-		read WAIT_FOR_USER
 		clear
 		menu2
 		
