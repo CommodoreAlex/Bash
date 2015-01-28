@@ -54,7 +54,7 @@ while [ true ]
 	break
 done
 
-mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administration.txt && touch CYBERSTEM/Service.txt && touch CYBERSTEM/SecUpdates.txt && touch CYBERSTEM/GuestandRoot.txt && touch CYBERSTEM/PolicyAccount.txt && touch CYBERSTEM/ProcFile.txt && touch CYBERSTEM/UsrGroup.txt && touch CYBERSTEM/Accounts.txt && touch CYBERSTEM/VisudoandPasswd.txt && touch CYBERSTEM/SysLog.txt && grep da > errors.txt
+mkdir CYBERSTEM && touch CYBERSTEM/Navigation.txt && touch CYBERSTEM/Administration.txt && touch CYBERSTEM/Service.txt && touch CYBERSTEM/SecUpdates.txt && touch CYBERSTEM/GuestandRoot.txt && touch CYBERSTEM/PolicyAccount.txt && touch CYBERSTEM/ProcFile.txt && touch CYBERSTEM/UsrGroup.txt && touch CYBERSTEM/Accounts.txt && touch CYBERSTEM/VisudoandPasswd.txt && touch CYBERSTEM/SysLog.txt
 #Creates the CYBERSTEM directory and creates text files in the directory
 echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 
@@ -67,7 +67,8 @@ while [ true ]
 done
 
 echo "###########################################################################################################################################" > Navigation.txt
-echo "Welcome to the first lesson in this manual, we hope it will assist you in learning bash and it's many functions" >> Navigation.txt
+echo "Welcome to the first installment in this manual." >> Navigation.txt
+echo "we hope it will assist you in learning bash and it's many functions" >> Navigation.txt
 echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin." >> Navigation.txt
 echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this" >> Navigation.txt
 echo "CD Example: <cd /home>" >> Navigation.txt
@@ -88,7 +89,8 @@ echo "                                  End of Lesson 1" >> Navigation.txt
 echo "###########################################################################################################################################" >> Navigation.txt
 
 echo "###########################################################################################################################################" > Administration.txt
-echo "Welcome to the second lesson in this Linux manual. In this we will cover administrative powers" >> Administration.txt
+echo "Welcome to the second installment in this manual." >> Administration.txt
+echo "In this section we will cover administrative powers" >> Administration.txt
 echo "We will go over the multiple ways in how it is used etc." >> Administration.txt
 echo "The command to be used as root but yet not root is called SUDO" >> Administration.txt
 echo "To use SUDO, for example we'd do something such as this." >> Administration.txt
@@ -96,10 +98,11 @@ echo "Example: <sudo apt-get cowsay>" >> Administration.txt
 echo "sudo apt-get cowsay is simply saying GET cowsay." >> Administration.txt
 echo "Sudo is mainly just used to authorize certain commands." >> Administration.txt
 echo "Sudo is something only Administrators should have access too." >> Administration.txt
+echo "                                  End of Lesson 2" >> Navigation.txt
 echo "###########################################################################################################################################" >> Administration.txt
 
 echo "###########################################################################################################################################" > Service.txt
-echo "Welcome to the third lesson of this manual." >> Service.txt
+echo "Welcome to the third installment of this manual." >> Service.txt
 echo "In this section we will be covering services of a Linux machine." >> Service.txt
 echo "Services run in the background you of your computer per say." >> Service.txt
 echo "Basically what starts on startup, whats running etc." >> Service.txt
@@ -115,13 +118,75 @@ echo "IF you were to start one you'd do..." >> Service.txt
 echo "<sudo service SERVICENAME start>" >> Service.txt
 echo "And if you wanted to remove one you'd do..." >> Service.txt
 echo "<sudo service rm SERVICENAME>" >> Service.txt
+echo "                                  End of Lesson 3" >> Navigation.txt
 echo "###########################################################################################################################################" >> Service.txt
+
+echo "###########################################################################################################################################" > SecUpdates.txt
+echo "Welcome to the fourth installment of this manual." >> SecUpdates.txt
+echo "In this section we will be going over updates essential for security." >> SecUpdates.txt
+echo "There are multiple ways to update, upgrade or even do both commands at once." >> SecUpdates.txt
+echo "If you were to begin updating you'd do the following command..." >> SecUpdates.txt
+echo "<sudo apt-get install update>" >> SecUpdates.txt
+echo "If you were to begin upgrading you'd do the following command..." >> SecUpdates.txt
+echo "<sudo apt-get install upgrade>" >> SecUpdates.txt
+echo "If you'd like to do both at once and get it done much faster." >> SecUpdates.txt
+echo "<Sudo apt-get update && sudo apt-get dist-upgrade>" >> SecUpdates.txt
+echo "In doing this command you'll update and upgrade your system, but why the "dist"?" >> SecUpdates.txt
+echo "Dist-upgrade is a more sophisticated way of doing it and is much more effective." >> SecUpdates.txt
+echo "If you'd like to easily automate security updates by GUI you'd do the following..." >> SecUpdates.txt
+echo "You would search "Update Manager" and then go into the setting of it." >> SecUpdates.txt
+echo "                                  End of Lesson 3" >> SecUpdates.txt
+echo "###########################################################################################################################################" >> SecUpdates.txt
+
+echo "###########################################################################################################################################" > GuestandRoot.txt
+echo "Welcome to the fifth installment of this manual." >> GuestandRoot.txt
+echo "In this section we will be covering the guest account security as well as root login security." >> GuestandRoot.txt
+echo "First off, we'll go over the guest accounts and how remove this vulnarability as well as a couple more..." >> GuestandRoot.txt
+echo "If were speaking about Ubuntu 12. we'd use this command" >> GuestandRoot.txt
+echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." >> GuestandRoot.txt
+echo "You'll want to add the following lines" >> GuestandRoot.txt
+echo "<allow-guest=false>" >> GuestandRoot.txt
+echo "<greeter-hide-users=true>" GuestandRoot.txt
+echo "Now if were working on a more modern version you'd follow a different process however still similar." >> GuestandRoot.txt
+echo "<cd /usr/share/lightdm/lightdm.conf.d/>" >> GuestandRoot.txt
+echo "<sudo gedit 50-ubuntu.conf>" >> GuestandRoot.txt
+echo "You'd fill the text file with the following" >> GuestandRoot.txt
+echo "<allow-guest=false>" >> GuestandRoot.txt
+echo "<greeter-hide-users=true>" >> GuestandRoot.txt
+echo "Basically very simple however different ways to access it!" >> GuestandRoot.txt
+echo "###########################################################################################################################################" >> GuestandRoot.txt
+echo "Now, lets talk about insecure root logins." >> GuestandRoot.txt
+echo "Do you really want your root login permitted to yes? Especially when that is a vulnarability?" >> GuestandRoot.txt
+echo "Of course not, so that's why we have to fix this." >> GuestandRoot.txt
+echo "If we want to access the text file containing the permissions reguarding the root login we'd do the following..." >> GuestandRoot.txt
+echo "<sudo gedit /etc/ssh/sshd_config>" >> GuestandRoot.txt
+echo "Okay, great so now that were inside we should change every YES permitting a root login to a NO." >> GuestandRoot.txt
+echo "This will make it so no one can access our root user." >> GuestandRoot.txt
+echo "                                  End of Lesson 5" >> GuestandRoot.txt
+echo "###########################################################################################################################################" >> GuestandRoot.txt
+
+echo "###########################################################################################################################################" > PolicyAccount.txt
+echo "Welcome to the sixth installment of this manual." >> PolicyAccount.txt
+echo "In this section we will talk a little bit about Password Policies and Account Lockout." >> PolicyAccount.txt
+echo "If we were going to edit the file containg our secure lockouts we'd do this."
+echo "<sudo gedit /etc/login.defs>" >> PolicyAccount.txt
+echo "Look through the file for a bit, and you'll see Max Days, Min Days, and Age." >> PolicyAccount.txt
+echo "You'll want to change Max Days to 150, Min Days to 10, And then Age to 7." >> PolicyAccount.txt
+echo "Then close out of that and now we'll go into the Account Policy." >> PolicyAccount.txt
+echo "To access the text file where we'll add our own line we'd do the following..." >> PolicyAccount.txt
+echo "<sudo gedit /etc/pam.d/common-password>" >> PolicyAccount.txt
+echo "Now that were in we'll add the following line to the end of the file." >> PolicyAccount.txt
+echo "<auth required pam_tally2.so deny =5 onerr=failunlock_time=1800>" >> PolicyAccount.txt
+echo "Now what this is saying is doing is setting the number of allowed failed login attempts, and lockout duration." >> PolicyAccount.txt
+echo "                                  End of Lesson 6" >> PolicyAccount.txt
+echo "###########################################################################################################################################" >> PolicyAccount.txt
 
 printf "##########################################################\n" #Introduction
   echo "Welcome to the Linux training course!"
   echo "This manual will go straight from start to finish. "
   echo "This course will teach you the bare essentials of BASH!"
 printf "During this tutorial you press -ENTER- to continue.\n"
+printf "During selection menu's answer with a number.\n"
   echo "##########################################################"
 read WAIT_FOR_USER  #Reads the input of the keyboard
 
