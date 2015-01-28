@@ -244,7 +244,7 @@ echo "Now usually the root login could be insecure, we definitely have to fix th
 echo "The command to execute that is this," >> VisudoandPasswd.txt
 echo "<sudo passwd>" >> VisudoandPasswd.txt
 echo "It'll prompt you for a password, just enter the new one and then you have your new secure root password." >> VisudoandPasswd.txt
-echo "                                  End of Lesson 10" >> VisudoPasswd.txt
+echo "                                  End of Lesson 10" >> VisudoandPasswd.txt
 echo "###########################################################################################################################################" >> VisudoandPasswd.txt
 
 echo "###########################################################################################################################################" > SysLog.txt
