@@ -146,7 +146,7 @@ echo "If were speaking about Ubuntu 12. we'd use this command" >> GuestandRoot.t
 echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." >> GuestandRoot.txt
 echo "You'll want to add the following lines" >> GuestandRoot.txt
 echo "<allow-guest=false>" >> GuestandRoot.txt
-echo "<greeter-hide-users=true>" GuestandRoot.txt
+echo "<greeter-hide-users=true>" >> GuestandRoot.txt
 echo "Now if were working on a more modern version you'd follow a different process however still similar." >> GuestandRoot.txt
 echo "<cd /usr/share/lightdm/lightdm.conf.d/>" >> GuestandRoot.txt
 echo "<sudo gedit 50-ubuntu.conf>" >> GuestandRoot.txt
@@ -168,7 +168,7 @@ echo "##########################################################################
 echo "###########################################################################################################################################" > PolicyAccount.txt
 echo "Welcome to the sixth installment of this manual." >> PolicyAccount.txt
 echo "In this section we will talk a little bit about Password Policies and Account Lockout." >> PolicyAccount.txt
-echo "If we were going to edit the file containg our secure lockouts we'd do this."
+echo "If we were going to edit the file containg our secure lockouts we'd do this." >> PolicyAccount.txt
 echo "<sudo gedit /etc/login.defs>" >> PolicyAccount.txt
 echo "Look through the file for a bit, and you'll see Max Days, Min Days, and Age." >> PolicyAccount.txt
 echo "You'll want to change Max Days to 150, Min Days to 10, And then Age to 7." >> PolicyAccount.txt
@@ -197,7 +197,7 @@ echo "And that is all you need to know about processes essentially." >> ProcFile
 echo "###########################################################################################################################################" >> ProcFile.txt
 echo "Now, on to finding and removing prohibited media files..." >> ProcFile.txt
 echo "If you wanted to search for a media file you'd do this command..." >> ProcFile.txt
-echo "<find / -name `*.mp3`" >> ProcFile.txt
+echo "<find / -name *.mp3" >> ProcFile.txt
 echo "Multiple media files that should be removed are the following." >> ProcFile.txt
 echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> ProcFile.txt
 echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> ProcFile.txt
