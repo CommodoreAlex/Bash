@@ -302,7 +302,9 @@ menu2()
 	1)
 		echo "Loading Lesson..."   #What this does is pause for a second, view the file, clear the stuff there, then
 		sleep 1                    #Bring you back to the menu again but clean
-		gedit Navigation.txt
+		clear
+		cat Navigation.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -311,7 +313,9 @@ menu2()
 	2)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit Administration.txt
+		clear
+		cat Administration.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -320,7 +324,9 @@ menu2()
 	3)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit Service.txt
+		clear
+		cat Service.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 	
@@ -329,7 +335,9 @@ menu2()
 	4)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit SecUpdates.txt
+		clear
+		cat SecUpdates.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -338,7 +346,9 @@ menu2()
 	5)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit GuestandRoot.txt
+		clear
+		cat GuestandRoot.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -347,7 +357,9 @@ menu2()
 	6)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit PolicyAccount.txt
+		clear
+		cat PolicyAccount.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -356,7 +368,9 @@ menu2()
 	7)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit ProcFile.txt
+		clear
+		cat ProcFile.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -365,7 +379,9 @@ menu2()
 	8)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit UsrGroup.txt
+		clear
+		cat UsrGroup.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -374,7 +390,9 @@ menu2()
 	9)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit Accounts.txt
+		clear
+		cat Accounts.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -383,7 +401,9 @@ menu2()
 	10)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit VisudoandPasswd.txt
+		clear
+		cat VisudoandPasswd.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
@@ -392,7 +412,9 @@ menu2()
 	11)
 		echo "Loading Lesson..."
 		sleep 1
-		gedit SysLog.txt
+		clear
+		cat SysLog.txt
+		read WAIT_FOR_USER
 		clear
 		menu2
 		
