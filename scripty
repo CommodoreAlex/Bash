@@ -98,7 +98,7 @@ echo "Example: <sudo apt-get cowsay>" >> Administration.txt
 echo "sudo apt-get cowsay is simply saying GET cowsay." >> Administration.txt
 echo "Sudo is mainly just used to authorize certain commands." >> Administration.txt
 echo "Sudo is something only Administrators should have access too." >> Administration.txt
-echo "                                  End of Lesson 2" >> Navigation.txt
+echo "                                  End of Lesson 2" >> Administration.txt
 echo "###########################################################################################################################################" >> Administration.txt
 
 echo "###########################################################################################################################################" > Service.txt
@@ -118,7 +118,7 @@ echo "IF you were to start one you'd do..." >> Service.txt
 echo "<sudo service SERVICENAME start>" >> Service.txt
 echo "And if you wanted to remove one you'd do..." >> Service.txt
 echo "<sudo service rm SERVICENAME>" >> Service.txt
-echo "                                  End of Lesson 3" >> Navigation.txt
+echo "                                  End of Lesson 3" >> Service.txt
 echo "###########################################################################################################################################" >> Service.txt
 
 echo "###########################################################################################################################################" > SecUpdates.txt
