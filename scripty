@@ -181,6 +181,82 @@ echo "Now what this is saying is doing is setting the number of allowed failed l
 echo "                                  End of Lesson 6" >> PolicyAccount.txt
 echo "###########################################################################################################################################" >> PolicyAccount.txt
 
+echo "###########################################################################################################################################" > ProcFile.txt
+echo "Welcome to the seventh installment in this manual." >> ProcFile.txt
+echo "In this section we will be covering processes and searching for media files." >> ProcFile.txt
+echo "To see how the layout of processes look etc you'd do this command." >> ProcFile.txt
+echo "<ps -a>" >> ProcFile.txt
+echo "If you wanted to see every single process running you'd do this." >> ProcFile.txt
+echo "<ps -A>" >> ProcFile.txt
+echo "Now what you can do when finding a process is.. you can kill it." >> ProcFile.txt
+echo "This can be especially useful when there is a process running in the background that shouldn't be per say." >> ProcFile.txt
+echo "<kill PID_of_target_process>" >> ProcFile.txt
+echo "If the program is misbehaving and does not exit when given the TERM signal, we can escalate the signal by passing the KILL signal:" >> ProcFile.txt
+echo "<kill -KILL PID_of_target_process>" >> ProcFile.txt
+echo "And that is all you need to know about processes essentially." >> ProcFile.txt
+echo "###########################################################################################################################################" >> ProcFile.txt
+echo "Now, on to finding and removing prohibited media files..." >> ProcFile.txt
+echo "If you wanted to search for a media file you'd do this command..." >> ProcFile.txt
+echo "<find / -name `*.mp3`" >> ProcFile.txt
+echo "Multiple media files that should be removed are the following." >> ProcFile.txt
+echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> ProcFile.txt
+echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> ProcFile.txt
+echo "                                  End of Lesson 7" >> ProcFile.txt
+
+echo "###########################################################################################################################################" > UsrGroup.txt
+echo "Welcome to the eigth installment of this manual." >> UsrGroup.txt
+echo "In this section of the manual, we'll be covering users and groups and how to manage them." >> UsrGroup.txt
+echo "If you were going to view the users file you'd do this." >> UsrGroup.txt
+echo "<gedit /etc/passwd>" >> UsrGroup.txt
+echo "Look for any unauthorized users and make sure that root has 0 users as well." >> UsrGroup.txt
+echo "[root:x:0:0:root:/root:/bin/bash] This right here is an example of a clean root user" >> UsrGroup.txt
+echo "If you see an unauthorized user in there, do not remove it but comment it out." >> UsrGroup.txt
+echo "I cannot stress how important it is to do so, if you were to remove the user." >> UsrGroup.txt
+echo "Then you lose not only the user but all of it's data, for all you know that could be essential for something else in time." >> UsrGroup.txt
+echo "###########################################################################################################################################" >> UsrGroup.txt
+echo "Moving on, we'll now talk about groups." >> UsrGroup.txt
+echo "NOW!, If you were going to view the group file then you'd execute this command..." >> UsrGroup.txt
+echo "<gedit /etc/group>" >> UsrGroup.txt
+echo "Make sure to check this file to look for groups that shouldn't be there, to see if a user is in said group etc." >> UsrGroup.txt
+echo "Always a good thing to check, also make sure root looks like this [root:x:0:]" >> UsrGroup.txt
+echo "And that is the minimum that you'll need to know about user and group files." >> UsrGroup.txt
+echo "                                  End of Lesson 8" >> UsrGroup.txt
+echo "###########################################################################################################################################" >> UsrGroup.txt
+
+echo "###########################################################################################################################################" > Accounts.txt
+echo "Welcome to the ninth installment of this manual." >> Accounts.txt
+echo "Here in this section we'll cover user accounts." >> Accounts.txt
+echo "Though we've covered a little about finding hidden useres, this will just be focused on the GUI area." >> Accounts.txt
+echo "If you want to see the un-hidden users you'd look for the UserAccounts GUI." >> Accounts.txt
+echo "First off, check to see if everyone is ranked what they should be etc." >> Accounts.txt
+echo "That's basically as simple as it gets so this is just almost as a note." >> Accounts.txt
+echo "                                  End of Lesson 9" >> Accounts.txt
+echo "###########################################################################################################################################" >> Accounts.txt
+
+echo "###########################################################################################################################################" > VisudoandPasswd.txt
+echo "Welcome to the tenth installment in this manual." >> VisudoandPasswd.txt
+echo "In this section we will be covering the sudoers file and insecure root login." >> VisudoandPasswd.txt
+echo "Now, the sudoer file is where root privelegdes are contained." >> VisudoandPasswd.txt
+echo "To access this file and to edit the file you would execute this command..." >> VisudoandPasswd.txt
+echo "<sudo visudo>" >> VisudoandPasswd.txt
+echo "Make sure everything checks out as should and then back out(USE COMMON SENSE)" >> VisudoandPasswd.txt
+echo "Now usually the root login could be insecure, we definitely have to fix that." >> VisudoandPasswd.txt
+echo "The command to execute that is this," >> VisudoandPasswd.txt
+echo "<sudo passwd>" >> VisudoandPasswd.txt
+echo "It'll prompt you for a password, just enter the new one and then you have your new secure root password." >> VisudoandPasswd.txt
+echo "                                  End of Lesson 10" >> VisudoPasswd.txt
+echo "###########################################################################################################################################" >> VisudoandPasswd.txt
+
+echo "###########################################################################################################################################" > SysLog.txt
+echo "This is just on how to install and run system logs" >> SysLog.txt
+echo "You'd execute the following commands." >> SysLog.txt
+echo "<Sudo apt-get install gnome>" >> SysLog.txt
+echo "<gnome-system-logs>" >> SysLog.txt
+echo "This will install and then let you view them well." >> SysLog.txt
+echo "Good luck, hope you've learned something from all of this!" >> SysLog.txt
+echo "                                  End of Lesson 11" >> SysLog.txt
+echo "###########################################################################################################################################" >> SysLog.txt
+
 printf "##########################################################\n" #Introduction
   echo "Welcome to the Linux training course!"
   echo "This manual will go straight from start to finish. "
