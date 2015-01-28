@@ -23,7 +23,7 @@ echo
 gedit /etc/shadow
 read Continue
 echo
-
+ 
 #Sudoers file
 sudo visudo
 read Continue
