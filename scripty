@@ -135,7 +135,7 @@ echo "In doing this command you'll update and upgrade your system, but why the "
 echo "Dist-upgrade is a more sophisticated way of doing it and is much more effective." >> SecUpdates.txt
 echo "If you'd like to easily automate security updates by GUI you'd do the following..." >> SecUpdates.txt
 echo "You would search "Update Manager" and then go into the setting of it." >> SecUpdates.txt
-echo "                                  End of Lesson 3" >> SecUpdates.txt
+echo "                                  End of Lesson 4" >> SecUpdates.txt
 echo "###########################################################################################################################################" >> SecUpdates.txt
 
 echo "###########################################################################################################################################" > GuestandRoot.txt
