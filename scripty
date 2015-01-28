@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Linux CYBERSTEM interactive manual, V.5
+#Linux CYBERSTEM interactive manual, V.7
 
 start() #Starts the function
 {
