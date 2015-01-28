@@ -1,97 +1,211 @@
 #!/bin/bash
 
-#v0.7 Whole re-write of the script but cleaner
+#RUN THIS SCRIPT AS SUDO "sudo bash <script> for example
+#v0.8
 
-#System logs
-apt-get install gnome
-gnome-system-logs
+start()
+{
+	echo "Starting Program..."
+	
+}
 
-#Change insecure root passwd
-passwd root
+menu()
+{
 
-#Groups
-gedit /etc/group
-read Continue
-echo
+	clear
+		printf "~CYBER SECURITY TOOL~\n"
+		printf "Which operation would you like to run...?\n"
+		echo "[1] Start"
+		echo "[2] Exit"
+		echo "[3] ReadMe"
+		read start_menu
+	
+	
+		case $start_menu in
+		1)
+			echo "Starting Program..."
+			sleep 1
+			clear
+			start
+		
+			;;
+	
+		2)
+			echo "Shutting down..."
+			sleep 1
+			clear
+			exit
+		
+			;;
+	
+		3)
+			clear
+			printf "This is made up of my older script, but put into a selection so you have options as-"
+			printf "To what you want to do.\n"
+			read WAIT_FOR_USER
+			menu
+		
+			;;
+		
+		*)
+			echo "Invalid Input, Redirecting..."
+			sleep 1
+			menu
+			;;
+		
+		esac
+}
 
-#Users
-gedit /etc/passwd
-read Continue
-echo
+menu
 
-#Password hashes
-gedit /etc/shadow
-read Continue
-echo
- 
-#Sudoers file
-sudo visudo
-read Continue
-echo
+echo "Loading Selection..."
 
-#Running processes on the image
-ps -A #Shows the processes
-read Continue
-echo
+begin()
+{
+		echo "Loading Menu..."
+}
 
-#Disable SSH root login automatically
-gedit /etc/ssh/sshd_config
-#Every yes it to be substitued with no
+menu2()
+{
 
-#Audit Policies
-apt-get install auditd
-auditctl -e 1
-gedit /etc/audit/auditd.conf
-read Continue
-echo
+	printf "########################################################\n"
+	printf "[1] Prohibited Media File Searcher\n"
+	printf "[2] Updater\n"
+	printf "[3] SSH Root Login\n"
+	printf "[4] Insecure Root Passwd\n"
+	printf "[5] System Logs\n"
+	printf "[6] User Checking\n"
+	printf "[7] Group Checking\n"
+	printf "[8] Service Checker\n"
+	printf "[9] Password Policy\n"
+	printf "[10] Account Policy\n"
+	printf "[11] Exit\n"
+	echo "----------------------------------------------------------"
+	read begin_menu2
 
-#Disabling the guest account as well as hiding users from login prompt
-#gedit /etc/lightdm/lightdm.conf #For Ubuntu 12
-#cd /usr/share/lightdm/lightdm.conf.d #For Ubuntu 14
-#gedit 50-ubuntu.conf
 
-#Password change for non-administrators
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
-#sudo passwd <user>
+		case $begin_menu2 in
+		1)
+		echo "Searching for Media Files..."
+		echo "------------------------------------------------------------"
+		find / -name "*.mp3"
+		find / -name "*.wma"
+		find / -name "*.mp4"
+		find / -name "*.mov"
+		find / -name "*.avi"
+		find / -name "*.gif"
+		find / -name "*.jpg"
+		find / -name "*.jpeg"
+		find / -name "*.png"
+		find / -name "*.bmp"
+		find / -name "*.exe"
+	
+		read SEARCH_RESULTS
+		clear
+		menu2
+		
+		;;
+		
+	2)
+		echo "Updating..."
+		apt-get update && apt-get dist-upgrade
+		echo "UPDATED!"
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	3)
+		echo "Permitting Root Login to NO."
+		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	4)
+		echo "Fix Insecure Root Passwd"
+		passwd
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	5)
+		echo "Installing System Logs Checker..."
+		apt-get install gnome
+		gnome-system-logs
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	6)
+		echo "Check Users..."
+		cat /etc/passwd
+		read WAIT_FOR_USER
+		clear
+		menu2
+	
+		;;
+		
+	7)
+		echo "Check Groups..."
+		cat /etc/group
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	8)
+		echo "Checking Services..."
+		service --status-all
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	9)
+		echo "Password Policy Section"
+		gedit /etc/pam.d/login.defs
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	10)
+		echo "Account Policy Section"
+		gedit /etc/pam.d/common-password
+		clear
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	11)
+		echo "Shutting down..."
+		sleep 1
+		clear
+		exit
+		
+		;;
+		
+	*)
+		echo "Invalid Input, Redirecting..."
+		sleep 1
+		clear
+		menu2
+		;;
+	
+	esac
+}
 
-#Minimum password age existing
-gedit /etc/pam.d/login.defs
-printf "Continue...\n\n"
-read Continue
-echo
-
-#Account lockout policy
-gedit /etc/pam.d/common-password
-#auth-required pam_tally.so deny=5 onerr=failunlock_time=1800 #DO NOT UN-NOTE
-printf "Continue...\n\n"
-
-#System Update
-apt-get update && apt-get dist-upgrade
-
-#Firewall
-ufw enable
-ufw default deny
-#ufw allow 80 #Uh? Forgot
-#ufw allow 22 #This is SSH
-
-#Files with prohibited extensions
-find / -name "*.mp3"
-find / -name "*.wav"
-find / -name "*.wma"
-find / -name "*.mp4"
-find / -name "*.mov"
-find / -name "*.avi"
-find / -name "*.gif"
-find / -name "*.jpg"
-find / -name "*.png"
-find / -name "*.exe"
-echo "Continue..."
-read Continue
-echo
+menu2
