@@ -87,7 +87,7 @@ echo "If you want to see what directory or whatever your in your could just use 
 echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." >> Navigation.txt
 echo "                                  End of Lesson 1" >> Navigation.txt
 echo "###########################################################################################################################################" >> Navigation.txt
-
+ 
 echo "###########################################################################################################################################" > Administration.txt
 echo "Welcome to the second installment in this manual." >> Administration.txt
 echo "In this section we will cover administrative powers" >> Administration.txt
