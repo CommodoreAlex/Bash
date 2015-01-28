@@ -202,8 +202,8 @@ echo "Multiple media files that should be removed are the following." >> ProcFil
 echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> ProcFile.txt
 echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> ProcFile.txt
 echo "                                  End of Lesson 7" >> ProcFile.txt
+echo "###########################################################################################################################################" >> ProcFile.txt
 
-echo "###########################################################################################################################################" > UsrGroup.txt
 echo "Welcome to the eigth installment of this manual." >> UsrGroup.txt
 echo "In this section of the manual, we'll be covering users and groups and how to manage them." >> UsrGroup.txt
 echo "If you were going to view the users file you'd do this." >> UsrGroup.txt
