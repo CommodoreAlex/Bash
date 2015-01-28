@@ -66,200 +66,201 @@ while [ true ]
 	break
 done
 
-echo "###########################################################################################################################################" > Navigation.txt
-echo "Welcome to the first installment in this manual." >> Navigation.txt
-echo "we hope it will assist you in learning bash and it's many functions" >> Navigation.txt
-echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin." >> Navigation.txt
-echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this" >> Navigation.txt
-echo "CD Example: <cd /home>" >> Navigation.txt
-echo "What we've seen above is simply directing ourselves into the home directory. You can also use cd to direct yourselves into other directories" >> Navigation.txt
-echo "Such as, <cd Dekstop>, <cd /bin>, <cd USER>. Basically, you can direct yourself into any directory using <cd>." >> Navigation.txt
-echo "Let's say you'd want to read a text file in your /home directory, you could use cat" >> Navigation.txt
-echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim." >> Navigation.txt
-echo "Example of the cat command in usage: cat navigation.txt Now, all this would do is as said above... print out the contents." >> Navigation.txt
-echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands." >> Navigation.txt
-echo "Example of copy in use: <cp test.txt>" >> Navigation.txt
-echo "Example of remove in use: <rm test.txt> There is also a way of removing directores, <rm -r Documents>" >> Navigation.txt
-echo "Example of move in use: move test.txt /home/Documents /home/Pictures" >> Navigation.txt
-echo "How about you want to see what's inside the directory or folder your in? You could use <ls> or <PWD>" >> Navigation.txt
-echo "Example of ls: If you want to use ls you could do, <ls>, or <ls -a>" >> Navigation.txt
-echo "If you want to see what directory or whatever your in your could just use PWD as PWD, nothing more to that." >> Navigation.txt
-echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." >> Navigation.txt
-echo "                                  End of Lesson 1" >> Navigation.txt
-echo "###########################################################################################################################################" >> Navigation.txt
+echo "###########################################################################################################################################" > CYBERSTEM/Navigation.txt
+echo "Welcome to the first installment in this manual." >> CYBERSTEM/Navigation.txt
+echo "we hope it will assist you in learning bash and it's many functions" >> CYBERSTEM/Navigation.txt
+echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin." >> CYBERSTEM/Navigation.txt
+echo "First off, we want to cover basic navigation, yeah? So if you'd want to go into directores for example you'd do this" >> CYBERSTEM/Navigation.txt
+echo "CD Example: <cd /home>" >> CYBERSTEM/Navigation.txt
+echo "What we've seen above is simply directing ourselves into the home directory. You can also use cd to direct yourselves into other directories" >> CYBERSTEM/Navigation.txt
+echo "Such as, <cd Dekstop>, <cd /bin>, <cd USER>. Basically, you can direct yourself into any directory using <cd>." >> CYBERSTEM/Navigation.txt
+echo "Let's say you'd want to read a text file in your /home directory, you could use cat" >> CYBERSTEM/Navigation.txt
+echo "Cat is a command that allows you to read text files in the terminal without editable priveledges, such as nano, gedit and vim." >> CYBERSTEM/Navigation.txt
+echo "Example of the cat command in usage: cat navigation.txt Now, all this would do is as said above... print out the contents." >> CYBERSTEM/Navigation.txt
+echo "How about wanting to copy, remove and move files,pictures etc. Well, all you need to use are these simple and short commands." >> CYBERSTEM/Navigation.txt
+echo "Example of copy in use: <cp test.txt>" >> CYBERSTEM/Navigation.txt
+echo "Example of remove in use: <rm test.txt> There is also a way of removing directores, <rm -r Documents>" >> CYBERSTEM/Navigation.txt
+echo "Example of move in use: move test.txt /home/Documents /home/Pictures" >> CYBERSTEM/Navigation.txt
+echo "How about you want to see what's inside the directory or folder your in? You could use <ls> or <PWD>" >> CYBERSTEM/Navigation.txt
+echo "Example of ls: If you want to use ls you could do, <ls>, or <ls -a>" >> CYBERSTEM/Navigation.txt
+echo "If you want to see what directory or whatever your in your could just use PWD as PWD, nothing more to that." >> CYBERSTEM/Navigation.txt
+echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." >> CYBERSTEM/Navigation.txt
+echo "                                  End of Lesson 1" >> CYBERSTEM/Navigation.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/Navigation.txt
  
-echo "###########################################################################################################################################" > Administration.txt
-echo "Welcome to the second installment in this manual." >> Administration.txt
-echo "In this section we will cover administrative powers" >> Administration.txt
-echo "We will go over the multiple ways in how it is used etc." >> Administration.txt
-echo "The command to be used as root but yet not root is called SUDO" >> Administration.txt
-echo "To use SUDO, for example we'd do something such as this." >> Administration.txt
-echo "Example: <sudo apt-get cowsay>" >> Administration.txt
-echo "sudo apt-get cowsay is simply saying GET cowsay." >> Administration.txt
-echo "Sudo is mainly just used to authorize certain commands." >> Administration.txt
-echo "Sudo is something only Administrators should have access too." >> Administration.txt
-echo "                                  End of Lesson 2" >> Administration.txt
-echo "###########################################################################################################################################" >> Administration.txt
+echo "###########################################################################################################################################" > CYBERSTEM/Administration.txt
+echo "Welcome to the second installment in this manual." >> CYBERSTEM/Administration.txt
+echo "In this section we will cover administrative powers" >> CYBERSTEM/Administration.txt
+echo "We will go over the multiple ways in how it is used etc." >> CYBERSTEM/Administration.txt
+echo "The command to be used as root but yet not root is called SUDO" >> CYBERSTEM/Administration.txt
+echo "To use SUDO, for example we'd do something such as this." >> CYBERSTEM/Administration.txt
+echo "Example: <sudo apt-get cowsay>" >> CYBERSTEM/Administration.txt
+echo "sudo apt-get cowsay is simply saying GET cowsay." >> CYBERSTEM/Administration.txt
+echo "Sudo is mainly just used to authorize certain commands." >> CYBERSTEM/Administration.txt
+echo "Sudo is something only Administrators should have access too." >> CYBERSTEM/Administration.txt
+echo "                                  End of Lesson 2" >> CYBERSTEM/Administration.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/Administration.txt
 
-echo "###########################################################################################################################################" > Service.txt
-echo "Welcome to the third installment of this manual." >> Service.txt
-echo "In this section we will be covering services of a Linux machine." >> Service.txt
-echo "Services run in the background you of your computer per say." >> Service.txt
-echo "Basically what starts on startup, whats running etc." >> Service.txt
-echo "If you were to want to examine the services running on your Linux machine you'd do the following.." >> Service.txt
-echo "<service --status-all>" >> Service.txt
-echo "What this will do is bring up a list of all running services on the machine." >> Service.txt
-echo "Now that you can see all the services running, you could start,restart, remove or stop one." >> Service.txt
-echo "If you wanted to stop a service for example you'd do..." >> Service.txt
-echo "<sudo service SERVICENAME stop>" >> Service.txt
-echo "If you were to restart a service you'd do..." >> Service.txt
-echo "<sudo service SERVICENAME restart>" >> Service.txt
-echo "IF you were to start one you'd do..." >> Service.txt
-echo "<sudo service SERVICENAME start>" >> Service.txt
-echo "And if you wanted to remove one you'd do..." >> Service.txt
-echo "<sudo service rm SERVICENAME>" >> Service.txt
-echo "                                  End of Lesson 3" >> Service.txt
-echo "###########################################################################################################################################" >> Service.txt
+echo "###########################################################################################################################################" > CYBERSTEM/Service.txt
+echo "Welcome to the third installment of this manual." >> CYBERSTEM/Service.txt
+echo "In this section we will be covering services of a Linux machine." >> CYBERSTEM/Service.txt
+echo "Services run in the background you of your computer per say." >> CYBERSTEM/Service.txt
+echo "Basically what starts on startup, whats running etc." >> CYBERSTEM/Service.txt
+echo "If you were to want to examine the services running on your Linux machine you'd do the following.." >> CYBERSTEM/Service.txt
+echo "<service --status-all>" >> CYBERSTEM/Service.txt
+echo "What this will do is bring up a list of all running services on the machine." >> CYBERSTEM/Service.txt
+echo "Now that you can see all the services running, you could start,restart, remove or stop one." >> CYBERSTEM/Service.txt
+echo "If you wanted to stop a service for example you'd do..." >> CYBERSTEM/Service.txt
+echo "<sudo service SERVICENAME stop>" >> CYBERSTEM/Service.txt
+echo "If you were to restart a service you'd do..." >> CYBERSTEM/Service.txt
+echo "<sudo service SERVICENAME restart>" >> CYBERSTEM/Service.txt
+echo "IF you were to start one you'd do..." >> CYBERSTEM/Service.txt
+echo "<sudo service SERVICENAME start>" >> CYBERSTEM/Service.txt
+echo "And if you wanted to remove one you'd do..." >> CYBERSTEM/Service.txt
+echo "<sudo service rm SERVICENAME>" >> CYBERSTEM/Service.txt
+echo "                                  End of Lesson 3" >> CYBERSTEM/Service.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/Service.txt
 
-echo "###########################################################################################################################################" > SecUpdates.txt
-echo "Welcome to the fourth installment of this manual." >> SecUpdates.txt
-echo "In this section we will be going over updates essential for security." >> SecUpdates.txt
-echo "There are multiple ways to update, upgrade or even do both commands at once." >> SecUpdates.txt
-echo "If you were to begin updating you'd do the following command..." >> SecUpdates.txt
-echo "<sudo apt-get install update>" >> SecUpdates.txt
-echo "If you were to begin upgrading you'd do the following command..." >> SecUpdates.txt
-echo "<sudo apt-get install upgrade>" >> SecUpdates.txt
-echo "If you'd like to do both at once and get it done much faster." >> SecUpdates.txt
-echo "<Sudo apt-get update && sudo apt-get dist-upgrade>" >> SecUpdates.txt
-echo "In doing this command you'll update and upgrade your system, but why the "dist"?" >> SecUpdates.txt
-echo "Dist-upgrade is a more sophisticated way of doing it and is much more effective." >> SecUpdates.txt
-echo "If you'd like to easily automate security updates by GUI you'd do the following..." >> SecUpdates.txt
-echo "You would search "Update Manager" and then go into the setting of it." >> SecUpdates.txt
-echo "                                  End of Lesson 4" >> SecUpdates.txt
-echo "###########################################################################################################################################" >> SecUpdates.txt
+echo "###########################################################################################################################################" > CYBERSTEM/SecUpdates.txt
+echo "Welcome to the fourth installment of this manual." >> CYBERSTEM/SecUpdates.txt
+echo "In this section we will be going over updates essential for security." >> CYBERSTEM/SecUpdates.txt
+echo "There are multiple ways to update, upgrade or even do both commands at once." >> CYBERSTEM/SecUpdates.txt
+echo "If you were to begin updating you'd do the following command..." >> CYBERSTEM/SecUpdates.txt
+echo "<sudo apt-get install update>" >> CYBERSTEM/SecUpdates.txt
+echo "If you were to begin upgrading you'd do the following command..." >> CYBERSTEM/SecUpdates.txt
+echo "<sudo apt-get install upgrade>" >> CYBERSTEM/SecUpdates.txt
+echo "If you'd like to do both at once and get it done much faster." >> CYBERSTEM/SecUpdates.txt
+echo "<Sudo apt-get update && sudo apt-get dist-upgrade>" >> CYBERSTEM/SecUpdates.txt
+echo "In doing this command you'll update and upgrade your system, but why the "dist"?" >> CYBERSTEM/SecUpdates.txt
+echo "Dist-upgrade is a more sophisticated way of doing it and is much more effective." >> CYBERSTEM/SecUpdates.txt
+echo "If you'd like to easily automate security updates by GUI you'd do the following..." >> CYBERSTEM/SecUpdates.txt
+echo "You would search "Update Manager" and then go into the setting of it." >> CYBERSTEM/SecUpdates.txt
+echo "                                  End of Lesson 4" >> CYBERSTEM/SecUpdates.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/SecUpdates.txt
 
-echo "###########################################################################################################################################" > GuestandRoot.txt
-echo "Welcome to the fifth installment of this manual." >> GuestandRoot.txt
-echo "In this section we will be covering the guest account security as well as root login security." >> GuestandRoot.txt
-echo "First off, we'll go over the guest accounts and how remove this vulnarability as well as a couple more..." >> GuestandRoot.txt
-echo "If were speaking about Ubuntu 12. we'd use this command" >> GuestandRoot.txt
-echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." >> GuestandRoot.txt
-echo "You'll want to add the following lines" >> GuestandRoot.txt
-echo "<allow-guest=false>" >> GuestandRoot.txt
-echo "<greeter-hide-users=true>" >> GuestandRoot.txt
-echo "Now if were working on a more modern version you'd follow a different process however still similar." >> GuestandRoot.txt
-echo "<cd /usr/share/lightdm/lightdm.conf.d/>" >> GuestandRoot.txt
-echo "<sudo gedit 50-ubuntu.conf>" >> GuestandRoot.txt
-echo "You'd fill the text file with the following" >> GuestandRoot.txt
-echo "<allow-guest=false>" >> GuestandRoot.txt
-echo "<greeter-hide-users=true>" >> GuestandRoot.txt
-echo "Basically very simple however different ways to access it!" >> GuestandRoot.txt
-echo "###########################################################################################################################################" >> GuestandRoot.txt
-echo "Now, lets talk about insecure root logins." >> GuestandRoot.txt
-echo "Do you really want your root login permitted to yes? Especially when that is a vulnarability?" >> GuestandRoot.txt
-echo "Of course not, so that's why we have to fix this." >> GuestandRoot.txt
-echo "If we want to access the text file containing the permissions reguarding the root login we'd do the following..." >> GuestandRoot.txt
-echo "<sudo gedit /etc/ssh/sshd_config>" >> GuestandRoot.txt
-echo "Okay, great so now that were inside we should change every YES permitting a root login to a NO." >> GuestandRoot.txt
-echo "This will make it so no one can access our root user." >> GuestandRoot.txt
-echo "                                  End of Lesson 5" >> GuestandRoot.txt
-echo "###########################################################################################################################################" >> GuestandRoot.txt
+echo "###########################################################################################################################################" > CYBERSTEM/GuestandRoot.txt
+echo "Welcome to the fifth installment of this manual." >> CYBERSTEM/GuestandRoot.txt
+echo "In this section we will be covering the guest account security as well as root login security." >> CYBERSTEM/GuestandRoot.txt
+echo "First off, we'll go over the guest accounts and how remove this vulnarability as well as a couple more..." >> CYBERSTEM/GuestandRoot.txt
+echo "If were speaking about Ubuntu 12. we'd use this command" >> CYBERSTEM/GuestandRoot.txt
+echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." CYBERSTEM/GuestandRoot.txt
+echo "You'll want to add the following lines" >> CYBERSTEM/GuestandRoot.txt
+echo "<allow-guest=false>" >> CYBERSTEM/GuestandRoot.txt
+echo "<greeter-hide-users=true>" >> CYBERSTEM/GuestandRoot.txt
+echo "Now if were working on a more modern version you'd follow a different process however still similar." >> CYBERSTEM/GuestandRoot.txt
+echo "<cd /usr/share/lightdm/lightdm.conf.d/>" >> CYBERSTEM/GuestandRoot.txt
+echo "<sudo gedit 50-ubuntu.conf>" >> CYBERSTEM/GuestandRoot.txt
+echo "You'd fill the text file with the following" >> CYBERSTEM/GuestandRoot.txt
+echo "<allow-guest=false>" >> CYBERSTEM/GuestandRoot.txt
+echo "<greeter-hide-users=true>" >> CYBERSTEM/GuestandRoot.txt
+echo "Basically very simple however different ways to access it!" >> CYBERSTEM/GuestandRoot.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
+echo "Now, lets talk about insecure root logins." >> CYBERSTEM/GuestandRoot.txt
+echo "Do you really want your root login permitted to yes? Especially when that is a vulnarability?" >> CYBERSTEM/GuestandRoot.txt
+echo "Of course not, so that's why we have to fix this." >> CYBERSTEM/GuestandRoot.txt
+echo "If we want to access the text file containing the permissions reguarding the root login we'd do the following..." >> CYBERSTEM/GuestandRoot.txt
+echo "<sudo gedit /etc/ssh/sshd_config>" >> CYBERSTEM/GuestandRoot.txt
+echo "Okay, great so now that were inside we should change every YES permitting a root login to a NO." >> CYBERSTEM/GuestandRoot.txt
+echo "This will make it so no one can access our root user." >> CYBERSTEM/GuestandRoot.txt
+echo "                                  End of Lesson 5" >> CYBERSTEM/GuestandRoot.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
 
-echo "###########################################################################################################################################" > PolicyAccount.txt
-echo "Welcome to the sixth installment of this manual." >> PolicyAccount.txt
-echo "In this section we will talk a little bit about Password Policies and Account Lockout." >> PolicyAccount.txt
-echo "If we were going to edit the file containg our secure lockouts we'd do this." >> PolicyAccount.txt
-echo "<sudo gedit /etc/login.defs>" >> PolicyAccount.txt
-echo "Look through the file for a bit, and you'll see Max Days, Min Days, and Age." >> PolicyAccount.txt
-echo "You'll want to change Max Days to 150, Min Days to 10, And then Age to 7." >> PolicyAccount.txt
-echo "Then close out of that and now we'll go into the Account Policy." >> PolicyAccount.txt
-echo "To access the text file where we'll add our own line we'd do the following..." >> PolicyAccount.txt
-echo "<sudo gedit /etc/pam.d/common-password>" >> PolicyAccount.txt
-echo "Now that were in we'll add the following line to the end of the file." >> PolicyAccount.txt
-echo "<auth required pam_tally2.so deny =5 onerr=failunlock_time=1800>" >> PolicyAccount.txt
-echo "Now what this is saying is doing is setting the number of allowed failed login attempts, and lockout duration." >> PolicyAccount.txt
-echo "                                  End of Lesson 6" >> PolicyAccount.txt
-echo "###########################################################################################################################################" >> PolicyAccount.txt
+echo "###########################################################################################################################################" > CYBERSTEM/PolicyAccount.txt
+echo "Welcome to the sixth installment of this manual." >> CYBERSTEM/PolicyAccount.txt
+echo "In this section we will talk a little bit about Password Policies and Account Lockout." >> CYBERSTEM/PolicyAccount.txt
+echo "If we were going to edit the file containg our secure lockouts we'd do this." >> CYBERSTEM/PolicyAccount.txt
+echo "<sudo gedit /etc/login.defs>" >> CYBERSTEM/PolicyAccount.txt
+echo "Look through the file for a bit, and you'll see Max Days, Min Days, and Age." >> CYBERSTEM/PolicyAccount.txt
+echo "You'll want to change Max Days to 150, Min Days to 10, And then Age to 7." >> CYBERSTEM/PolicyAccount.txt
+echo "Then close out of that and now we'll go into the Account Policy." >> CYBERSTEM/PolicyAccount.txt
+echo "To access the text file where we'll add our own line we'd do the following..." >> CYBERSTEM/PolicyAccount.txt
+echo "<sudo gedit /etc/pam.d/common-password>" >> CYBERSTEM/PolicyAccount.txt
+echo "Now that were in we'll add the following line to the end of the file." >> CYBERSTEM/PolicyAccount.txt
+echo "<auth required pam_tally2.so deny =5 onerr=failunlock_time=1800>" >> CYBERSTEM/PolicyAccount.txt
+echo "Now what this is saying is doing is setting the number of allowed failed login attempts, and lockout duration." >> CYBERSTEM/PolicyAccount.txt
+echo "                                  End of Lesson 6" >> CYBERSTEM/PolicyAccount.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/PolicyAccount.txt
 
-echo "###########################################################################################################################################" > ProcFile.txt
-echo "Welcome to the seventh installment in this manual." >> ProcFile.txt
-echo "In this section we will be covering processes and searching for media files." >> ProcFile.txt
-echo "To see how the layout of processes look etc you'd do this command." >> ProcFile.txt
-echo "<ps -a>" >> ProcFile.txt
-echo "If you wanted to see every single process running you'd do this." >> ProcFile.txt
-echo "<ps -A>" >> ProcFile.txt
-echo "Now what you can do when finding a process is.. you can kill it." >> ProcFile.txt
-echo "This can be especially useful when there is a process running in the background that shouldn't be per say." >> ProcFile.txt
-echo "<kill PID_of_target_process>" >> ProcFile.txt
-echo "If the program is misbehaving and does not exit when given the TERM signal, we can escalate the signal by passing the KILL signal:" >> ProcFile.txt
-echo "<kill -KILL PID_of_target_process>" >> ProcFile.txt
-echo "And that is all you need to know about processes essentially." >> ProcFile.txt
-echo "###########################################################################################################################################" >> ProcFile.txt
-echo "Now, on to finding and removing prohibited media files..." >> ProcFile.txt
-echo "If you wanted to search for a media file you'd do this command..." >> ProcFile.txt
-echo "<find / -name *.mp3" >> ProcFile.txt
-echo "Multiple media files that should be removed are the following." >> ProcFile.txt
-echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> ProcFile.txt
-echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> ProcFile.txt
-echo "                                  End of Lesson 7" >> ProcFile.txt
-echo "###########################################################################################################################################" >> ProcFile.txt
+echo "###########################################################################################################################################" > CYBERSTEM/ProcFile.txt
+echo "Welcome to the seventh installment in this manual." >> CYBERSTEM/ProcFile.txt
+echo "In this section we will be covering processes and searching for media files." >> CYBERSTEM/ProcFile.txt
+echo "To see how the layout of processes look etc you'd do this command." >> CYBERSTEM/ProcFile.txt
+echo "<ps -a>" >> CYBERSTEM/ProcFile.txt
+echo "If you wanted to see every single process running you'd do this." >> CYBERSTEM/ProcFile.txt
+echo "<ps -A>" >> CYBERSTEM/ProcFile.txt
+echo "Now what you can do when finding a process is.. you can kill it." >> CYBERSTEM/ProcFile.txt
+echo "This can be especially useful when there is a process running in the background that shouldn't be per say." >> CYBERSTEM/ProcFile.txt
+echo "<kill PID_of_target_process>" >> CYBERSTEM/ProcFile.txt
+echo "If the program is misbehaving and does not exit when given the TERM signal, we can escalate the signal by passing the KILL signal:" >> CYBERSTEM/ProcFile.txt
+echo "<kill -KILL PID_of_target_process>" >> CYBERSTEM/ProcFile.txt
+echo "And that is all you need to know about processes essentially." >> CYBERSTEM/ProcFile.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/ProcFile.txt
+echo "Now, on to finding and removing prohibited media files..." >> CYBERSTEM/ProcFile.txt
+echo "If you wanted to search for a media file you'd do this command..." >> CYBERSTEM/ProcFile.txt
+echo "<find / -name *.mp3" >> CYBERSTEM/ProcFile.txt
+echo "Multiple media files that should be removed are the following." >> CYBERSTEM/ProcFile.txt
+echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> CYBERSTEM/ProcFile.txt
+echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> CYBERSTEM/ProcFile.txt
+echo "                                  End of Lesson 7" >> CYBERSTEM/ProcFile.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/ProcFile.txt
 
-echo "Welcome to the eigth installment of this manual." >> UsrGroup.txt
-echo "In this section of the manual, we'll be covering users and groups and how to manage them." >> UsrGroup.txt
-echo "If you were going to view the users file you'd do this." >> UsrGroup.txt
-echo "<gedit /etc/passwd>" >> UsrGroup.txt
-echo "Look for any unauthorized users and make sure that root has 0 users as well." >> UsrGroup.txt
-echo "[root:x:0:0:root:/root:/bin/bash] This right here is an example of a clean root user" >> UsrGroup.txt
-echo "If you see an unauthorized user in there, do not remove it but comment it out." >> UsrGroup.txt
-echo "I cannot stress how important it is to do so, if you were to remove the user." >> UsrGroup.txt
-echo "Then you lose not only the user but all of it's data, for all you know that could be essential for something else in time." >> UsrGroup.txt
-echo "###########################################################################################################################################" >> UsrGroup.txt
-echo "Moving on, we'll now talk about groups." >> UsrGroup.txt
-echo "NOW!, If you were going to view the group file then you'd execute this command..." >> UsrGroup.txt
-echo "<gedit /etc/group>" >> UsrGroup.txt
-echo "Make sure to check this file to look for groups that shouldn't be there, to see if a user is in said group etc." >> UsrGroup.txt
-echo "Always a good thing to check, also make sure root looks like this [root:x:0:]" >> UsrGroup.txt
-echo "And that is the minimum that you'll need to know about user and group files." >> UsrGroup.txt
-echo "                                  End of Lesson 8" >> UsrGroup.txt
-echo "###########################################################################################################################################" >> UsrGroup.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
+echo "Welcome to the eigth installment of this manual." >> CYBERSTEM/UsrGroup.txt
+echo "In this section of the manual, we'll be covering users and groups and how to manage them." >> CYBERSTEM/UsrGroup.txt
+echo "If you were going to view the users file you'd do this." >> CYBERSTEM/UsrGroup.txt
+echo "<gedit /etc/passwd>" >> CYBERSTEM/UsrGroup.txt
+echo "Look for any unauthorized users and make sure that root has 0 users as well." >> CYBERSTEM/UsrGroup.txt
+echo "[root:x:0:0:root:/root:/bin/bash] This right here is an example of a clean root user" >> CYBERSTEM/UsrGroup.txt
+echo "If you see an unauthorized user in there, do not remove it but comment it out." >> CYBERSTEM/UsrGroup.txt
+echo "I cannot stress how important it is to do so, if you were to remove the user." >> CYBERSTEM/UsrGroup.txt
+echo "Then you lose not only the user but all of it's data, for all you know that could be essential for something else in time." >> CYBERSTEM/UsrGroup.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
+echo "Moving on, we'll now talk about groups." >> CYBERSTEM/UsrGroup.txt
+echo "NOW!, If you were going to view the group file then you'd execute this command..." >> CYBERSTEM/UsrGroup.txt
+echo "<gedit /etc/group>" >> CYBERSTEM/UsrGroup.txt
+echo "Make sure to check this file to look for groups that shouldn't be there, to see if a user is in said group etc." >> CYBERSTEM/UsrGroup.txt
+echo "Always a good thing to check, also make sure root looks like this [root:x:0:]" >> CYBERSTEM/UsrGroup.txt
+echo "And that is the minimum that you'll need to know about user and group files." >> CYBERSTEM/UsrGroup.txt
+echo "                                  End of Lesson 8" >> CYBERSTEM/UsrGroup.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
 
-echo "###########################################################################################################################################" > Accounts.txt
-echo "Welcome to the ninth installment of this manual." >> Accounts.txt
-echo "Here in this section we'll cover user accounts." >> Accounts.txt
-echo "Though we've covered a little about finding hidden useres, this will just be focused on the GUI area." >> Accounts.txt
-echo "If you want to see the un-hidden users you'd look for the UserAccounts GUI." >> Accounts.txt
-echo "First off, check to see if everyone is ranked what they should be etc." >> Accounts.txt
-echo "That's basically as simple as it gets so this is just almost as a note." >> Accounts.txt
-echo "                                  End of Lesson 9" >> Accounts.txt
-echo "###########################################################################################################################################" >> Accounts.txt
+echo "###########################################################################################################################################" > CYBERSTEM/Accounts.txt
+echo "Welcome to the ninth installment of this manual." >> CYBERSTEM/Accounts.txt
+echo "Here in this section we'll cover user accounts." >> CYBERSTEM/Accounts.txt
+echo "Though we've covered a little about finding hidden useres, this will just be focused on the GUI area." >> CYBERSTEM/Accounts.txt
+echo "If you want to see the un-hidden users you'd look for the UserAccounts GUI." >> CYBERSTEM/Accounts.txt
+echo "First off, check to see if everyone is ranked what they should be etc." >> CYBERSTEM/Accounts.txt
+echo "That's basically as simple as it gets so this is just almost as a note." >> CYBERSTEM/Accounts.txt
+echo "                                  End of Lesson 9" >> CYBERSTEM/Accounts.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/Accounts.txt
 
-echo "###########################################################################################################################################" > VisudoandPasswd.txt
-echo "Welcome to the tenth installment in this manual." >> VisudoandPasswd.txt
-echo "In this section we will be covering the sudoers file and insecure root login." >> VisudoandPasswd.txt
-echo "Now, the sudoer file is where root privelegdes are contained." >> VisudoandPasswd.txt
-echo "To access this file and to edit the file you would execute this command..." >> VisudoandPasswd.txt
-echo "<sudo visudo>" >> VisudoandPasswd.txt
-echo "Make sure everything checks out as should and then back out(USE COMMON SENSE)" >> VisudoandPasswd.txt
-echo "Now usually the root login could be insecure, we definitely have to fix that." >> VisudoandPasswd.txt
-echo "The command to execute that is this," >> VisudoandPasswd.txt
-echo "<sudo passwd>" >> VisudoandPasswd.txt
-echo "It'll prompt you for a password, just enter the new one and then you have your new secure root password." >> VisudoandPasswd.txt
-echo "                                  End of Lesson 10" >> VisudoandPasswd.txt
-echo "###########################################################################################################################################" >> VisudoandPasswd.txt
+echo "###########################################################################################################################################" > CYBERSTEM/VisudoandPasswd.txt
+echo "Welcome to the tenth installment in this manual." >> CYBERSTEM/VisudoandPasswd.txt
+echo "In this section we will be covering the sudoers file and insecure root login." >> CYBERSTEM/VisudoandPasswd.txt
+echo "Now, the sudoer file is where root privelegdes are contained." >> CYBERSTEM/VisudoandPasswd.txt
+echo "To access this file and to edit the file you would execute this command..." >> CYBERSTEM/VisudoandPasswd.txt
+echo "<sudo visudo>" >> CYBERSTEM/VisudoandPasswd.txt
+echo "Make sure everything checks out as should and then back out(USE COMMON SENSE)" >> CYBERSTEM/VisudoandPasswd.txt
+echo "Now usually the root login could be insecure, we definitely have to fix that." >> CYBERSTEM/VisudoandPasswd.txt
+echo "The command to execute that is this," >> CYBERSTEM/VisudoandPasswd.txt
+echo "<sudo passwd>" >> CYBERSTEM/VisudoandPasswd.txt
+echo "It'll prompt you for a password, just enter the new one and then you have your new secure root password." >> CYBERSTEM/VisudoandPasswd.txt
+echo "                                  End of Lesson 10" >> CYBERSTEM/VisudoandPasswd.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/VisudoandPasswd.txt
 
-echo "###########################################################################################################################################" > SysLog.txt
-echo "This is just on how to install and run system logs" >> SysLog.txt
-echo "You'd execute the following commands." >> SysLog.txt
-echo "<Sudo apt-get install gnome>" >> SysLog.txt
-echo "<gnome-system-logs>" >> SysLog.txt
-echo "This will install and then let you view them well." >> SysLog.txt
-echo "Good luck, hope you've learned something from all of this!" >> SysLog.txt
-echo "                                  End of Lesson 11" >> SysLog.txt
-echo "###########################################################################################################################################" >> SysLog.txt
+echo "###########################################################################################################################################" > CYBERSTEM/SysLog.txt
+echo "This is just on how to install and run system logs" >> CYBERSTEM/SysLog.txt
+echo "You'd execute the following commands." >> CYBERSTEM/SysLog.txt
+echo "<Sudo apt-get install gnome>" >> CYBERSTEM/SysLog.txt
+echo "<gnome-system-logs>" >> CYBERSTEM/SysLog.txt
+echo "This will install and then let you view them well." >> CYBERSTEM/SysLog.txt
+echo "Good luck, hope you've learned something from all of this!" >> CYBERSTEM/SysLog.txt
+echo "                                  End of Lesson 11" >> CYBERSTEM/SysLog.txt
+echo "###########################################################################################################################################" >> CYBERSTEM/SysLog.txt
 
 printf "##########################################################\n" #Introduction
   echo "Welcome to the Linux training course!"
-  echo "This manual will go straight from start to finish. "
+  echo "This manual will have lessons presented in a selection menu."
   echo "This course will teach you the bare essentials of BASH!"
 printf "During this tutorial you press -ENTER- to continue.\n"
 printf "During selection menu's answer with a number.\n"
