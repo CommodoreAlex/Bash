@@ -143,7 +143,7 @@ echo "Welcome to the fifth installment of this manual." >> CYBERSTEM/GuestandRoo
 echo "In this section we will be covering the guest account security as well as root login security." >> CYBERSTEM/GuestandRoot.txt
 echo "First off, we'll go over the guest accounts and how remove this vulnarability as well as a couple more..." >> CYBERSTEM/GuestandRoot.txt
 echo "If were speaking about Ubuntu 12. we'd use this command" >> CYBERSTEM/GuestandRoot.txt
-echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." CYBERSTEM/GuestandRoot.txt
+echo "<sudo gedit /etc/lightdm/lightdm.conf> This will bring you to the editable text file to work in." >> CYBERSTEM/GuestandRoot.txt
 echo "You'll want to add the following lines" >> CYBERSTEM/GuestandRoot.txt
 echo "<allow-guest=false>" >> CYBERSTEM/GuestandRoot.txt
 echo "<greeter-hide-users=true>" >> CYBERSTEM/GuestandRoot.txt
@@ -304,7 +304,7 @@ menu2()
 		echo "Loading Lesson..."   #What this does is pause for a second, view the file, clear the stuff there, then
 		sleep 1                    #Bring you back to the menu again but clean
 		clear
-		cat Navigation.txt
+		gedit Navigation.txt
 		read WAIT_FOR_USER
 		clear
 		menu2
