@@ -258,6 +258,8 @@ echo "Good luck, hope you've learned something from all of this!" >> CYBERSTEM/S
 echo "                                  End of Lesson 11" >> CYBERSTEM/SysLog.txt
 echo "###########################################################################################################################################" >> CYBERSTEM/SysLog.txt
 
+cd CYBERSTEM
+
 printf "##########################################################\n" #Introduction
   echo "Welcome to the Linux training course!"
   echo "This manual will have lessons presented in a selection menu."
