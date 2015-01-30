@@ -13,17 +13,18 @@ menu()
 {
 
 	clear
-		printf "~CYBER SECURITY TOOL~\n"
+		echo "-------------------------------------------------------"
+		echo -e "\e[1;32m ~CYBER SECURITY TOOL~ \e[0m"
 		printf "Which operation would you like to run...?\n"
-		echo "[1] Start"
-		echo "[2] Exit"
-		echo "[3] ReadMe"
+		echo -e "\e[1;32m [1] Start \e[0m"
+		echo -e "\e[1;31m [2] Exit \e[0m"
+		echo "-------------------------------------------------------"
 		read start_menu
 	
 	
 		case $start_menu in
 		1)
-			echo "Starting Program..."
+			echo -e "\e[1;33m Starting Program... \e[0m"
 			sleep 1
 			clear
 			start
@@ -31,24 +32,15 @@ menu()
 			;;
 	
 		2)
-			echo "Shutting down..."
+			echo -e "\e[1;31m Shutting down... \e[0m"
 			sleep 1
 			clear
 			exit
 		
 			;;
-	
-		3)
-			clear
-			printf "This is made up of my older script, but put into a selection so you have options as-"
-			printf "To what you want to do.\n"
-			read WAIT_FOR_USER
-			menu
-		
-			;;
 		
 		*)
-			echo "Invalid Input, Redirecting..."
+			echo -e "\e[1;31m Invalid Input, Redirecting... \e[0m"
 			sleep 1
 			menu
 			;;
@@ -58,17 +50,17 @@ menu()
 
 menu
 
-echo "Loading Selection..."
+echo -e "\e[1;33m Loading Selection... \e[0m"
 
 begin()
 {
-		echo "Loading Menu..."
+		echo -e "\e[1;33m Loading Menu... \e[0m"
 }
 
 menu2()
 {
-
-	printf "########################################################\n"
+	clear
+	echo -e "\e[1;33m ########################################################### \e[0m"
 	printf "[1] Prohibited Media File Searcher\n"
 	printf "[2] Updater\n"
 	printf "[3] SSH Root Login\n"
@@ -80,13 +72,13 @@ menu2()
 	printf "[9] Password Policy\n"
 	printf "[10] Account Policy\n"
 	printf "[11] Exit\n"
-	echo "----------------------------------------------------------"
+	echo -e "\e[1;32m ----------------------------------------------------------- \e[0m"
 	read begin_menu2
 
 
 		case $begin_menu2 in
 		1)
-		echo "Searching for Media Files..."
+		echo -e "\e[1;32m Searching for Media Files... \e[0m"
 		echo "------------------------------------------------------------"
 		find / -name "*.mp3"
 		find / -name "*.wma"
@@ -99,7 +91,7 @@ menu2()
 		find / -name "*.png"
 		find / -name "*.bmp"
 		find / -name "*.exe"
-	
+		echo -e "\e[1;32m [+] Finished! \e[0m"
 		read SEARCH_RESULTS
 		clear
 		menu2
@@ -107,9 +99,9 @@ menu2()
 		;;
 		
 	2)
-		echo "Updating..."
+		echo -e "\e[1;32m Updating... \e[0m"
 		apt-get update && apt-get dist-upgrade
-		echo "UPDATED!"
+		echo -e "\e[1;32m [+] UPDATED! \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -117,8 +109,9 @@ menu2()
 		;;
 		
 	3)
-		echo "Permitting Root Login to NO."
+		echo -e "\e[1;32m Permitting Root Login to NO. \e[0m"
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+		echo -e "\e[1;32m [+] Finished! \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -126,8 +119,9 @@ menu2()
 		;;
 		
 	4)
-		echo "Fix Insecure Root Passwd"
+		echo -e "\e[1;32m Fix Insecure Root Passwd \e[0m"
 		passwd
+		echo -e "\e[1;32m [+] Secure \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -135,9 +129,10 @@ menu2()
 		;;
 		
 	5)
-		echo "Installing System Logs Checker..."
+		echo -e "\e[1;32m Installing System Logs Checker... \e[0m"
 		apt-get install gnome
 		gnome-system-logs
+		echo -e "\e[1;32m [+] Installed \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -145,8 +140,9 @@ menu2()
 		;;
 		
 	6)
-		echo "Check Users..."
+		echo -e "\e[1;32m Check Users... \e[0m"
 		cat /etc/passwd
+		echo -e "\e[1;32m [+] Users checked \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -154,8 +150,9 @@ menu2()
 		;;
 		
 	7)
-		echo "Check Groups..."
+		echo -e "\e[1;32m Check Groups... \e[0m"
 		cat /etc/group
+		echo -e "\e[1;32m [+] Groups checked \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -163,8 +160,9 @@ menu2()
 		;;
 		
 	8)
-		echo "Checking Services..."
+		echo -e "\e[1;32m Checking Services... \e[0m"
 		service --status-all
+		echo -e "\e[1;32m [+] Services checked \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -172,8 +170,9 @@ menu2()
 		;;
 		
 	9)
-		echo "Password Policy Section"
+		echo -e "\e[1;32m Password Policy Section \e[0m"
 		gedit /etc/pam.d/login.defs
+		echo -e "\e[1;32m [+] Policy Re-written \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -181,9 +180,10 @@ menu2()
 		;;
 		
 	10)
-		echo "Account Policy Section"
+		echo -e "\e[1;32m Account Policy Section \e[0m"
 		gedit /etc/pam.d/common-password
 		clear
+		echo -e "\e[1;32m [+] Policy Re-written \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -191,7 +191,7 @@ menu2()
 		;;
 		
 	11)
-		echo "Shutting down..."
+		echo -e "\e[1;31m Shutting down... \e[0m"
 		sleep 1
 		clear
 		exit
@@ -199,7 +199,7 @@ menu2()
 		;;
 		
 	*)
-		echo "Invalid Input, Redirecting..."
+		echo -e "\e[1;31m Invalid Input, Redirecting... \e[0m"
 		sleep 1
 		clear
 		menu2
