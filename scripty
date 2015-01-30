@@ -38,7 +38,7 @@ menu() #Starting of the menu
 
         *) #Asterisk to bring it back
                 echo "Invaid input, redirecting..."
-                sleep 2
+                sleep 1
                 clear
                 menu #Refers to the menu options
                 ;;
