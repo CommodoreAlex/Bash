@@ -30,14 +30,14 @@ menu() #Starting of the menu
 
         2)
                 echo -e "\e[1;31m Exiting program... \e[0m"
-                sleep 2
+                sleep 1
                 clear
                 exit #Closes the script, overall
 
                 ;;
 
         *) #Asterisk to bring it back
-                echo "Invaid input, redirecting..."
+                echo -e "\e[1;33m Invaid input, redirecting... \e[0m"
                 sleep 1
                 clear
                 menu #Refers to the menu options
@@ -268,7 +268,7 @@ echo "This manual will have lessons presented in a selection menu."
 echo "This course will teach you the bare essentials of BASH!"
 printf "During this tutorial you press -ENTER- to continue.\n"
 printf "During selection menu's answer with a number.\n"
-echo -e "\e[1;32m ------------------------------------------------------------------ \e[0m"
+echo -e "\e[1;33m ------------------------------------------------------------------ \e[0m"
 read WAIT_FOR_USER  #Reads the input of the keyboard
 
 while [ true ]
