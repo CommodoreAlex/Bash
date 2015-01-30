@@ -298,7 +298,7 @@ menu2()
 	printf "[9] User Accounts\n"
 	printf "[10] Sudoers file and Insecure Root Password\n"
 	printf "[11] System Log Checking\n"
-	printf "[12] Exit Program\n"
+	echo -e "\e[1;31m [12] Exit Program \e[0m"
 	echo -e "\e[1;32m ------------------------------------------------------------ \e[0m"
 	read begin_menu2
 
