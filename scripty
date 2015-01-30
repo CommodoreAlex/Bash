@@ -4,22 +4,24 @@
 
 start() #Starts the function
 {
-        echo "Starting program..."
+        echo -e "\e[1;33m Starting program... \e[0m"
         
 }
 
 menu() #Starting of the menu
 {
 	clear
-        printf "Which operation would you like to run...?\n" #printf is a better way of printing rather than echo, \n makes a new line blank etc.
-        echo "[1] Start" #Shows the option of 1 or 2 to be processed
-        echo "[2] Exit"
+		echo "----------------------------------------------------"
+        echo -e "\e[1;33m Which operation would you like to run...? \e[0m"
+        echo -e "\e[1;32m [1] Start \e[0m" #Shows the option of 1 or 2 to be processed
+        echo -e "\e[1;31m [2] Exit \e[0m"
+		echo "----------------------------------------------------"
         read START_MENU #Reads the input of the keyboard and then the variable
 
 
         case $START_MENU in
         1)
-                echo "Loading..."
+                echo -e "\e[1;33m Loading... \e[0m"
                 sleep 1 #Pauses for one second
                 clear
                 start #Moves on with the rest
@@ -27,7 +29,7 @@ menu() #Starting of the menu
                  ;;
 
         2)
-                echo "Exiting program..."
+                echo -e "\e[1;31m Exiting program... \e[0m"
                 sleep 2
                 clear
                 exit #Closes the script, overall
@@ -46,7 +48,7 @@ menu() #Starting of the menu
 
 menu #Refers the menu outside of the function
 
-echo "Creating Directories, etc..." #Creates CYBERSTEM directory and creates files inside of it
+echo -e "\e[1;33m Creating Directories, etc... \e[0m" #Colored text, why not?
 while [ true ]
 	do
 	sleep 1
@@ -60,13 +62,13 @@ echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 
 while [ true ]
 	do
-	echo "Loading..."
+	echo -e "\e[1;33m Loading... \e[0m"
 	sleep 2
 	clear
 	break
 done
 
-echo "###########################################################################################################################################" > CYBERSTEM/Navigation.txt
+echo "#################################################################################################################" > CYBERSTEM/Navigation.txt
 echo "Welcome to the first installment in this manual." >> CYBERSTEM/Navigation.txt
 echo "we hope it will assist you in learning bash and it's many functions" >> CYBERSTEM/Navigation.txt
 echo "Soon you'll find it's quite simpler than you'd think at first glance. Now, let's begin." >> CYBERSTEM/Navigation.txt
@@ -86,9 +88,9 @@ echo "Example of ls: If you want to use ls you could do, <ls>, or <ls -a>" >> CY
 echo "If you want to see what directory or whatever your in your could just use PWD as PWD, nothing more to that." >> CYBERSTEM/Navigation.txt
 echo "And that is virtualy all you need to know for basic Linux OS navigation in the terminal." >> CYBERSTEM/Navigation.txt
 echo "                                  End of Lesson 1" >> CYBERSTEM/Navigation.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/Navigation.txt
+echo "#################################################################################################################" >> CYBERSTEM/Navigation.txt
  
-echo "###########################################################################################################################################" > CYBERSTEM/Administration.txt
+echo "#################################################################################################################" > CYBERSTEM/Administration.txt
 echo "Welcome to the second installment in this manual." >> CYBERSTEM/Administration.txt
 echo "In this section we will cover administrative powers" >> CYBERSTEM/Administration.txt
 echo "We will go over the multiple ways in how it is used etc." >> CYBERSTEM/Administration.txt
@@ -99,9 +101,9 @@ echo "sudo apt-get cowsay is simply saying GET cowsay." >> CYBERSTEM/Administrat
 echo "Sudo is mainly just used to authorize certain commands." >> CYBERSTEM/Administration.txt
 echo "Sudo is something only Administrators should have access too." >> CYBERSTEM/Administration.txt
 echo "                                  End of Lesson 2" >> CYBERSTEM/Administration.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/Administration.txt
+echo "#################################################################################################################" >> CYBERSTEM/Administration.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/Service.txt
+echo "#################################################################################################################" > CYBERSTEM/Service.txt
 echo "Welcome to the third installment of this manual." >> CYBERSTEM/Service.txt
 echo "In this section we will be covering services of a Linux machine." >> CYBERSTEM/Service.txt
 echo "Services run in the background you of your computer per say." >> CYBERSTEM/Service.txt
@@ -119,9 +121,9 @@ echo "<sudo service SERVICENAME start>" >> CYBERSTEM/Service.txt
 echo "And if you wanted to remove one you'd do..." >> CYBERSTEM/Service.txt
 echo "<sudo service rm SERVICENAME>" >> CYBERSTEM/Service.txt
 echo "                                  End of Lesson 3" >> CYBERSTEM/Service.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/Service.txt
+echo "#################################################################################################################" >> CYBERSTEM/Service.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/SecUpdates.txt
+echo "#################################################################################################################" > CYBERSTEM/SecUpdates.txt
 echo "Welcome to the fourth installment of this manual." >> CYBERSTEM/SecUpdates.txt
 echo "In this section we will be going over updates essential for security." >> CYBERSTEM/SecUpdates.txt
 echo "There are multiple ways to update, upgrade or even do both commands at once." >> CYBERSTEM/SecUpdates.txt
@@ -136,9 +138,9 @@ echo "Dist-upgrade is a more sophisticated way of doing it and is much more effe
 echo "If you'd like to easily automate security updates by GUI you'd do the following..." >> CYBERSTEM/SecUpdates.txt
 echo "You would search "Update Manager" and then go into the setting of it." >> CYBERSTEM/SecUpdates.txt
 echo "                                  End of Lesson 4" >> CYBERSTEM/SecUpdates.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/SecUpdates.txt
+echo "#################################################################################################################" >> CYBERSTEM/SecUpdates.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/GuestandRoot.txt
+echo "#################################################################################################################" > CYBERSTEM/GuestandRoot.txt
 echo "Welcome to the fifth installment of this manual." >> CYBERSTEM/GuestandRoot.txt
 echo "In this section we will be covering the guest account security as well as root login security." >> CYBERSTEM/GuestandRoot.txt
 echo "First off, we'll go over the guest accounts and how remove this vulnarability as well as a couple more..." >> CYBERSTEM/GuestandRoot.txt
@@ -154,7 +156,7 @@ echo "You'd fill the text file with the following" >> CYBERSTEM/GuestandRoot.txt
 echo "<allow-guest=false>" >> CYBERSTEM/GuestandRoot.txt
 echo "<greeter-hide-users=true>" >> CYBERSTEM/GuestandRoot.txt
 echo "Basically very simple however different ways to access it!" >> CYBERSTEM/GuestandRoot.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
+echo "#################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
 echo "Now, lets talk about insecure root logins." >> CYBERSTEM/GuestandRoot.txt
 echo "Do you really want your root login permitted to yes? Especially when that is a vulnarability?" >> CYBERSTEM/GuestandRoot.txt
 echo "Of course not, so that's why we have to fix this." >> CYBERSTEM/GuestandRoot.txt
@@ -163,9 +165,9 @@ echo "<sudo gedit /etc/ssh/sshd_config>" >> CYBERSTEM/GuestandRoot.txt
 echo "Okay, great so now that were inside we should change every YES permitting a root login to a NO." >> CYBERSTEM/GuestandRoot.txt
 echo "This will make it so no one can access our root user." >> CYBERSTEM/GuestandRoot.txt
 echo "                                  End of Lesson 5" >> CYBERSTEM/GuestandRoot.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
+echo "#################################################################################################################" >> CYBERSTEM/GuestandRoot.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/PolicyAccount.txt
+echo "#################################################################################################################" > CYBERSTEM/PolicyAccount.txt
 echo "Welcome to the sixth installment of this manual." >> CYBERSTEM/PolicyAccount.txt
 echo "In this section we will talk a little bit about Password Policies and Account Lockout." >> CYBERSTEM/PolicyAccount.txt
 echo "If we were going to edit the file containg our secure lockouts we'd do this." >> CYBERSTEM/PolicyAccount.txt
@@ -179,9 +181,9 @@ echo "Now that were in we'll add the following line to the end of the file." >> 
 echo "<auth required pam_tally2.so deny =5 onerr=failunlock_time=1800>" >> CYBERSTEM/PolicyAccount.txt
 echo "Now what this is saying is doing is setting the number of allowed failed login attempts, and lockout duration." >> CYBERSTEM/PolicyAccount.txt
 echo "                                  End of Lesson 6" >> CYBERSTEM/PolicyAccount.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/PolicyAccount.txt
+echo "#################################################################################################################" >> CYBERSTEM/PolicyAccount.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/ProcFile.txt
+echo "#################################################################################################################" > CYBERSTEM/ProcFile.txt
 echo "Welcome to the seventh installment in this manual." >> CYBERSTEM/ProcFile.txt
 echo "In this section we will be covering processes and searching for media files." >> CYBERSTEM/ProcFile.txt
 echo "To see how the layout of processes look etc you'd do this command." >> CYBERSTEM/ProcFile.txt
@@ -194,7 +196,7 @@ echo "<kill PID_of_target_process>" >> CYBERSTEM/ProcFile.txt
 echo "If the program is misbehaving and does not exit when given the TERM signal, we can escalate the signal by passing the KILL signal:" >> CYBERSTEM/ProcFile.txt
 echo "<kill -KILL PID_of_target_process>" >> CYBERSTEM/ProcFile.txt
 echo "And that is all you need to know about processes essentially." >> CYBERSTEM/ProcFile.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/ProcFile.txt
+echo #################################################################################################################" >> CYBERSTEM/ProcFile.txt
 echo "Now, on to finding and removing prohibited media files..." >> CYBERSTEM/ProcFile.txt
 echo "If you wanted to search for a media file you'd do this command..." >> CYBERSTEM/ProcFile.txt
 echo "<find / -name *.mp3" >> CYBERSTEM/ProcFile.txt
@@ -202,9 +204,9 @@ echo "Multiple media files that should be removed are the following." >> CYBERST
 echo ".mp3, .mp4, .exe, jpg, jpeg, .wav, .avi, .png" >> CYBERSTEM/ProcFile.txt
 echo "I suggest making a script with the following and executing them simultaneously and then removing them." >> CYBERSTEM/ProcFile.txt
 echo "                                  End of Lesson 7" >> CYBERSTEM/ProcFile.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/ProcFile.txt
+echo "#################################################################################################################" >> CYBERSTEM/ProcFile.txt
 
-echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
+echo "#################################################################################################################" >> CYBERSTEM/UsrGroup.txt
 echo "Welcome to the eigth installment of this manual." >> CYBERSTEM/UsrGroup.txt
 echo "In this section of the manual, we'll be covering users and groups and how to manage them." >> CYBERSTEM/UsrGroup.txt
 echo "If you were going to view the users file you'd do this." >> CYBERSTEM/UsrGroup.txt
@@ -214,7 +216,7 @@ echo "[root:x:0:0:root:/root:/bin/bash] This right here is an example of a clean
 echo "If you see an unauthorized user in there, do not remove it but comment it out." >> CYBERSTEM/UsrGroup.txt
 echo "I cannot stress how important it is to do so, if you were to remove the user." >> CYBERSTEM/UsrGroup.txt
 echo "Then you lose not only the user but all of it's data, for all you know that could be essential for something else in time." >> CYBERSTEM/UsrGroup.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
+echo "#################################################################################################################" >> CYBERSTEM/UsrGroup.txt
 echo "Moving on, we'll now talk about groups." >> CYBERSTEM/UsrGroup.txt
 echo "NOW!, If you were going to view the group file then you'd execute this command..." >> CYBERSTEM/UsrGroup.txt
 echo "<gedit /etc/group>" >> CYBERSTEM/UsrGroup.txt
@@ -222,9 +224,9 @@ echo "Make sure to check this file to look for groups that shouldn't be there, t
 echo "Always a good thing to check, also make sure root looks like this [root:x:0:]" >> CYBERSTEM/UsrGroup.txt
 echo "And that is the minimum that you'll need to know about user and group files." >> CYBERSTEM/UsrGroup.txt
 echo "                                  End of Lesson 8" >> CYBERSTEM/UsrGroup.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/UsrGroup.txt
+echo "#################################################################################################################" >> CYBERSTEM/UsrGroup.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/Accounts.txt
+echo "#################################################################################################################" > CYBERSTEM/Accounts.txt
 echo "Welcome to the ninth installment of this manual." >> CYBERSTEM/Accounts.txt
 echo "Here in this section we'll cover user accounts." >> CYBERSTEM/Accounts.txt
 echo "Though we've covered a little about finding hidden useres, this will just be focused on the GUI area." >> CYBERSTEM/Accounts.txt
@@ -232,9 +234,9 @@ echo "If you want to see the un-hidden users you'd look for the UserAccounts GUI
 echo "First off, check to see if everyone is ranked what they should be etc." >> CYBERSTEM/Accounts.txt
 echo "That's basically as simple as it gets so this is just almost as a note." >> CYBERSTEM/Accounts.txt
 echo "                                  End of Lesson 9" >> CYBERSTEM/Accounts.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/Accounts.txt
+echo "#################################################################################################################" >> CYBERSTEM/Accounts.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/VisudoandPasswd.txt
+echo "#################################################################################################################" > CYBERSTEM/VisudoandPasswd.txt
 echo "Welcome to the tenth installment in this manual." >> CYBERSTEM/VisudoandPasswd.txt
 echo "In this section we will be covering the sudoers file and insecure root login." >> CYBERSTEM/VisudoandPasswd.txt
 echo "Now, the sudoer file is where root privelegdes are contained." >> CYBERSTEM/VisudoandPasswd.txt
@@ -246,9 +248,9 @@ echo "The command to execute that is this," >> CYBERSTEM/VisudoandPasswd.txt
 echo "<sudo passwd>" >> CYBERSTEM/VisudoandPasswd.txt
 echo "It'll prompt you for a password, just enter the new one and then you have your new secure root password." >> CYBERSTEM/VisudoandPasswd.txt
 echo "                                  End of Lesson 10" >> CYBERSTEM/VisudoandPasswd.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/VisudoandPasswd.txt
+echo "#################################################################################################################" >> CYBERSTEM/VisudoandPasswd.txt
 
-echo "###########################################################################################################################################" > CYBERSTEM/SysLog.txt
+echo "#################################################################################################################" > CYBERSTEM/SysLog.txt
 echo "This is just on how to install and run system logs" >> CYBERSTEM/SysLog.txt
 echo "You'd execute the following commands." >> CYBERSTEM/SysLog.txt
 echo "<Sudo apt-get install gnome>" >> CYBERSTEM/SysLog.txt
@@ -256,17 +258,17 @@ echo "<gnome-system-logs>" >> CYBERSTEM/SysLog.txt
 echo "This will install and then let you view them well." >> CYBERSTEM/SysLog.txt
 echo "Good luck, hope you've learned something from all of this!" >> CYBERSTEM/SysLog.txt
 echo "                                  End of Lesson 11" >> CYBERSTEM/SysLog.txt
-echo "###########################################################################################################################################" >> CYBERSTEM/SysLog.txt
+echo "#################################################################################################################" >> CYBERSTEM/SysLog.txt
 
 cd CYBERSTEM
 
-printf "##########################################################\n" #Introduction
-  echo "Welcome to the Linux training course!"
-  echo "This manual will have lessons presented in a selection menu."
-  echo "This course will teach you the bare essentials of BASH!"
+echo -e "\e[1;33m ################################################################### \e[0m"
+echo "Welcome to the Linux training course!"
+echo "This manual will have lessons presented in a selection menu."
+echo "This course will teach you the bare essentials of BASH!"
 printf "During this tutorial you press -ENTER- to continue.\n"
 printf "During selection menu's answer with a number.\n"
-  echo "##########################################################"
+echo -e "\e[1;32m ------------------------------------------------------------------ \e[0m"
 read WAIT_FOR_USER  #Reads the input of the keyboard
 
 while [ true ]
@@ -277,14 +279,14 @@ done
 
 begin()
 {
-	echo "Loading Lesson Selection..."
+	echo -e "\e[1;33m Loading Lesson Selection... \e[0m"
 }
 
 menu2()
 {
 
-	printf "######Lesson Selection Menu################################\n"
-	printf "~If editable, DO NOT EDIT ANY TEXT FILES!~\n"
+	echo -e "\e[1;33m ######Lesson Selection Menu################################ \e[0m"
+	echo -e "\e[1;31m ~If editable, DO NOT EDIT ANY TEXT FILES!~ \e[0m" #Text in RED
 	printf "[1] Basic Linux Navigation\n"
 	printf "[2] Administrative Capabilities\n"
 	printf "[3] Service Management\n"
@@ -297,16 +299,16 @@ menu2()
 	printf "[10] Sudoers file and Insecure Root Password\n"
 	printf "[11] System Log Checking\n"
 	printf "[12] Exit Program\n"
-	echo "############################################################"
+	echo -e "\e[1;32m ------------------------------------------------------------ \e[0m"
 	read begin_menu2
 
 
 	case $begin_menu2 in
 	1)
-		echo "Loading Lesson..."   #What this does is pause for a second, view the file, clear the stuff there, then
+		echo -e "\e[1;33m Loading Lesson... \e[0m"   #What this does is pause for a second, view the file, clear the stuff there, then
 		sleep 1                    #Bring you back to the menu again but clean
 		clear
-		gedit Navigation.txt
+		cat Navigation.txt
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -314,7 +316,7 @@ menu2()
 		;;
 		
 	2)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat Administration.txt
@@ -325,7 +327,7 @@ menu2()
 		;;
 		
 	3)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat Service.txt
@@ -336,7 +338,7 @@ menu2()
 		;;
 		
 	4)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat SecUpdates.txt
@@ -347,7 +349,7 @@ menu2()
 		;;
 		
 	5)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat GuestandRoot.txt
@@ -358,7 +360,7 @@ menu2()
 		;;
 		
 	6)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat PolicyAccount.txt
@@ -369,7 +371,7 @@ menu2()
 		;;
 	
 	7)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat ProcFile.txt
@@ -380,7 +382,7 @@ menu2()
 		;;
 		
 	8)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat UsrGroup.txt
@@ -391,7 +393,7 @@ menu2()
 		;;
 		
 	9)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat Accounts.txt
@@ -402,7 +404,7 @@ menu2()
 		;;
 		
 	10)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat VisudoandPasswd.txt
@@ -413,7 +415,7 @@ menu2()
 		;;
 		
 	11)
-		echo "Loading Lesson..."
+		echo -e "\e[1;33m Loading Lesson... \e[0m"
 		sleep 1
 		clear
 		cat SysLog.txt
@@ -424,7 +426,7 @@ menu2()
 		;;
 		
 	12)
-		echo "Shutting down..."
+		echo -e "\e[1;31m Shutting down... \e[0m"
 		sleep 1
 		clear
 		exit
@@ -432,7 +434,7 @@ menu2()
 		;;
 		
 	*)
-		echo "Invalid Input, Redirecting..."
+		echo -e "\e[1;33m Invalid Input, Redirecting... \e[0m"
 		sleep 1
 		clear
 		menu2
