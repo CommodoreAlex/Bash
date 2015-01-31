@@ -1,8 +1,6 @@
 #!/bin/bash
-
-#RUN THIS SCRIPT AS SUDO "sudo bash <script> for example
+#RUN THIS SCRIPT AS SUDO, SOME FUNCTIONS REQUIRE SUDO.
 #v0.8
-
 start()
 {
 	echo "Starting Program..."
