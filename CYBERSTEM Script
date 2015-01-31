@@ -1,7 +1,5 @@
 #!/bin/bash
-
-#Linux CYBERSTEM interactive manual, V.7
-
+#Linux CYBERSTEM interactive manual, V.8
 start() #Starts the function
 {
         echo -e "\e[1;33m Starting program... \e[0m"
