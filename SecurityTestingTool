@@ -50,7 +50,7 @@ menu()
 
 menu
 
-echo -e "\e[1;33m Loading Selection... \e[0m"
+mkdir SECTOOLTXT
 
 begin()
 {
@@ -66,12 +66,15 @@ menu2()
 	printf "[3] SSH Root Login\n"
 	printf "[4] Insecure Root Passwd\n"
 	printf "[5] System Logs\n"
-	printf "[6] User Listing\n"
-	printf "[7] Group Listing\n"
+	printf "[6] User Copy\n"
+	printf "[7] Group Copy\n"
 	printf "[8] Service Section\n"
 	printf "[9] Password Policy\n"
 	printf "[10] Account Policy\n"
-	printf "[11] Exit\n"
+	printf "[11] Guest Account 12.04\n"
+	printf "[12] Guest Account 14.01\n"
+	printf "[13] RkHunter\n"
+	printf "[14] Exit\n"
 	echo -e "\e[1;32m ----------------------------------------------------------- \e[0m"
 	read begin_menu2
 
@@ -141,8 +144,8 @@ menu2()
 		
 	6)
 		echo -e "\e[1;32m Check Users... \e[0m"
-		cat /etc/passwd
-		echo -e "\e[1;32m [+] Users Stated \e[0m"
+		cp /etc/passwd SECTOOLTXT
+		echo -e "\e[1;32m [+] Users Copied\e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -151,8 +154,8 @@ menu2()
 		
 	7)
 		echo -e "\e[1;32m Check Groups... \e[0m"
-		cat /etc/group
-		echo -e "\e[1;32m [+] Groups Stated \e[0m"
+		cp /etc/group SECTOOLTXT
+		echo -e "\e[1;32m [+] Groups Copied \e[0m"
 		read WAIT_FOR_USER
 		clear
 		menu2
@@ -192,6 +195,42 @@ menu2()
 		;;
 		
 	11)
+		echo -e "\e[1;32m Guest Account 12.04\n"
+		gedit /etc/lightdm/lightdm.conf #allow-guest= false | greeter-hide-users= true
+		echo -e "\e[1;32m [+] Guest Account Re-Written \e[0m"
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	12)
+		echo -e "\e[1;32m Guest Account 14.04\n"
+		cd /usr/share/lightdm/lightdm.conf.d/ #allow-guest= false | greeter-hide-users= true
+		gedit 50-ubuntu.conf
+		echo -e"\e[1;32m [+] Guest Account Re-Written \e[0m"
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	13)
+		echo -e "\e[1;31m [!] Beginning RkHunter Installation... \e[0m"
+		apt-get install chkrootkit
+		apt-get install rkhunter
+		rhkunter --update
+		clear
+		sleep 1
+		rkhunter -c #SCANS FOR VULNERABILITIES
+		echo -e "\e[1;32m [+] Scan Results Printed... \e[0m"
+		read VIEW_MATERIAL
+		clear
+		menu2
+		
+		;;
+			
+	14)
 		echo -e "\e[1;31m [!] Shutting down... \e[0m"
 		sleep 1
 		clear
