@@ -4,7 +4,7 @@
 start()
 {
 	echo "Starting Program..."
-	
+
 }
 
 menu()
@@ -24,7 +24,7 @@ menu()
 	
 		case $start_menu in
 		1)
-			echo -e "\e[1;33m Starting Program... \e[0m"
+			echo -e "\e[1;33m Starting SECTOOL... \e[0m"
 			sleep 1
 			clear
 			start
@@ -74,7 +74,8 @@ menu2()
 	printf "[11] Guest Account 12.04\n"
 	printf "[12] Guest Account 14.01\n"
 	printf "[13] RkHunter\n"
-	printf "[14] Exit\n"
+	printf "[14] Executable Setup\n"
+	echo -e "\e[1;31m [15] Exit \e[0m"
 	echo -e "\e[1;32m ----------------------------------------------------------- \e[0m"
 	read begin_menu2
 
@@ -186,7 +187,6 @@ menu2()
 	10)
 		echo -e "\e[1;32m Account Policy Section \e[0m"
 		gedit /etc/pam.d/common-password
-		clear
 		echo -e "\e[1;32m [+] Policy Re-written \e[0m"
 		read WAIT_FOR_USER
 		clear
@@ -229,8 +229,22 @@ menu2()
 		menu2
 		
 		;;
-			
+		
 	14)
+		echo -e "\e[1;31m [!] Setting Executable From All Directories... \e[0m"
+		sleep 1
+		chmod +x SECTOOL
+		cp SECTOOL /usr/bin/SECTOOL
+		cp SECTOOL /usr/local/bin
+		echo -e "\e[1;32m [+] Executable Set... \e[0m"
+		echo -e "\e[1;32m ~You are now able to type <SECTOOL>in any directory to recall this tool~ \e[0m"
+		read WAIT_FOR_USER
+		clear
+		menu2
+		
+		;;
+		
+	15)
 		echo -e "\e[1;31m [!] Shutting down... \e[0m"
 		sleep 1
 		clear
