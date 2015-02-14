@@ -25,7 +25,6 @@ menu()
 		case $start_menu in
 		1)
 			echo -e "\e[1;33m Starting SECTOOL... \e[0m"
-			sleep 1
 			clear
 			start
 		
@@ -33,7 +32,6 @@ menu()
 	
 		2)
 			echo -e "\e[1;31m Shutting down... \e[0m"
-			sleep 1
 			clear
 			exit
 		
@@ -61,7 +59,7 @@ menu2()
 {
 	clear
 	echo -e "\e[1;33m ########################################################### \e[0m"
-	printf "[1] Prohibited Media File Searcher\n"
+	printf "[1] Prohibited Media File Finder\n"
 	printf "[2] Updater\n"
 	printf "[3] SSH Root Login\n"
 	printf "[4] Insecure Root Passwd\n"
