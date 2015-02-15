@@ -59,8 +59,13 @@ printf "[11] Guest Account 12.04\n"
 printf "[12] Guest Account 14.01\n"
 printf "[13] RkHunter\n"
 printf "[14] Executable Setup\n"
-printf "[15] Ping\n"
-echo -e "\e[1;31m [16] Exit \e[0m"
+printf "[15] Basic Ping\n"
+printf "[16] Firewall\n"
+printf "[17] Listening Ports\n"
+printf "[18] Visudo\n"
+printf "[19] Crontab\n"
+printf "[20] Procceses\n"
+echo -e "\e[1;31m [21] Exit \e[0m"
 echo -e "\e[1;32m ----------------------------------------------------------- \e[0m"
 read begin_menu2
 case $begin_menu2 in
@@ -79,9 +84,9 @@ find / -name "*.png"
 find / -name "*.bmp"
 find / -name "*.exe"
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read SEARCH_RESULTS
 clear
@@ -91,9 +96,9 @@ menu2
 echo -e "\e[1;31m [!] Updating... \e[0m"
 apt-get update && apt-get dist-upgrade
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -103,9 +108,9 @@ menu2
 echo -e "\e[1;32m Permitting Root Login to NO. \e[0m"
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 if [ $? -eq ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccesful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccesful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -115,9 +120,9 @@ menu2
 echo -e "\e[1;32m Fix Insecure Root Passwd \e[0m"
 passwd
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccesful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccesful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -128,9 +133,9 @@ echo -e "\e[1;32m Installing System Logs Checker... \e[0m"
 apt-get install gnome
 gnome-system-logs
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+} Success... \e[0m"
+echo -e "\e[1;32m [+} Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -140,9 +145,9 @@ menu2
 echo -e "\e[1;32m Check Users... \e[0m"
 cp /etc/passwd SECTOOLTXT
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -152,9 +157,9 @@ menu2
 echo -e "\e[1;32m Check Groups... \e[0m"
 cp /etc/group SECTOOLTXT
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -164,9 +169,9 @@ menu2
 echo -e "\e[1;31m [!] Checking Services... \e[0m"
 service --status-all
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful...\e[0m"
+echo -e "\e[1;31m [!] Unsuccessful...\e[0m"
 fi
 read WAIT_FOR_USER
 sleep 1
@@ -177,9 +182,9 @@ menu3
 echo -e "\e[1;32m Password Policy Section \e[0m"
 gedit /etc/pam.d/login.defs
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -189,9 +194,9 @@ menu2
 echo -e "\e[1;32m Account Policy Section \e[0m"
 gedit /etc/pam.d/common-password
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -201,9 +206,9 @@ menu2
 echo -e "\e[1;32m Guest Account 12.04\n"
 gedit /etc/lightdm/lightdm.conf #allow-guest= false | greeter-hide-users= true
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -214,9 +219,9 @@ echo -e "\e[1;32m Guest Account 14.04\n"
 cd /usr/share/lightdm/lightdm.conf.d/ #allow-guest= false | greeter-hide-users= true
 gedit 50-ubuntu.conf
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -231,9 +236,9 @@ clear
 sleep 1
 rkhunter -c #SCANS FOR VULNERABILITIES
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read VIEW_MATERIAL
 clear
@@ -246,9 +251,9 @@ chmod +x SECTOOL
 cp SECTOOL /usr/bin/SECTOOL
 cp SECTOOL /usr/local/bin
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 echo -e "\e[1;32m ~You are now able to type <SECTOOL>in any directory to recall this tool~ \e[0m"
 read WAIT_FOR_USER
@@ -261,6 +266,43 @@ echo "------------------------------------------------------------"
 read INPUT
 ping $INPUT
 if [ $? -eq 0 ]; then
+echo -e "\e[1;32m [+] Success... \e[0m"
+else
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu2
+;;
+16)
+clear
+menu4
+;;
+17)
+netstat -tulpn
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu2
+;;
+18)
+visudo
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessfu... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu2
+;;
+19)
+crontab -e
+if [ $? -eq 0 ]; then
     echo -e "\e[1;32m [+] Success... \e[0m"
 else
     echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
@@ -269,7 +311,20 @@ read WAIT_FOR_USER
 clear
 menu2
 ;;
-16)
+20)
+echo "Demonstration of process layout"
+ps
+ps -A
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu2
+;;
+21)
 echo -e "\e[1;31m [!] Shutting down... \e[0m"
 sleep 1
 clear
@@ -305,9 +360,9 @@ echo -e "\e[1;31m [!] Removing Telnet... \e[0m"
 service rm telnet
 sleep 1
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -319,9 +374,9 @@ service apache stop
 service rm apache2
 sleep 1
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;32m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;32m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -333,9 +388,9 @@ service ssh stop
 service rm ssh
 sleep 1
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -346,9 +401,9 @@ echo -e "\e[1;31m [!] Removing VSFTPD... \e[0m"
 service vsftpd stop
 service rm vsftpd
 if [ $? -eq 0 ]; then
-    echo -e "\e[1;32m [+] Success... \e[0m"
+echo -e "\e[1;32m [+] Success... \e[0m"
 else
-    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
 fi
 read WAIT_FOR_USER
 clear
@@ -369,3 +424,106 @@ menu3
 esac
 }
 menu3
+
+ubuntu()
+{
+	echo "Ubuntu Firewall"
+
+}
+menu4()
+{
+clear
+echo -e "\e[1;33m #########~Ubuntu OS Firewall Options...?~################### \e[0m"
+echo -e "\e[1;31m [!] This will only work with the Ubuntu OS [!] \e[0m"
+echo "-----------------------------------------------------------"
+printf "[1] Enable Firewall\n"
+printf "[2] Disable Firewall\n"
+printf "[3] Firewall Status\n"
+printf "[4] Allow port 22\n"
+printf "[5] Allow port 80\n"
+printf "[6] Default Firewall (RESET)\n"
+printf "[7] Application Menu\n"
+echo -e "\e[1;32m ----------------------------------------------------------\e[0m"
+read ubuntu_menu4
+case $ubuntu_menu4 in
+1)
+ufw enable
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+2)
+ufw disable
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+3)
+ufw status
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+4)
+ufw allow 22
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+5)
+ufw allow 80
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessfu... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+6)
+ufw default deny
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m [+] Success... \e[0m"
+else
+    echo -e "\e[1;31m [!] Unsuccessful... \e[0m"
+fi
+read WAIT_FOR_USER
+clear
+menu4
+;;
+7)
+echo -e "\e[1;32m Moving back to main menu... \e[0m"
+sleep 1
+clear
+menu2
+;;
+*)
+echo -e "\e[1;31m [!] Invalid Input, Redirecting... \e[0m"
+sleep 1
+clear
+menu4
+;;
+esac
+}
+menu4
