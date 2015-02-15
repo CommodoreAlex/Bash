@@ -258,7 +258,7 @@ menu2
 15)
 echo -e "\e[1;32m Enter an IP address or domain... \e[0m"
 echo "------------------------------------------------------------"
-read $INPUT
+read INPUT
 ping $INPUT
 if [ $? -eq 0 ]; then
     echo -e "\e[1;32m [+] Success... \e[0m"
