@@ -17,7 +17,7 @@ menu()
 
 clear
 echo "-------------------------------------------------------"
-echo -e "$GREEN ~Wireless Network Tool~ $COEND"
+echo -e "$GREEN ~Simplified Aircrack~ $COEND"
 printf "Which operation would you like to run...?\n"
 echo -e "$GREEN [1] Start $COEND"
 echo -e "$RED [2] Exit $COEND"
