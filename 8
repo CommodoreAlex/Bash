@@ -154,6 +154,9 @@ case $begin_menu2 in
 	echo "-------------------------"
 	echo -e "$GREEN [+] All offending PID's have been removed... $COEND"
 	echo "-----------------------------------------------------------"
+	echo -e "$YELLOW Searching for surrounding networks $COEND"
+	airodump-ng mon0
+	echo "-----------------------------------------------------------"
 	echo -e "$RED [!] Input CH $COEND"
 	read CH
 	echo -e "$RED [!] Input BSSID $COEND"
