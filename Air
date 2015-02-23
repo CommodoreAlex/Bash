@@ -148,6 +148,7 @@ case $begin_menu2 in
 	;;
 
 4)
+	mkdir -p /root/Crack
 	sleep 1
 	airmon-ng check kill
 	ifconfig wlan0 down
