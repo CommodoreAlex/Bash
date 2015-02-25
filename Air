@@ -75,7 +75,7 @@ clear
 echo -e "$YELLOW ############################################### $COEND"
 printf "[1] View all surrounding wireless networks\n"
 printf "[2] Listen on one CH\n"
-printf "[3] Listen on one CH | Write data down\n"
+printf "[3] Listen on one CH | Write data to a file\n"
 printf "[4] Password Cracking\n"
 echo -e "$RED [5] Exit $COEND"
 echo -e "$GREEN ----------------------------------------------------------- $COEND"
