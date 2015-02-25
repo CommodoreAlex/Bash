@@ -44,8 +44,8 @@ case $start_menu in
 
 3)
 	echo -e "$YELLOW ~READ ME~ $COEND"
-	echo "Before cracking add a folder at the destination of -/root/Crack-"
-	echo "Make sure you have a list of words to use"
+	echo "Before cracking add a folder at the destination of -/root/Crack/wpa2psk-"
+	echo "Make sure you have a list of words to use for cracking"
 	echo "Good source for learning cracking https://www.youtube.com/watch?v=uEXugINjFuo&index=1&list=WL"
 	read WAIT_FOR_USER
 	clear
