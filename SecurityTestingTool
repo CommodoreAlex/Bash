@@ -17,7 +17,7 @@ menu()
 
 clear
 echo "-------------------------------------------------------"
-echo -e "\e[1;32m ~CYBER SECURITY TOOL~ \e[0m"
+echo -e "$GREEN ~CYBER SECURITY TOOL~ $COEND"
 printf "Which operation would you like to run...?\n"
 echo -e "$GREEN [1] Start $COEND"
 echo -e "$RED [2] Exit $COEND"
@@ -620,7 +620,7 @@ case $ubuntu_menu4 in
 	menu4
 	;;
 	
-esac
+	esac
 }
 	
 menu4
