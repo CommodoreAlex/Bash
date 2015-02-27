@@ -1,5 +1,10 @@
 #!/bin/bash
 #Linux CYBERSTEM interactive manual, V.8
+GREEN="\e[1;32m"
+RED="\e[1;31m"
+YELLOW="\e[1;33m"
+COEND="\e[0m"
+
 start() #Starts the function
 {
         echo -e "\e[1;33m Starting program... \e[0m"
@@ -10,16 +15,16 @@ menu() #Starting of the menu
 {
 	clear
 		echo "----------------------------------------------------"
-        echo -e "\e[1;33m Which operation would you like to run...? \e[0m"
-        echo -e "\e[1;32m [1] Start \e[0m" #Shows the option of 1 or 2 to be processed
-        echo -e "\e[1;31m [2] Exit \e[0m"
+        echo -e "$YELLOW Which operation would you like to run...? $COEND"
+        echo -e "$GREEN [1] Start $COEND" #Shows the option of 1 or 2 to be processed
+        echo -e "$RED [2] Exit $COEND"
 		echo "----------------------------------------------------"
         read START_MENU #Reads the input of the keyboard and then the variable
 
 
         case $START_MENU in
         1)
-                echo -e "\e[1;33m Loading... \e[0m"
+                echo -e "$YELLOW Loading... $COEND"
                 sleep 1 #Pauses for one second
                 clear
                 start #Moves on with the rest
@@ -27,7 +32,7 @@ menu() #Starting of the menu
                  ;;
 
         2)
-                echo -e "\e[1;31m Exiting program... \e[0m"
+                echo -e "$RED Exiting program... $COEND"
                 sleep 1
                 clear
                 exit #Closes the script, overall
@@ -35,7 +40,7 @@ menu() #Starting of the menu
                 ;;
 
         *) #Asterisk to bring it back
-                echo -e "\e[1;33m Invaid input, redirecting... \e[0m"
+                echo -e "$YELLOW Invaid input, redirecting... $COEND"
                 sleep 1
                 clear
                 menu #Refers to the menu options
@@ -46,7 +51,7 @@ menu() #Starting of the menu
 
 menu #Refers the menu outside of the function
 
-echo -e "\e[1;33m Creating Directories, etc... \e[0m" #Colored text, why not?
+echo -e "$YELLOW Creating Directories, etc... $COEND" #Colored text, why not?
 while [ true ]
 	do
 	sleep 1
@@ -60,7 +65,7 @@ echo "Running " $(lsb_release -sd) "with kernel" $(uname -r)
 
 while [ true ]
 	do
-	echo -e "\e[1;33m Loading... \e[0m"
+	echo -e "$YELLOW Loading... $COEND"
 	sleep 2
 	clear
 	break
@@ -260,13 +265,13 @@ echo "##########################################################################
 
 cd CYBERSTEM
 
-echo -e "\e[1;33m ################################################################### \e[0m"
+echo -e "$YELLOW ################################################################### $COEND"
 echo "Welcome to the Linux training course!"
 echo "This manual will have lessons presented in a selection menu."
 echo "This course will teach you the bare essentials of BASH!"
 printf "During this tutorial you press -ENTER- to continue.\n"
 printf "During selection menu's answer with a number.\n"
-echo -e "\e[1;33m ------------------------------------------------------------------ \e[0m"
+echo -e "$YELLOW ------------------------------------------------------------------ $COEND"
 read WAIT_FOR_USER  #Reads the input of the keyboard
 
 while [ true ]
@@ -277,14 +282,14 @@ done
 
 begin()
 {
-	echo -e "\e[1;33m Loading Lesson Selection... \e[0m"
+	echo -e "$YELLOW Loading Lesson Selection... $COEND"
 }
 
 menu2()
 {
 
-	echo -e "\e[1;33m ######Lesson Selection Menu################################ \e[0m"
-	echo -e "\e[1;31m ~If editable, DO NOT EDIT ANY TEXT FILES!~ \e[0m" #Text in RED
+	echo -e "$YELLOW ######Lesson Selection Menu################################ $COEND"
+	echo -e "$RED ~If editable, DO NOT EDIT ANY TEXT FILES!~ $COEND" #Text in RED
 	printf "[1] Basic Linux Navigation\n"
 	printf "[2] Administrative Capabilities\n"
 	printf "[3] Service Management\n"
@@ -296,14 +301,14 @@ menu2()
 	printf "[9] User Accounts\n"
 	printf "[10] Sudoers file and Insecure Root Password\n"
 	printf "[11] System Log Checking\n"
-	echo -e "\e[1;31m [12] Exit Program \e[0m"
-	echo -e "\e[1;32m ------------------------------------------------------------ \e[0m"
+	echo -e "$RED [12] Exit Program $COEND"
+	echo -e "$GREEN ------------------------------------------------------------ $COEND"
 	read begin_menu2
 
 
 	case $begin_menu2 in
 	1)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"   #What this does is pause for a second, view the file, clear the stuff there, then
+		echo -e "$YELLOW Loading Lesson... $COEND"   #What this does is pause for a second, view the file, clear the stuff there, then
 		sleep 1                    #Bring you back to the menu again but clean
 		clear
 		cat Navigation.txt
@@ -314,7 +319,7 @@ menu2()
 		;;
 		
 	2)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat Administration.txt
@@ -325,7 +330,7 @@ menu2()
 		;;
 		
 	3)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat Service.txt
@@ -336,7 +341,7 @@ menu2()
 		;;
 		
 	4)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat SecUpdates.txt
@@ -347,7 +352,7 @@ menu2()
 		;;
 		
 	5)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat GuestandRoot.txt
@@ -358,7 +363,7 @@ menu2()
 		;;
 		
 	6)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat PolicyAccount.txt
@@ -369,7 +374,7 @@ menu2()
 		;;
 	
 	7)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $YELLOW"
 		sleep 1
 		clear
 		cat ProcFile.txt
@@ -380,7 +385,7 @@ menu2()
 		;;
 		
 	8)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat UsrGroup.txt
@@ -391,7 +396,7 @@ menu2()
 		;;
 		
 	9)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat Accounts.txt
@@ -402,7 +407,7 @@ menu2()
 		;;
 		
 	10)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat VisudoandPasswd.txt
@@ -413,7 +418,7 @@ menu2()
 		;;
 		
 	11)
-		echo -e "\e[1;33m Loading Lesson... \e[0m"
+		echo -e "$YELLOW Loading Lesson... $COEND"
 		sleep 1
 		clear
 		cat SysLog.txt
@@ -424,7 +429,7 @@ menu2()
 		;;
 		
 	12)
-		echo -e "\e[1;31m Shutting down... \e[0m"
+		echo -e "$RED Shutting down... $COEND"
 		sleep 1
 		clear
 		exit
@@ -432,7 +437,7 @@ menu2()
 		;;
 		
 	*)
-		echo -e "\e[1;33m Invalid Input, Redirecting... \e[0m"
+		echo -e "$RED Invalid Input, Redirecting... $COEND"
 		sleep 1
 		clear
 		menu2
