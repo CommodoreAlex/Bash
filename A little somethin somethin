@@ -47,15 +47,15 @@ else
     printf '%s\n' "uh-oh, not on host"
 fi
 
-IIP = /sbin/ifconfig eth0 | greo "inet addr" | awk -F: '{print $2}' | awk '{print $1}'  #http://www.if-not-true-then-false.com/2010/linux-get-ip-address/
+IIP = /sbin/ifconfig eth0 | greo "inet addr" | awk -F: '{print $2}' | awk '{print $1}'
 
-EIP = curl http://ipecho.net/plain; echo               #http://www.if-not-true-then-false.com/2010/linux-get-ip-address/  ; http://ipecho.net/
+EIP = curl http://ipecho.net/plain; echo
 
-NAMESERVER = cat /etc/resolv.conf           #http://unix.stackexchange.com/questions/28941/what-dns-servers-am-i-using
+NAMESERVER = cat /etc/resolv.conf
 
 RAMUSAGE = free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%)\n", $3,$2,$3*100/$2 }'
 df -h | awk '$NF=="/"{printf "Disk Usage: %d/%dGB (%s)\n", $3,$2,$5}'
-top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'             #http://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
+top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'
 
 LOADAVERAGE = uptime                            #'man uptime' Should be researched
 
