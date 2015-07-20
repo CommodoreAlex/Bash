@@ -15,7 +15,7 @@ echo "Starting Program..."
 menu()
 {
 
-clear
+clear 
 echo "-------------------------------------------------------"
 echo -e "$GREEN ~CYBER SECURITY TOOL~ $COEND"
 printf "Which operation would you like to run...?\n"
