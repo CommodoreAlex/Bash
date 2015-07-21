@@ -45,6 +45,9 @@ case $start_menu in
 3)
 	echo "Go here for some clean configuration file examples."
 	echo -e "$YELLOW https://github.com/cquick97/security-scripts/tree/master/Linux $COEND"
+	read WAIT_FOR_USER
+	clear
+	menu
 	
 	;;
 	
