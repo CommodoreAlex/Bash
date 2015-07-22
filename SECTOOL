@@ -239,7 +239,7 @@ case $begin_menu2 in
 	
 	;;
 	
-9)
+9) #pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent
 	echo -e "$YELLOW Password Policy Section"
 	nano /etc/pam.d/login.defs
 	if [ $? -eq 0 ]; then
@@ -352,6 +352,14 @@ case $begin_menu2 in
 	;;
 	
 16)
+	ufw status
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	sleep 1
 	clear
 	menu4
 	
@@ -413,7 +421,9 @@ case $begin_menu2 in
 	
 	;;
 	
-21) #pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent I PUT THIS HERE BECAUSE I CAN!
+21)
+	echo "Entering user configuration."
+	read WAIT_FOR_USER
 	clear
 	menu5
 	
@@ -493,137 +503,6 @@ case $begin_menu2 in
 
 menu2
 
-test()
-{
-echo "Starting Selection..."
-
-}
-
-menu3()
-{
-clear
-echo "#################################################################"
-printf "[1] Remove Telnet\n"
-printf "[2] Remove Apache\n"
-printf "[3] Remove OpenSSH\n"
-printf "[4] Remove Very Secure FTP Daemon -VSFTPD-\n"
-printf "[5] Install Apache\n"
-printf "[6] Install SSH\n"
-printf "[7] Application Menu\n"
-echo -e "$GREEN -----------------------------------------------------------"
-read test_menu3
-
-case $test_menu3 in
-1)
-	echo -e "$RED [!] Removing Telnet"
-	service rm telnet
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-2)
-	echo -e "$RED [!] Removing Apache"
-	service apache stop
-	service rm apache2
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-3)
-	echo -e "$RED [!] Removing OpenSSH"
-	service ssh stop
-	service rm ssh
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-4)
-	echo -e "$RED [!] Removing VSFTPD"
-	service vsftpd stop
-	service rm vsftpd
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-5)
-	echo -e "$GREEN [+] Installing Apache"
-	apt-get install apache2
-	service apache2 start
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-6)
-	echo -e "$GREEN [+] Installing SSH"
-	apt-get install ssh
-	service ssh start
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-7)
-	echo -e "$YELLOW Proceeding to Menu..."
-	sleep 1
-	clear
-	menu2
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input"
-	sleep 1
-	clear
-	menu3
-	;;
-	esac
-}
-
-menu3
 
 ubuntu()
 {
@@ -634,7 +513,7 @@ ubuntu()
 menu4()
 {
 clear
-echo -e "$YELLOW #########~Ubuntu OS Firewall Options...?~###################"
+echo "#########~Ubuntu OS Firewall Options...?~###################"
 echo -e "$RED [!] This will only work with the Ubuntu OS [!]"
 echo "$RESET -----------------------------------------------------------"
 printf "[1] Enable Firewall\n"
@@ -740,6 +619,8 @@ case $ubuntu_menu4 in
 	read WAIT_FOR_USER
 	clear
 	menu4
+	
+	;;
 	
 8)
 	apt-get install UFW
@@ -908,6 +789,8 @@ case $userconfig_menu5 in
 	clear
 	menu5
 	
+	;;
+	
 8)
 	echo -e "$YELLOW Proceeding to Menu..."
 	sleep 1
@@ -926,3 +809,136 @@ case $userconfig_menu5 in
 }
 
 menu5
+
+
+services()
+{
+echo "Starting Selection..."
+
+}
+
+menu3()
+{
+clear
+echo "#################################################################"
+printf "[1] Remove Telnet\n"
+printf "[2] Remove Apache\n"
+printf "[3] Remove OpenSSH\n"
+printf "[4] Remove Very Secure FTP Daemon -VSFTPD-\n"
+printf "[5] Install Apache\n"
+printf "[6] Install SSH\n"
+printf "[7] Application Menu\n"
+echo -e "$GREEN -----------------------------------------------------------"
+read services_menu3
+
+case $services_menu3 in
+1)
+	echo -e "$RED [!] Removing Telnet"
+	service rm telnet
+	sleep 1
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+2)
+	echo -e "$RED [!] Removing Apache"
+	service apache stop
+	service rm apache2
+	sleep 1
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+3)
+	echo -e "$RED [!] Removing OpenSSH"
+	service ssh stop
+	service rm ssh
+	sleep 1
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+4)
+	echo -e "$RED [!] Removing VSFTPD"
+	service vsftpd stop
+	service rm vsftpd
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+5)
+	echo -e "$GREEN [+] Installing Apache"
+	apt-get install apache2
+	service apache2 start
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+6)
+	echo -e "$GREEN [+] Installing SSH"
+	apt-get install ssh
+	service ssh start
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success..."
+	else
+		echo -e "$RED [!] Unsuccessful..."
+	fi
+	read WAIT_FOR_USER
+	clear
+	menu3
+	
+	;;
+	
+7)
+	echo -e "$YELLOW Proceeding to Menu..."
+	sleep 1
+	clear
+	menu2
+	
+	;;
+	
+*)
+	echo -e "$RED [!] Invalid Input"
+	sleep 1
+	clear
+	menu3
+	;;
+	esac
+}
+
+menu3
