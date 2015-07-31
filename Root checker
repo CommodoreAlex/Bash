@@ -3,5 +3,5 @@ if [ $EUID -ne 0 ]; then
 	sleep 1
 	exit
 else
-    echo -e "$GREEN [+] You are root, running as per usual... COEND"
+    echo -e "$GREEN [+] Root detected, moving on. COEND"
 fi
