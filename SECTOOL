@@ -372,7 +372,7 @@ case $begin_menu2 in
 	else
 		echo -e "$RED [!] Unsuccessful..."
 	fi
-	echo -e "$RED [!] Check the 'crontab -e' & '/etc/rc.local' as well as they could have backdoors"
+	echo "[!] Check the 'crontab -e' & '/etc/rc.local' as well as they could have backdoors"
 	read WAIT_FOR_USER
 	clear
 	menu2
@@ -514,7 +514,7 @@ menu4()
 {
 clear
 echo "#########~Ubuntu OS Firewall Options...?~###################"
-echo -e "$RED [!] This will only work with the Ubuntu OS [!]"
+echo "[!] This will only work with the Ubuntu OS"
 echo "$RESET -----------------------------------------------------------"
 printf "[1] Enable Firewall\n"
 printf "[2] Disable Firewall\n"
