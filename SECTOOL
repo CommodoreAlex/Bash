@@ -665,7 +665,7 @@ userconfig()
 menu5()
 {
 clear
-echo -e "$YELLOW #########~Would you like to remove any services...?~###################"
+echo -e "$YELLOW #########~Easy User Configuration for The Lazy!~###################"
 echo -e "$RESET -----------------------------------------------------------"
 printf "[1] Add User\n"
 printf "[2] Remove User\n"
