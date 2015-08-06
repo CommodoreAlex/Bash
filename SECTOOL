@@ -423,7 +423,7 @@ case $begin_menu2 in
 	
 21)
 	echo "Entering user configuration."
-	read WAIT_FOR_USER
+	sleep 1
 	clear
 	menu5
 	
