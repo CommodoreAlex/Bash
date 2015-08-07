@@ -623,7 +623,7 @@ case $ubuntu_menu4 in
 	;;
 	
 8)
-	apt-get install UFW
+	apt-get install GUFW
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success..."
 	else
