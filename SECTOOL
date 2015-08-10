@@ -1,6 +1,5 @@
 #!/bin/bash
-#RUN THIS SCRIPT AS ROOT
-#V12
+#V14
 #!/bin/bash
 
 ### Color Output
@@ -12,114 +11,48 @@ BOLD="\033[01;01m"     # Highlight
 COEND="/e[0m"          # Ending Phrase
 RESET="\033[00m"       # Normal
 
-start()
-{
-echo "Starting Program..."
+# Installing HTOP
+htop(){
+	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+		echo -e "$BLUE dpkg-query: [-] No packages found matching 'htop'."
+		echo "Would you like to install HTOP? (y/n)"             			#Checks to see if htop is installed or not.
+		echo " -------------------------------------"            		    #If it is installed then it will direct you to the second if statement.
+		read $REPLY                                                         #If it isn't installed it will direct you to the first if statement.
+																			#If it isn't installed you will be prompted with a choice to install or not.
+		if [ $REPLY = 'y' ]; then                                           #If it is installed it will tell you if packages are detected + some other info then
+			apt-get install htop                                            #direct you to the htop utility, your original request.
+		if [ $? -eq 0 ]; then
+			echo -e "$GREEN [+] HTOP has successfully been installed.. $COEND"
+		else
+			echo -e "$RED [!] Installation was unsuccessful.. $COEND"
+		fi
+	else
+		sleep 1
+		clear
+		menu2
+	fi
 
+	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo -e "$GREEN dpkg-query: [+] Packages found matching 'htop'. $COEND"
+	else
+		echo -e "$RED dpkg-query: [!] No packages found matching 'htop'. $COEND"
+		sleep 1
+	fi
 }
 
-menu()
-{
+# Put executable setup here
+exec(){
+	asdfs
 
-clear 
-echo "-------------------------------------------------------"
-echo -e "$BOLD CYBER COMPETITION TOOL"
-echo -e "$RESET What would you like to do?"
-echo -e "$GREEN [1] Start"
-echo -e "$RED [2] Exit"
-echo -e "$RESET [3] Readme"
-echo -e "$RESET -------------------------------------------------------"
-date
-uptime
-read start_menu
-
-case $start_menu in
-1)
-	echo "Starting SECTOOL..."
-	clear
-	start
-
-	;;
-
-2)
-	echo -e "$RED [!] Shutting down..."
-	clear
-	exit
-
-	;;
-
-3)
-	echo "Go here for some clean configuration file examples."
-	echo -e "$YELLOW https://github.com/CommodoreAlex/Bash/tree/master"
-	echo "Some things to look out for..."
-	echo "1) Aircrack-NG"
-	echo "2) John the ripper"
-	echo "3) Hydra"
-	echo "4) MariaDB Services"
-	echo "5) Samba Root Shares"
-	echo "6) Netcat Backdoor"
-	echo "7) Perl Backdoor"
-	echo "8) Mongodb"
-	echo "9) SMBD (Samba)"
-	echo "10) Medusa"
-	read WAIT_FOR_USER
-	clear
-	menu
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input"
-	sleep 1
-	menu
-	;;
-	esac
+	daf
+	asdfsdf
+	accountfsd
 }
 
-menu
-
-mkdir SECTOOLTXT    #This holds the copies of the user and group text files.
-
-begin()
-{
-echo ""
-
-}
-
-menu2()
-{
-clear
-echo "###########################################################"
-printf "[1] Prohibited Media File Finder\n"
-printf "[2] Updater\n"
-printf "[3] SSH Root Login\n"
-printf "[4] Insecure Root Passwd\n"
-printf "[5] System Logs\n"
-printf "[6] User List Copy\n"
-printf "[7] Group List Copy\n"
-printf "[8] Services\n"
-printf "[9] Login.defs\n"
-printf "[10] Common-Password\n"
-printf "[11] Guest Account 12.04\n"
-printf "[12] Guest Account 14.04\n"
-printf "[13] RkHunter\n"
-printf "[14] Executable Setup\n"
-printf "[15] Ping\n"
-printf "[16] Firewall\n"
-printf "[17] Netstat (Check for listening ports)\n"
-printf "[18] Sudoers\n"
-printf "[19] Crontab\n"
-printf "[20] Procceses\n"
-printf "[21] User Account Config\n"
-printf "[22] HTOP\n"
-printf "[23] Shadow List Copy\n"
-echo -e "$RED [24] Exit #COEND"
-echo -e "$GREEN -----------------------------------------------------------"
-read begin_menu2
-
-case $begin_menu2 in
-1)
-	echo -e "$YELLOW Presenting all media files with possible prohibited extensions"
+# Media File Finder
+media(){
+	echo "Listing all media files"
 	echo "------------------------------------------------------------"
 	find / -name "*.mp3"
 	find / -name "*.mp4"
@@ -128,364 +61,304 @@ case $begin_menu2 in
 	find / -name "*.jpeg"
 	find / -name "*.png"
 	find / -name "*.exe"
+
+	read WAIT_FOR_USER
+
 	if [ $? -eq 0 ]; then
-	    echo -e "$GREEN [+] Success..."
+		echo -e "$Green [+] Success.. $COEND"
 	else
-        echo -e "$RED [!] Unsuccessful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read SEARCH_RESULTS
+
+	sleep 1
+}
+
+# Users/Group
+users(){
+	# Moving important files to UGP dir.
+	mkdir UGP
+	cp /etc/passwd UGP
+	cp /etc/group UGP
+	cp /etc/shadow UGP
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+
+# Change ROOT passwd.
+	echo "Please change the root passwd."
+	passwd
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+
+# Disable ROOT account
+	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
+	passwd -l root  2>&1>/dev/null
+	echo "[+] Root account has been locked."
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+
+# Guest Account
+	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
+	if grep -q "allow-guest=false" /etc/lightdm/lightdm.conf; then
+		echo "[+] Guest account already disabled!"
+	else
+		echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+	fi
+	echo "[+] Guest account disabled. (lightdm)"
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+
+# Hide userlist from login screen
+    sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
+    if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
+        echo "[+] User list already hidden!"
+    else
+        echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
+    fi
+    echo "[+] User list hidden from login screen. (lightdm)"
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+}
+
+# Updates
+	updates(){
+	echo "Updating/Upgrading"
+	sleep 1
+	apt-get update && apt-get dist-upgrade
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] System has been updated.. $COEND"
+	else
+		echo -e "$RED [!] Update unsuccessful.. $COEND"
+	fi
+
+	sleep 1
+}
+
+# SSH
+ssh(){
+	echo "Permitting SSH ROOT login to 'no'"
+	sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+
+	sleep 1
+}
+
+# Firewall
+firewall(){
+
+	#Configures the firewall, resets/enables/lists/asks if port 22 is allowed.
+	ufw default deny
+	ufw enable
+	ufw status numbered
+	
+	# Allow port 22?
+	echo "Would you like to allow port 22? (y/n)"
+	read $ANSWER
+	
+	if [ $ANSWER = 'y' ]; then
+		ufw allow 22
+		echo "Port 22 is allowed."
+	else
+		echo "Port 22 is not allowed."
+		sleep 1
+	fi
+}
+
+# Cron
+cron(){
+
+    # Check scheduled jobs
+    echo "[+] Listing /etc/cron* directories"
+    ls -la /etc/cron*
+    echo "[+] Listing root crontab"
+    crontab -l
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
+}
+
+# Services
+services()
+{
+echo ""
+
+}
+
+menu1()
+{
+clear
+echo "#################################################################"
+printf "[1] Remove Telnet\n"
+printf "[2] Remove Apache\n"
+printf "[3] Remove SSH\n"
+printf "[4] Remove Very Secure FTP Daemon -VSFTPD-\n"
+printf "[5] Remove Bind9 (DNS Server)\n"
+printf "[6] Install Apache\n"
+printf "[7] Install SSH\n"
+printf "[8] Exit\n"
+echo -e "$GREEN -----------------------------------------------------------"
+read services_menu1
+
+case $services_menu1 in
+1)
+	echo -e "$RED [!] Removing Telnet $COEND"
+	apt-get -purge remove telnet
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 2)
-	echo -e "$YELLOW Updating..."
-	apt-get update && apt-get dist-upgrade
+	echo -e "$RED [!] Removing Apache $COEND"
+	service apache2 stop
+	apt-get -purge remove apache2
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccessful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 3)
-	echo -e "$RED [!] Permitting Root Login to NO."
-	sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-	if [ $? -eq ]; then
-		echo -e "$GREEN [+] Success..."
+	echo -e "$RED [!] Removing SSH $COEND"
+	service ssh stop
+	apt-get -purge remove ssh
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccesful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 4)
-	echo -e "$YELLOW Input New Root Passwd"
-	passwd
+	echo -e "$RED [!] Removing VSFTPD $COEND"
+	service vsftpd stop
+	apt-get -purge remove vsftpd
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccesful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 5)
-	echo -e "$YELLOW Installing Gnome System Log Viewer"
-	apt-get install gnome
-	gnome-system-logs
+	echo -e "$RED [!] Removing Bind9 (DNS Server) $COEND"
+	service bind9 stop
+	apt-get -purge remove bind9
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+} Success..."
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccessful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 6)
-	echo -e "$YELLOW Writing Users to -SECTOOLTXT-"
-	cp /etc/passwd SECTOOLTXT
+	echo -e "$GREEN [+] Installing Apache $COEND"
+	apt-get install apache2
+	service apache2 start
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccessful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 7)
-	echo -e "$YELLOW Writing groups to -SECTOOLTXT-"
-	cp /etc/group SECTOOLTXT
+	echo -e "$GREEN [+] Installing SSH $COEND"
+	apt-get install ssh
+	service ssh start
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
+		echo -e "$GREEN [+] Success.. $COEND"
 	else
-		echo -e "$RED [!] Unsuccessful..."
+		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
-	read WAIT_FOR_USER
+	
+	sleep 1
 	clear
-	menu2
+	menu1
 	
 	;;
 	
 8)
-	echo -e "$YELLOW Presenting Services"
-	service --status-all
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	sleep 1
-	clear
-	menu3
-	
-	;;
-	
-9) #pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent
-	echo -e "$YELLOW Password Policy Section"
-	nano /etc/pam.d/login.defs
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-10)
-	echo -e "$YELLOW Account Policy Section"
-	nano /etc/pam.d/common-password
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-11)
-	echo -e "$YELLOW Guest Account 12.04"
-	gedit /etc/lightdm/lightdm.conf #allow-guest= false | greeter-hide-users= true
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-12)
-	echo -e "$YELLOW Guest Account 14.04"
-	cd /usr/share/lightdm/lightdm.conf.d/ #allow-guest= false | greeter-hide-users= true
-	gedit 50-ubuntu.conf
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-13)
-	echo -e "$RED [!] Beginning RkHunter Installation..."
-	apt-get install chkrootkit
-	apt-get install rkhunter
-	rhkunter --update
-	clear
-	sleep 1
-	rkhunter -c #SCANS FOR VULNERABILITIES
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read VIEW_MATERIAL
-	clear
-	menu2
-	
-	;;
-	
-14)
-	echo -e "$RED [!] Setting Executable From All Directories..."
-	sleep 1
-	chmod +x SECTOOL
-	cp SECTOOL /usr/bin/SECTOOL
-	cp SECTOOL /usr/local/bin
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-		clear
-		menu2
-	fi
-	echo -e "$GREEN ~You are now able to type <SECTOOL>in any directory to recall this tool~"
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-15)
-	echo -e "$YELLOW Enter an IP address or domain..."
-	echo "------------------------------------------------------------"
-	read INPUT
-	ping $INPUT
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-16)
-	ufw status
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	sleep 1
-	clear
-	menu4
-	
-	;;
-	
-17)
-	netstat -tulpna #apt-get purge netcat | apt-get purge --auto-remove netcat | apt-get remove netcat | apt-get remove --autoremove netca
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	echo "[!] Check the 'crontab -e' & '/etc/rc.local' as well as they could have backdoors"
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-18)
-	cd /etc/sudoers.d #VISUDO
-	ls
-	echo -e "$RED [!] EX. of dirty file http://prntscr.com/5rq01o"
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-19)
-	crontab -e
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-20)
-	echo "Demonstration of process layout"
-	ps -A
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-21)
-	echo "Entering user configuration."
-	sleep 1
-	clear
-	menu5
-	
-	;;
-	
-22)
-	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    echo -e "$BLUE dpkg-query: [-] No packages found matching 'htop'."
-	echo -e "$YELLOW Would you like to install HTOP? (y/n)"             #Checks to see if htop is installed or not.
-	echo -e "$RESET -------------------------------------"              #If it is installed then it will direct you to the second if statement.
-	read $REPLY                                                         #If it isn't installed it will direct you to the first if statement.
-	                                                                    #If it isn't installed you will be prompted with a choice to install or not.
-	if [ $REPLY = 'y' ]; then                                           #If it is installed it will tell you if packages are detected + some other info then
-		apt-get install htop                                            #direct you to the htop utility, your original request.
-		if [ $? -eq 0 ]; then
-			echo -e "$GREEN [+] HTOP has successfully been installed... $COEND"
-		else
-			echo -e "$RED [!] Installation was unsuccessful... $COEND"
-		fi
-	else
-		sleep 1
-		clear
-		menu2
-		fi
-	fi
-
-
-	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-	dpkg-query -l htop
-    echo -e "$BLUE dpkg-query: [+] Packages found matching 'htop'."
-	echo -e "$YELLOW Would you like to start the HTOP utility? (y/n)"
-	echo -e "$RESET -------------------------------------"
-	read $REPLY
-	
-	if [ $REPLY = y ]; then
-		sleep 1
-		htop
-	else
-		sleep 1
-		clear
-		menu2
-		fi
-	fi
-   
-	;;
-	
-23)
-	echo -e "$YELLOW Writing Shadow to -SECTOOLTXT-"
-	cp /etc/shadow SECTOOLTXT
-		if [ $? -eq 0 ]; then
-			echo -e "$GREEN [+] Success..."
-		else
-			echo -e "$RED [!] Unsuccessful..."
-		fi
-	read WAIT_FOR_USER
-	clear
-	menu2
-	
-	;;
-	
-24)
-	echo -e "$RED [!] Shutting down..."
 	sleep 1
 	clear
 	exit
@@ -493,452 +366,12 @@ case $begin_menu2 in
 	;;
 	
 *)
-	echo -e "$RED [!] Invalid Input"
+	echo -e "$RED [!] Invalid Input.. $COEND"
 	sleep 1
 	clear
-	menu2
+	menu1
 	;;
 	esac
 }
 
-menu2
-
-
-ubuntu()
-{
-	echo "Ubuntu Firewall"
-
-}
-
-menu4()
-{
-clear
-echo "#########~Ubuntu OS Firewall Options...?~###################"
-echo "[!] This will only work with the Ubuntu OS"
-echo "$RESET -----------------------------------------------------------"
-printf "[1] Enable Firewall\n"
-printf "[2] Disable Firewall\n"
-printf "[3] Firewall Status\n"
-printf "[4] Allow port 22\n"
-printf "[5] Allow port 80\n"
-printf "[6] Remove Firewall Rules\n"
-printf "[7] Default Firewall (RESET)\n"
-printf "[8] Install GUFW\n"
-printf "[9] Application Menu\n"
-echo -e "$GREEN ----------------------------------------------------------"
-read ubuntu_menu4
-	
-case $ubuntu_menu4 in
-1)
-	ufw enable
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-
-	;;
-
-2)
-	ufw disable
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-
-	;;
-
-3)
-	ufw status
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-4)
-	ufw allow 22
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-5)
-	ufw allow 80
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessfu..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-6)
-	echo -e "$RED [!] Input Port"
-	read Port
-	ufw --force delete $Port
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-7)
-	ufw default deny
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsucwcessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-8)
-	apt-get install GUFW
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsucwcessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu4
-	
-	;;
-	
-9)
-	echo -e "$YELLOW Moving back to main menu..."
-	sleep 1
-	clear
-	menu2
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input"
-	sleep 1
-	clear
-	menu4
-	;;
-	
-	esac
-}
-
-menu4
-
-
-userconfig()
-{
-	echo "Configuration"
-
-}
-
-menu5()
-{
-clear
-echo -e "$YELLOW #########~Easy User Configuration for The Lazy!~###################"
-echo -e "$RESET -----------------------------------------------------------"
-printf "[1] Add User\n"
-printf "[2] Remove User\n"
-printf "[3] Modify A Users Name\n"
-printf "[4] Change a users passwd\n"
-printf "[5] Delete Users Home DIR\n"
-printf "[6] Add User to Group\n"
-printf "[7] Remove User from Group\n"
-printf "[8] Applicaiton Menu\n"
-echo -e "$GREEN -----------------------------------------------------------"
-read userconfig_menu5
-
-case $userconfig_menu5 in
-1)
-	echo "What user would you like to create?"
-	read $USER
-	adduser $USER
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-2)
-	echo "What user would you like to remove?"
-	read $USER
-	deluser $USER
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-3)
-	echo "What is the new username?"
-	read new_username
-	echo "What is the old username?"
-	read old_username
-	usermod -l $new_username $old_username
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-4)
-	echo "What user pass would you like to change?"
-	read $USER_NAME
-	passwd $USER_NAME
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-5)
-	echo "What user HOME DIR would you like to remove? (Write file path /home/username)"
-	read $FILE_PATH
-	rm -r $FILE_PATH #/home/username
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-6)
-	echo "What user are you moving?"
-	read $USER
-	echo "What is the destination for the user?"
-	read $DESTINATION
-	usermod -a -G $DESTINATION $USER
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-7)
-	echo "What is the username?"
-	read $USER
-	echo "What is the group name?"
-	read $GROUP
-	deluser $USER $GROUP
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu5
-	
-	;;
-	
-8)
-	echo -e "$YELLOW Proceeding to Menu..."
-	sleep 1
-	clear
-	menu2
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input"
-	sleep 1
-	clear
-	menu5
-	;;
-	esac
-}
-
-menu5
-
-
-services()
-{
-echo "Starting Selection..."
-
-}
-
-menu3()
-{
-clear
-echo "#################################################################"
-printf "[1] Remove Telnet\n"
-printf "[2] Remove Apache\n"
-printf "[3] Remove OpenSSH\n"
-printf "[4] Remove Very Secure FTP Daemon -VSFTPD-\n"
-printf "[5] Install Apache\n"
-printf "[6] Install SSH\n"
-printf "[7] Application Menu\n"
-echo -e "$GREEN -----------------------------------------------------------"
-read services_menu3
-
-case $services_menu3 in
-1)
-	echo -e "$RED [!] Removing Telnet"
-	service rm telnet
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-2)
-	echo -e "$RED [!] Removing Apache"
-	service apache stop
-	service rm apache2
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-3)
-	echo -e "$RED [!] Removing OpenSSH"
-	service ssh stop
-	service rm ssh
-	sleep 1
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-4)
-	echo -e "$RED [!] Removing VSFTPD"
-	service vsftpd stop
-	service rm vsftpd
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-5)
-	echo -e "$GREEN [+] Installing Apache"
-	apt-get install apache2
-	service apache2 start
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-6)
-	echo -e "$GREEN [+] Installing SSH"
-	apt-get install ssh
-	service ssh start
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success..."
-	else
-		echo -e "$RED [!] Unsuccessful..."
-	fi
-	read WAIT_FOR_USER
-	clear
-	menu3
-	
-	;;
-	
-7)
-	echo -e "$YELLOW Proceeding to Menu..."
-	sleep 1
-	clear
-	menu2
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input"
-	sleep 1
-	clear
-	menu3
-	;;
-	esac
-}
-
-menu3
+menu1
