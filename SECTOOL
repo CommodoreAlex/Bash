@@ -13,6 +13,7 @@ RESET="\033[00m"       # Normal
 
 # Installing HTOP
 htop(){
+
 	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
 		echo -e "$BLUE dpkg-query: [-] No packages found matching 'htop'."
 		echo "Would you like to install HTOP? (y/n)"             			#Checks to see if htop is installed or not.
@@ -43,6 +44,7 @@ htop(){
 
 # Put executable setup here
 exec(){
+
 	asdfs
 
 	daf
@@ -52,6 +54,7 @@ exec(){
 
 # Media File Finder
 media(){
+
 	echo "Listing all media files"
 	echo "------------------------------------------------------------"
 	find / -name "*.mp3"
@@ -75,6 +78,7 @@ media(){
 
 # Users/Group
 users(){
+
 	# Moving important files to UGP dir.
 	mkdir UGP
 	cp /etc/passwd UGP
@@ -90,6 +94,7 @@ users(){
 	sleep 1
 
 # Change ROOT passwd.
+
 	echo "Please change the root passwd."
 	passwd
 
@@ -102,6 +107,7 @@ users(){
 	sleep 1
 
 # Disable ROOT account
+
 	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
 	passwd -l root  2>&1>/dev/null
 	echo "[+] Root account has been locked."
@@ -115,6 +121,7 @@ users(){
 	sleep 1
 
 # Guest Account
+
 	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
 	if grep -q "allow-guest=false" /etc/lightdm/lightdm.conf; then
 		echo "[+] Guest account already disabled!"
@@ -132,6 +139,7 @@ users(){
 	sleep 1
 
 # Hide userlist from login screen
+
     sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
     if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
         echo "[+] User list already hidden!"
@@ -151,6 +159,7 @@ users(){
 
 # Updates
 	updates(){
+	
 	echo "Updating/Upgrading"
 	sleep 1
 	apt-get update && apt-get dist-upgrade
@@ -166,6 +175,7 @@ users(){
 
 # SSH
 ssh(){
+
 	echo "Permitting SSH ROOT login to 'no'"
 	sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 
