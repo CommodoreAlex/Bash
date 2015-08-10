@@ -15,7 +15,7 @@ RESET="\033[00m"       # Normal
 htop(){
 
 	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-		echo -e "$BLUE dpkg-query: [-] No packages found matching 'htop'."
+		echo -e "$RED dpkg-query: [!]  No packages found matching 'htop'. $COEND"
 		echo "Would you like to install HTOP? (y/n)"             			#Checks to see if htop is installed or not.
 		echo " -------------------------------------"            		    #If it is installed then it will direct you to the second if statement.
 		read $REPLY                                                         #If it isn't installed it will direct you to the first if statement.
