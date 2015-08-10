@@ -11,47 +11,57 @@ BOLD="\033[01;01m"     # Highlight
 COEND="/e[0m"          # Ending Phrase
 RESET="\033[00m"       # Normal
 
-# Installing HTOP
-htop(){
+# Password Policy
+policy(){
 
-	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-		echo -e "$RED dpkg-query: [!]  No packages found matching 'htop'. $COEND"
-		echo "Would you like to install HTOP? (y/n)"             			#Checks to see if htop is installed or not.
-		echo " -------------------------------------"            		    #If it is installed then it will direct you to the second if statement.
-		read $REPLY                                                         #If it isn't installed it will direct you to the first if statement.
-																			#If it isn't installed you will be prompted with a choice to install or not.
-		if [ $REPLY = 'y' ]; then                                           #If it is installed it will tell you if packages are detected + some other info then
-			apt-get install htop                                            #direct you to the htop utility, your original request.
-		if [ $? -eq 0 ]; then
-			echo -e "$GREEN [+] HTOP has successfully been installed.. $COEND"
-		else
-			echo -e "$RED [!] Installation was unsuccessful.. $COEND"
-		fi
-	else
-		sleep 1
-		clear
-		menu2
-	fi
-
-	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-		dpkg-query -l htop
-		echo -e "$GREEN dpkg-query: [+] Packages found matching 'htop'. $COEND"
-	else
-		echo -e "$RED dpkg-query: [!] No packages found matching 'htop'. $COEND"
-		sleep 1
-	fi
+	# pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent
+	echo "Be sure to put 150, 10, 7."
+	echo "Press 'ENTER' when ready to edit."
+	read WAIT_FOR_USER
+	nano /etc/login.defs
+	sleep 1
+	
+	echo "pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent"
+	echo "After sha512 place remember=5 minlen=8"
+	echo "Press 'ENTER' when ready to edit."
+	read WAIT_FOR_USER
+	nano /etc/pam.d/common-password
+	sleep 1
 }
-
+	
 # Put executable setup here
 exec(){
-
-	asdfs
-
-	daf
-	asdfsdf
-	accountfsd
+	
+	chmod +x STEMSCRIPT
+	cp STEMSCRIPT /usr/bin/STEMSCRIPT
+	cp STEMSCRIPT /usr/local/bin
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Now executable from any directory $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND:
+	fi
+	
+	sleep 1
 }
 
+# Sudoers
+sudoers(){
+
+	cd /etc/sudoers.d
+	ls -a
+	read WAIT_FOR_USER
+	nano README
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$Green [+] Success.. $COEND"
+	else
+		echo -e "$RED [!] Unsuccessful.. $COEND"
+	fi
+
+	sleep 1
+}
+	
 # Media File Finder
 media(){
 
@@ -86,12 +96,12 @@ users(){
 	cp /etc/shadow UGP
 
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
+		echo -e "$GREEN [+] Success, be sure to check UGP dir. $COEND"
 	else
 		echo -e "$RED [!] Unsuccessful.. $COEND"
 	fi
 	
-	sleep 1
+	sleep 3
 
 # Change ROOT passwd.
 
@@ -122,13 +132,9 @@ users(){
 
 # Guest Account
 
-	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
-	if grep -q "allow-guest=false" /etc/lightdm/lightdm.conf; then
-		echo "[+] Guest account already disabled!"
-	else
-		echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
-	fi
-	echo "[+] Guest account disabled. (lightdm)"
+	cd usr/share/lightdm/lightdm.conf.d/   #allow-guest= false | greeter-hide-users= true | # out autologon
+	gedit 50-ubuntu.conf
+	cd
 
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success.. $COEND"
@@ -141,13 +147,7 @@ users(){
 # Hide userlist from login screen
 
     sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
-    if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
-        echo "[+] User list already hidden!"
-    else
-        echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
-    fi
-    echo "[+] User list hidden from login screen. (lightdm)"
-	
+   
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success.. $COEND"
 	else
@@ -158,7 +158,7 @@ users(){
 }
 
 # Updates
-	updates(){
+updates(){
 	
 	echo "Updating/Upgrading"
 	sleep 1
@@ -197,7 +197,7 @@ firewall(){
 	ufw status numbered
 	
 	# Allow port 22?
-	echo "Would you like to allow port 22? (y/n)"
+	echo "Would you like to allow port 22 (y/n)"
 	read $ANSWER
 	
 	if [ $ANSWER = 'y' ]; then
@@ -217,6 +217,15 @@ cron(){
     ls -la /etc/cron*
     echo "[+] Listing root crontab"
     crontab -l
+	
+	echo "Would you like to edit the crontab? (y/n)"
+	read $RESPONSE
+	
+	if [ $RESPONSE = 'y' ]; then
+		crontab -e
+	else
+		echo " "
+	fi
 	
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Success.. $COEND"
