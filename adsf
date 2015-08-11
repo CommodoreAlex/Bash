@@ -1,0 +1,191 @@
+#!/bin/bash
+#V14
+#!/bin/bash
+
+### Color Output
+RED="\033[01;31m"      # Errors
+GREEN="\033[01;32m"    # Success
+YELLOW="\033[01;33m"   # Warnings/Information
+BLUE="\033[01;34m"     # Heading
+BOLD="\033[01;01m"     # Highlight
+COEND="/e[0m"          # Ending Phrase
+RESET="\033[00m"       # Normal
+
+large_config(){
+	
+	# Changes the ROOT password & disables the account overall.
+	# Disables the guest account.
+	# Hides userlist from login screen.
+	# Copies passwd, group, and shadow files to a dir named 'UGP'
+	
+	# Moving passwd/group/shadow files to UGP dir.
+	mkdir UGP
+	cp /etc/passwd UGP
+	cp /etc/group UGP
+	cp /etc/shadow UGP
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Successfully copied files to UGP dir. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Could not copy to UGP dir. $COEND"
+		read WAIT_FOR_USER
+	fi
+
+	# Disables the guest account & Hides the userlist from the login screen.
+	# allow-guest= false | greeter-hide-users= true | # out autologon
+	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Guest account/Userlist have been configured. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Couldn't configure /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+		read WAIT_FOR_USER
+	fi
+	
+	# Root password change.
+	passwd
+	
+	# Disable root account.
+	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
+    passwd -l root 2>&1>/dev/null
+	echo -e "$GREEN [+] Root account has been locked. $COEND"
+	read WAIT_FOR_USER
+}
+
+password_policy(){
+
+	# This will set the password policy for common-password & login.defs.
+	# Also this will install libpam-cracklib for /etc/pam.d/common-password.
+	
+	apt-get update && apt-get install libpam-cracklib
+    if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
+        echo "[+] /etc/pam.d/common-password already configured"
+		read WAIT_FOR_USER
+    else
+        echo "password   requisite    pam_cracklib.so retry=3 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
+		echo "[+] /etc/pam.d/common-password set."
+		read WAIT_FOR_USER
+    fi
+
+    sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
+    sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
+    echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs"
+	read WAIT_FOR_USER
+}
+
+ssh(){
+
+	# This will change the permit root login of /etc/ssh/sshd_config.
+	# to no, if it has the line 'PermitRootLogin yes'.
+	
+	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+        echo "[!] Root SSH login is enabled!"
+		sleep 1
+        sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
+		sleep 1
+        echo "[+] Root SSH login has been disabled."
+		read WAIT_FOR_USER
+    fi
+	
+	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+		echo "[!] X11 Forwarding is enabled!"
+		sleep 1
+        sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
+        echo "[+] X11 Forwarding has been disabled."
+		read WAIT_FOR_USER
+    fi
+}
+
+firewall(){
+
+	# Sets the firewall to default standards
+	# Enables the firewall
+	# Lists the allowed ports of the firewall
+	
+	ufw default deny &>/dev/null
+	ufw enable &>/dev/null
+	sleep 1
+	ufw status numbered
+	read WAIT_FOR_USER
+}
+
+media(){
+
+	# Finds and lists the media files selected for search.
+	
+	find / -name "*.mp3"
+	find / -name "*.mp4"
+	find / -name "*.gif"
+	find / -name "*.jpg"
+	find / -name "*.jpeg"
+	find / -name "*.png"
+	find / -name "*.exe"
+	echo -e "$GREEN [+] Listed media/exec files. $COEND"
+	read WAIT_FOR_USER
+}
+
+crontab(){
+
+	# Checks the scheduled jobs
+	echo "Listing /etc/cron* directories"
+	ls -la /etc/cron*
+	read WAIT_FOR_USER
+	echo "Listing root crontab"
+	crontab -l
+	read WAIT_FOR_USER
+}
+
+updates(){
+	
+	# Makes sure sources are added
+    if grep -q "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Security source already installed!"
+    else
+        echo "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Security source added"
+    fi
+
+    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Updates source already installed!"
+    else
+        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Updates source added"
+    fi
+
+    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Backports source already installed!"
+    else
+        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Backports source added"
+    fi
+
+    # Check for updates daily
+    if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
+        echo "[!] Daily updates check already configured!"
+    else
+        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
+        echo "[+] Daily updates configured"
+    fi
+
+	# Updates and upgrades the system
+    apt-get update && apt-get dist-upgrade &>/dev/null
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] The system has been updated/upgraded. $COEND"
+	else
+		echo -e "$GREEN [!] The system has not been updated. $COEND"
+	fi
+}
+
+if [ 1 = 1 ]; then
+	large_config
+	password_policy
+	ssh
+	firewall
+	media
+	crontab
+	updates
+else
+	echo ""
+	exit
+fi
