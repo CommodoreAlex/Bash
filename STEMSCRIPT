@@ -131,7 +131,7 @@ firewall(){
 
 services(){
 
-	# Prompt for install / Removal /
+	# Prompts the user for removal of services.
 	
 	echo "Would you like to remove bind9? -DNS Server- (y/n)"
 	read $REPLY
@@ -180,6 +180,20 @@ services(){
 		echo -e "$RED [!] Could not remove SSH / SSH isn't installed. $COEND"
 		read WAIT_FOR_USER
 	fi
+	
+	clear
+	sleep 1
+}
+
+
+ports(){
+
+	# Shows all open ports on the system.
+	
+	echo "[+] Listing all open ports"
+	
+	netstat -tulpna | grep LISTEN
+	read WAIT_FOR_USER
 	
 	clear
 	sleep 1
@@ -277,6 +291,7 @@ if [ 1 = 1 ]; then
 	ssh
 	firewall
 	services
+	ports
 	media
 	crontab
 	updates
