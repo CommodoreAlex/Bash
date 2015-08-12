@@ -3,70 +3,192 @@
 #!/bin/bash
 
 ### Color Output
-RED="\033[01;31m"      # Errors
-GREEN="\033[01;32m"    # Success
-YELLOW="\033[01;33m"   # Warnings/Information
-BLUE="\033[01;34m"     # Heading
-BOLD="\033[01;01m"     # Highlight
-COEND="/e[0m"          # Ending Phrase
-RESET="\033[00m"       # Normal
+#GREEN="/e[1;32m"       # Success / OLD
+#RED="/e[1;31m"         # Errors / OLD
+#COEND="/e[0m"          # Ending Phrase / OLD
+#RED="\033[01;31m"      # Errors
+#GREEN="\033[01;32m"    # Success
+#YELLOW="\033[01;33m"   # Warnings/Information
+#BLUE="\033[01;34m"     # Heading
+#BOLD="\033[01;01m"     # Highlight
+#COEND="/e[0m"          # Ending Phrase
+#RESET="\033[00m"       # Normal
 
-# Password Policy
-policy(){
-
-	# pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent
-	echo "Be sure to put 150, 10, 7."
-	echo "Press 'ENTER' when ready to edit."
-	read WAIT_FOR_USER
-	nano /etc/login.defs
-	sleep 1
+large_config(){
 	
-	echo "pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent"
-	echo "After sha512 place remember=5 minlen=8"
-	echo "Press 'ENTER' when ready to edit."
-	read WAIT_FOR_USER
-	nano /etc/pam.d/common-password
-	sleep 1
-}
+	# Changes the ROOT password & disables the account overall.
+	# Disables the guest account.
+	# Hides userlist from login screen.
+	# Copies passwd, group, and shadow files to a dir named 'UGP'
 	
-# Put executable setup here
-exec(){
-	
-	chmod +x STEMSCRIPT
-	cp STEMSCRIPT /usr/bin/STEMSCRIPT
-	cp STEMSCRIPT /usr/local/bin
+	# Moving passwd/group/shadow files to UGP dir.
+	mkdir UGP
+	cp /etc/passwd UGP
+	cp /etc/group UGP
+	cp /etc/shadow UGP
 	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Now executable from any directory $COEND"
+		echo -e "$GREEN [+] Successfully copied files to UGP dir. $COEND"
+		read WAIT_FOR_USER
 	else
-		echo -e "$RED [!] Unsuccessful.. $COEND:
+		echo -e "$RED [!] Could not copy to UGP dir. $COEND"
+		read WAIT_FOR_USER
 	fi
-	
-	sleep 1
-}
 
-# Sudoers
-sudoers(){
-
-	cd /etc/sudoers.d
-	ls -a
-	read WAIT_FOR_USER
-	nano README
+	# Disables the guest account & Hides the userlist from the login screen.
+																											# allow-guest= false | greeter-hide-users= true | # out autologon
+	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	
 	if [ $? -eq 0 ]; then
-		echo -e "$Green [+] Success.. $COEND"
+		echo -e "$GREEN [+] Guest account/Userlist have been configured. $COEND"
+		read WAIT_FOR_USER
 	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
+		echo -e "$RED [!] Couldn't configure /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf"
+		read WAIT_FOR_USER
 	fi
+	
+	# Hides the userlist from the login screen.
+	
+	sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf 2>&1>/dev/null 
+	
+	if [ $? -eq 0 ]; then
+		echo -e "$GREEN [+] Userlist has been configured. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Couldn't configure /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf $COEND"
+		read WAIT_FOR_USER
+	fi
+	
+	# Root password change.
+	passwd
+	
+	# Disable root account.
+	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
+    passwd -l root 2>&1>/dev/null
+	echo -e "$GREEN [+] Root account has been locked. $COEND"
+	read WAIT_FOR_USER
+}
 
+password_policy(){
+
+	# This will set the password policy for common-password & login.defs.
+	# Also this will install libpam-cracklib for /etc/pam.d/common-password.
+	
+	apt-get update && apt-get install libpam-cracklib
+    if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
+        echo "[+] /etc/pam.d/common-password already configured"
+		read WAIT_FOR_USER
+    else
+        echo "password   requisite    pam_cracklib.so retry=3 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
+		echo "[+] /etc/pam.d/common-password set."
+		read WAIT_FOR_USER
+    fi
+
+    sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
+    sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
+    echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs"
+	read WAIT_FOR_USER
+}
+
+ssh(){
+
+	# This will change the permit root login of /etc/ssh/sshd_config.
+	# to no, if it has the line 'PermitRootLogin yes'.
+	
+	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+        echo "[!] Root SSH login is enabled!"
+		sleep 1
+        sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
+		sleep 1
+        echo "[+] Root SSH login has been disabled."
+		read WAIT_FOR_USER
+    fi
+	
+	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+		echo "[!] X11 Forwarding is enabled!"
+		sleep 1
+        sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
+        echo "[+] X11 Forwarding has been disabled."
+		read WAIT_FOR_USER
+    fi
+}
+
+firewall(){
+
+	# Sets the firewall to default standards
+	# Enables the firewall
+	# Lists the allowed ports of the firewall
+	
+	ufw default deny &>/dev/null
+	ufw enable
+	sleep 1
+	ufw status numbered
+	read WAIT_FOR_USER
+	
+	clear
 	sleep 1
 }
+
+services(){
+
+	# Prompt for install / Removal /
 	
-# Media File Finder
+	echo "Would you like to remove bind9? -DNS Server- (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get -purge remove bind9 &>/dev/null
+		echo -e "$GREEN [+] Bind9 DNS Server has been removed $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Could not remove Bind9 or it isn't there. $COEND"
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove apache2? (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get -purge remove apache2 &>/dev/null
+		echo -e "$GREEN [+] Apache2 has been removed. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Could not remove Apache2 / Apache2 isn't installed. $COEND"
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove VSFTPD? -FTP- (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get -purge remove vsftpd &>/dev/null
+		echo -e "$GREEN [+] VSFTPD has been removed. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Could not remove VSFTPD / VSFTPD isn't installed. $COEND"
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove SSH? (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get -purge remove ssh
+		echo -e "$GREEN [+] SSH has been removed. $COEND"
+		read WAIT_FOR_USER
+	else
+		echo -e "$RED [!] Could not remove SSH / SSH isn't installed. $COEND"
+		read WAIT_FOR_USER
+	fi
+	
+	clear
+	sleep 1
+}
+
 media(){
 
-	echo "Listing all media files"
-	echo "------------------------------------------------------------"
+	# Finds and lists the media files selected for search.
+	
 	find / -name "*.mp3"
 	find / -name "*.mp4"
 	find / -name "*.gif"
@@ -74,323 +196,91 @@ media(){
 	find / -name "*.jpeg"
 	find / -name "*.png"
 	find / -name "*.exe"
-
+	echo -e "$GREEN [+] Listed media/exec files. $COEND"
 	read WAIT_FOR_USER
-
-	if [ $? -eq 0 ]; then
-		echo -e "$Green [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-
+	
+	clear
 	sleep 1
 }
 
-# Users/Group
-users(){
+crontab(){
 
-	# Moving important files to UGP dir.
-	mkdir UGP
-	cp /etc/passwd UGP
-	cp /etc/group UGP
-	cp /etc/shadow UGP
-
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success, be sure to check UGP dir. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
+	# Checks the scheduled jobs
+	echo "Listing /etc/cron* directories"
+	ls -la /etc/cron*
+	read WAIT_FOR_USER
+	echo "Listing root crontab"
+	crontab -l
+	read WAIT_FOR_USER
 	
-	sleep 3
-
-# Change ROOT passwd.
-
-	echo "Please change the root passwd."
-	passwd
-
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-
-# Disable ROOT account
-
-	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
-	passwd -l root  2>&1>/dev/null
-	echo "[+] Root account has been locked."
-
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-
-# Guest Account
-
-	cd usr/share/lightdm/lightdm.conf.d/   #allow-guest= false | greeter-hide-users= true | # out autologon
-	gedit 50-ubuntu.conf
-	cd
-
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-
-# Hide userlist from login screen
-
-    sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf 2>&1>/dev/null
-   
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
+	clear
 	sleep 1
 }
 
-# Updates
 updates(){
 	
-	echo "Updating/Upgrading"
-	sleep 1
-	apt-get update && apt-get dist-upgrade
+	# Makes sure sources are added
+    if grep -q "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Security source already installed!"
+		read WAIT_FOR_USER
+    else
+        echo "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Security source added"
+		read WAIT_FOR_USER
+    fi
 
+    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Updates source already installed!"
+		read WAIT_FOR_USER
+    else
+        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Updates source added"
+		read WAIT_FOR_USER
+    fi
+
+    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" /etc/apt/sources.list; then
+        echo "[!] Backports source already installed!"
+		read WAIT_FOR_USER
+    else
+        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" >> /etc/apt/sources.list
+        echo "[+] Backports source added"
+		read WAIT_FOR_USER
+    fi
+
+    # Check for updates daily
+	
+    if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
+        echo "[!] Daily updates check already configured!"
+		read WAIT_FOR_USER
+    else
+        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
+        echo "[+] Daily updates configured"
+		read WAIT_FOR_USER
+    fi
+
+	# Updates and upgrades the system
+	
+    apt-get update && apt-get dist-upgrade &>/dev/null
+	
 	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] System has been updated.. $COEND"
+		echo -e "$GREEN [+] The system has been updated/upgraded. $COEND"
+		read WAIT_FOR_USER
 	else
-		echo -e "$RED [!] Update unsuccessful.. $COEND"
+		echo -e "$GREEN [!] The system has not been updated. $COEND"
+		read WAIT_FOR_USER
 	fi
-
-	sleep 1
 }
 
-# SSH
-ssh(){
-
-	echo "Permitting SSH ROOT login to 'no'"
-	sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-
-	sleep 1
-}
-
-# Firewall
-firewall(){
-
-	#Configures the firewall, resets/enables/lists/asks if port 22 is allowed.
-	ufw default deny
-	ufw enable
-	ufw status numbered
-	
-	# Allow port 22?
-	echo "Would you like to allow port 22 (y/n)"
-	read $ANSWER
-	
-	if [ $ANSWER = 'y' ]; then
-		ufw allow 22
-		echo "Port 22 is allowed."
-	else
-		echo "Port 22 is not allowed."
-		sleep 1
-	fi
-}
-
-# Cron
-cron(){
-
-    # Check scheduled jobs
-    echo "[+] Listing /etc/cron* directories"
-    ls -la /etc/cron*
-    echo "[+] Listing root crontab"
-    crontab -l
-	
-	echo "Would you like to edit the crontab? (y/n)"
-	read $RESPONSE
-	
-	if [ $RESPONSE = 'y' ]; then
-		crontab -e
-	else
-		echo " "
-	fi
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-}
-
-# Services
-services()
-{
-echo ""
-
-}
-
-menu1()
-{
-clear
-echo "#################################################################"
-printf "[1] Remove Telnet\n"
-printf "[2] Remove Apache\n"
-printf "[3] Remove SSH\n"
-printf "[4] Remove Very Secure FTP Daemon -VSFTPD-\n"
-printf "[5] Remove Bind9 (DNS Server)\n"
-printf "[6] Install Apache\n"
-printf "[7] Install SSH\n"
-printf "[8] Exit\n"
-echo -e "$GREEN -----------------------------------------------------------"
-read services_menu1
-
-case $services_menu1 in
-1)
-	echo -e "$RED [!] Removing Telnet $COEND"
-	apt-get -purge remove telnet
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-2)
-	echo -e "$RED [!] Removing Apache $COEND"
-	service apache2 stop
-	apt-get -purge remove apache2
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-3)
-	echo -e "$RED [!] Removing SSH $COEND"
-	service ssh stop
-	apt-get -purge remove ssh
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-4)
-	echo -e "$RED [!] Removing VSFTPD $COEND"
-	service vsftpd stop
-	apt-get -purge remove vsftpd
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-5)
-	echo -e "$RED [!] Removing Bind9 (DNS Server) $COEND"
-	service bind9 stop
-	apt-get -purge remove bind9
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-6)
-	echo -e "$GREEN [+] Installing Apache $COEND"
-	apt-get install apache2
-	service apache2 start
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-7)
-	echo -e "$GREEN [+] Installing SSH $COEND"
-	apt-get install ssh
-	service ssh start
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Success.. $COEND"
-	else
-		echo -e "$RED [!] Unsuccessful.. $COEND"
-	fi
-	
-	sleep 1
-	clear
-	menu1
-	
-	;;
-	
-8)
-	sleep 1
-	clear
+if [ 1 = 1 ]; then
+	large_config
+	password_policy
+	ssh
+	firewall
+	services
+	media
+	crontab
+	updates
+else
+	echo "Exit"
 	exit
-	
-	;;
-	
-*)
-	echo -e "$RED [!] Invalid Input.. $COEND"
-	sleep 1
-	clear
-	menu1
-	;;
-	esac
-}
-
-menu1
+fi
