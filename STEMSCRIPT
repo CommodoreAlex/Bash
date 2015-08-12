@@ -3,9 +3,6 @@
 #!/bin/bash
 
 ### Color Output
-#GREEN="/e[1;32m"       # Success / OLD
-#RED="/e[1;31m"         # Errors / OLD
-#COEND="/e[0m"          # Ending Phrase / OLD
 #RED="\033[01;31m"      # Errors
 #GREEN="\033[01;32m"    # Success
 #YELLOW="\033[01;33m"   # Warnings/Information
@@ -13,6 +10,34 @@
 #BOLD="\033[01;01m"     # Highlight
 #COEND="/e[0m"          # Ending Phrase
 #RESET="\033[00m"       # Normal
+
+htop(){
+
+	# These two if statements will determine if the 'htop' packages
+	# are installed. If they are not, then the user will be prompted
+	# for installation. If they are, the user will not be prompted for
+	# installation of 'htop'. 
+
+	clear
+	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo -e "$BLUE dpkg-query: [+] Packages found matching 'htop'. $COEND"
+		sleep 1
+		clear
+	else
+		echo -e "$RED [!] No packages found matching 'htop'. $COEND"
+		echo "Would you like to install HTOP? (y/n)"
+		echo "-------------------------------------"
+		read $REPLY
+		
+		if [ $REPLY = 'y' ]; then
+			apt-get install htop
+		else
+			sleep 1
+		clear
+		fi
+	fi
+}
 
 large_config(){
 	
@@ -22,19 +47,19 @@ large_config(){
 	# Copies passwd, group, and shadow files to a dir named 'UGP'
 	
 	# Moving passwd/group/shadow files to UGP dir.
-	mkdir UGP
-	cp /etc/passwd UGP
-	cp /etc/group UGP
-	cp /etc/shadow UGP
 	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Successfully copied files to UGP dir. $COEND"
-		read WAIT_FOR_USER
+	if [ grep 'UGP' = 1 ]; then
+		mkdir UGP
+		cp /etc/passwd UGP
+		cp /etc/group UGP
+		cp /etc/shadow UGP
+		echo -e "$GREEN [+] Dir 'UGP' has been created. $COEND"
+		sleep 1
+		clear
 	else
-		echo -e "$RED [!] Could not copy to UGP dir. $COEND"
-		read WAIT_FOR_USER
+		echo "[+] Dir 'UGP' already exists"
 	fi
-
+	
 	# Disables the guest account & Hides the userlist from the login screen.
 																											# allow-guest= false | greeter-hide-users= true | # out autologon
 	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
@@ -286,7 +311,8 @@ updates(){
 }
 
 if [ 1 = 1 ]; then
-	large_config
+	#htop                                          # Make sure to check if any functions aren't being called.
+	large_config								   # Last time you didn't check now did you? { Note to self }
 	password_policy
 	ssh
 	firewall
