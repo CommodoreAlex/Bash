@@ -9,29 +9,39 @@
 #BOLD="\033[01;01m"     # Highlight
 #COEND="/e[0m"          # Ending Phrase
 #RESET="\033[00m"       # Normal
+	
+down(){
 
-htop(){
-
-	# These two if statements will determine if the 'htop' packages
-	# are installed. If they are not, then the user will be prompted
-	# for installation. If they are, the user will not be prompted for
-	# installation of 'htop'. 
-
-	clear
+	if [ $(dpkg-query -W -f='${Status}' chkrootkit 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo -e "$BLUE dpkg-query: [+] Packages found matching 'chkrootkit'. $COEND"
+	else
+		echo -e "$RED [!] No packages found matching 'chkrootkit'. $COEND"
+		apt-get install chkrootkit -y
+	fi
+	
+	if [ $(dpkg-query -W -f='${Status}' rkhunter 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo -e "$BLUE dpkg-query: [+] Packages found matching 'rkhunter'. $COEND"
+	else
+		echo -e "$RED [!] No packages found matching 'rkhunter'. $COEND"
+		apt-get install rkhunter -y
+	fi
+	
+	if [ $(dpkg-query -W -f='${Status}' tiger 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo -e "$BLUE dpkg-query: [+] Packages found matching 'tiger'. $COEND"
+	else
+		echo -e "$RED [!] No packages found matching 'tiger'. $COEND"
+		apt-get install tiger -y
+	fi
+	
 	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		dpkg-query -l htop
 		echo -e "$BLUE dpkg-query: [+] Packages found matching 'htop'. $COEND"
 	else
 		echo -e "$RED [!] No packages found matching 'htop'. $COEND"
-		echo "Would you like to install HTOP? (y/n)"
-		echo "-------------------------------------"
-		read $REPLY
-		
-		if [ $REPLY = 'y' ]; then
-			apt-get install htop
-		else
-			echo "Not installing htop."
-		fi
+		apt-get install htop
 	fi
 }
 
@@ -44,19 +54,16 @@ large_config(){
 	
 	# Moving passwd/group/shadow files to UGP dir.
 	
-	if [ grep 'UGP' = 1 ]; then
-		mkdir UGP
-		cp /etc/passwd UGP
-		cp /etc/group UGP
-		cp /etc/shadow UGP
-		echo -e "$GREEN [+] Dir 'UGP' has been created. $COEND"
-	else
-		echo "[+] Dir 'UGP' already exists"
-	fi
+		mkdir UGP &>/dev/null
+		cp /etc/passwd UGP &>/dev/null
+		cp /etc/group UGP &>/dev/null
+		cp /etc/shadow UGP &>/dev/null
+		echo "[+] Dir 'UGP' has been created with sub files."
 	
 	# Disables the guest account & Hides the userlist from the login screen.
-																											# allow-guest= false | greeter-hide-users= true | # out autologon
-	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	# allow-guest= false | greeter-hide-users= true | # out autologon
+	
+	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf &>/dev/null
 	
 	if [ $? -eq 0 ]; then
 		echo -e "$GREEN [+] Guest account/Userlist have been configured. $COEND"
@@ -93,7 +100,7 @@ password_policy(){
 	# This will set the password policy for common-password & login.defs.
 	# Also this will install libpam-cracklib for /etc/pam.d/common-password.
 	
-	apt-get update && apt-get install libpam-cracklib
+	apt-get update && apt-get install libpam-cracklib -y
     if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
         echo "[+] /etc/pam.d/common-password already configured"
 		read WAIT_FOR_USER
@@ -286,8 +293,8 @@ updates(){
 }
 
 if [ 1 = 1 ]; then
-	htop                                          # Make sure to check if any functions aren't being called.
-	large_config								   # Last time you didn't check now did you? { Note to self }
+	down
+	large_config
 	password_policy
 	ssh
 	firewall
@@ -299,4 +306,3 @@ if [ 1 = 1 ]; then
 else
 	echo "Exit"
 	exit
-fi
