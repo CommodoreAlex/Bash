@@ -86,7 +86,7 @@ large_config(){
 	fi
 	
 	# Root password change.
-	passwd
+	passwd root
 	
 	# Disable root account.
 	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
