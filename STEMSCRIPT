@@ -121,14 +121,14 @@ ssh(){
 	# This will change the permit root login of /etc/ssh/sshd_config.
 	# to no, if it has the line 'PermitRootLogin yes'.
 	
-	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+	if grep -Fxq "PermitRootLogin yes" /etc/ssh/ssh_config; then
         echo "[!] Root SSH login is enabled!"
         sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
         echo "[+] Root SSH login has been disabled."
 		read WAIT_FOR_USER
     fi
 	
-	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+	if grep -Fxq "X11Forwarding yes" /etc/ssh/ssh_config; then
 		echo "[!] X11 Forwarding is enabled!"
         sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
         echo "[+] X11 Forwarding has been disabled."
