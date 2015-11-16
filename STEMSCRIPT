@@ -1,101 +1,60 @@
 #!/bin/bash
-#V14
+#V15
 
-### Color Output
-#RED="\033[01;31m"      # Errors
-#GREEN="\033[01;32m"    # Success
-#YELLOW="\033[01;33m"   # Warnings/Information
-#BLUE="\033[01;34m"     # Heading
-#BOLD="\033[01;01m"     # Highlight
-#COEND="/e[0m"          # Ending Phrase
-#RESET="\033[00m"       # Normal
-	
-down(){
+ssh()
+{
 
-	if [ $(dpkg-query -W -f='${Status}' chkrootkit 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-		dpkg-query -l htop
-		echo -e "$BLUE dpkg-query: [+] Packages found matching 'chkrootkit'. $COEND"
-	else
-		echo -e "$RED [!] No packages found matching 'chkrootkit'. $COEND"
-		apt-get install chkrootkit -y
+	# This will change the 'PermitRootLogin yes' to 'PermitRootLogin no'.
+	# This will also disallow X11 Forwarding.
+	
+		if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+		echo "[!] SSH ROOT login is enabled!"
+		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
+		echo "[+] SSH ROOT login is disabled!"
+		sleep 3
+	
 	fi
 	
-	if [ $(dpkg-query -W -f='${Status}' rkhunter 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-		dpkg-query -l htop
-		echo -e "$BLUE dpkg-query: [+] Packages found matching 'rkhunter'. $COEND"
-	else
-		echo -e "$RED [!] No packages found matching 'rkhunter'. $COEND"
-		apt-get install rkhunter -y
-	fi
+		if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+		echo "[!] X11 Forwarding is enabled!"
+		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
+		echo "[+] X11 Forwarding has been disabled!"
+		sleep 3
 	
-	if [ $(dpkg-query -W -f='${Status}' tiger 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-		dpkg-query -l htop
-		echo -e "$BLUE dpkg-query: [+] Packages found matching 'tiger'. $COEND"
-	else
-		echo -e "$RED [!] No packages found matching 'tiger'. $COEND"
-		apt-get install tiger -y
 	fi
+}	
+
+firewall()
+{
+
+	# Sets the firewall to default standards
+	# Enables the firewall
 	
-	if [ $(dpkg-query -W -f='${Status}' htop 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-		dpkg-query -l htop
-		echo -e "$BLUE dpkg-query: [+] Packages found matching 'htop'. $COEND"
-	else
-		echo -e "$RED [!] No packages found matching 'htop'. $COEND"
-		apt-get install htop
-	fi
+	ufw enable
+	echo 'y' ufw reset
 }
 
-large_config(){
+updates() 
+{
+
+	# Updates and Upgrades
 	
-	# Changes the ROOT password & disables the account overall.
-	# Disables the guest account.
-	# Hides userlist from login screen.
-	# Copies passwd, group, and shadow files to a dir named 'UGP'
+	apt-get update && apt-get dist-upgrade -y
 	
-	# Moving passwd/group/shadow files to UGP dir.
+	# Checks for daily updates
 	
-		mkdir UGP &>/dev/null
-		cp /etc/passwd UGP &>/dev/null
-		cp /etc/group UGP &>/dev/null
-		cp /etc/shadow UGP &>/dev/null
-		echo "[+] Dir 'UGP' has been created with sub files."
-	
-	# Disables the guest account & Hides the userlist from the login screen.
-	# allow-guest= false | greeter-hide-users= true | # out autologon
-	
-	sed -i 's/allow-guest=true/allow-guest-false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf &>/dev/null
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Guest account/Userlist have been configured. $COEND"
+    if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
+        echo "[!] Daily updates check already configured!"
 		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Couldn't configure /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf"
+    else
+        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
+        echo "[+] Daily updates configured"
 		read WAIT_FOR_USER
-	fi
-	
-	# Hides the userlist from the login screen.
-	
-	sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf 2>&1>/dev/null 
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] Userlist has been configured. $COEND"
-		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Couldn't configure /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf $COEND"
-		read WAIT_FOR_USER
-	fi
-	
-	# Root password change.
-	passwd root
-	
-	# Disable root account.
-	echo "root:"'$1$FvmieeAj$cDmFLn5RvjYphj3iL1RJZ/' | chpasswd -e
-    passwd -l root 2>&1>/dev/null
-	echo -e "$GREEN [+] Root account has been locked. $COEND"
-	read WAIT_FOR_USER
+    fi
 }
 
-password_policy(){
+passwordpolicy()
+{
 
 	# This will set the password policy for common-password & login.defs.
 	# Also this will install libpam-cracklib for /etc/pam.d/common-password.
@@ -116,105 +75,10 @@ password_policy(){
 	read WAIT_FOR_USER
 }
 
-ssh(){
+media()
+{
 
-	# This will change the permit root login of /etc/ssh/sshd_config.
-	# to no, if it has the line 'PermitRootLogin yes'.
-	
-	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
-        echo "[!] Root SSH login is enabled!"
-        sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
-        echo "[+] Root SSH login has been disabled."
-		read WAIT_FOR_USER
-    fi
-	
-	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
-		echo "[!] X11 Forwarding is enabled!"
-        sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
-        echo "[+] X11 Forwarding has been disabled."
-		read WAIT_FOR_USER
-    fi
-}
-
-firewall(){
-
-	# Sets the firewall to default standards
-	# Enables the firewall
-	# Lists the allowed ports of the firewall
-	
-	ufw default deny &>/dev/null
-	ufw enable
-	ufw status numbered
-	read WAIT_FOR_USER
-}
-
-services(){
-
-	# Prompts the user for removal of services.
-	
-	echo "Would you like to remove bind9? -DNS Server- (y/n)"
-	read $REPLY
-	
-	if [ $REPLY = 'y' ]; then
-		apt-get -purge remove bind9 &>/dev/null
-		echo -e "$GREEN [+] Bind9 DNS Server has been removed $COEND"
-		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Could not remove Bind9 or it isn't there. $COEND"
-		read WAIT_FOR_USER
-	fi
-	
-	echo "Would you like to remove apache2? (y/n)"
-	read $REPLY
-	
-	if [ $REPLY = 'y' ]; then
-		apt-get -purge remove apache2 &>/dev/null
-		echo -e "$GREEN [+] Apache2 has been removed. $COEND"
-		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Could not remove Apache2 / Apache2 isn't installed. $COEND"
-		read WAIT_FOR_USER
-	fi
-	
-	echo "Would you like to remove VSFTPD? -FTP- (y/n)"
-	read $REPLY
-	
-	if [ $REPLY = 'y' ]; then
-		apt-get -purge remove vsftpd &>/dev/null
-		echo -e "$GREEN [+] VSFTPD has been removed. $COEND"
-		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Could not remove VSFTPD / VSFTPD isn't installed. $COEND"
-		read WAIT_FOR_USER
-	fi
-	
-	echo "Would you like to remove SSH? (y/n)"
-	read $REPLY
-	
-	if [ $REPLY = 'y' ]; then
-		apt-get -purge remove ssh
-		echo -e "$GREEN [+] SSH has been removed. $COEND"
-		read WAIT_FOR_USER
-	else
-		echo -e "$RED [!] Could not remove SSH / SSH isn't installed. $COEND"
-		read WAIT_FOR_USER
-	fi
-}
-
-
-ports(){
-
-	# Shows all open ports on the system.
-	
-	echo "[+] Listing all open ports"
-	
-	netstat -tulpna | grep LISTEN
-	read WAIT_FOR_USER
-}
-
-media(){
-
-	# Finds and lists the media files selected for search.
+	# Finds and lists media files with the following extensions.
 	
 	find / -name "*.mp3"
 	find / -name "*.mp4"
@@ -222,12 +86,44 @@ media(){
 	find / -name "*.jpg"
 	find / -name "*.jpeg"
 	find / -name "*.png"
-	find / -name "*.exe"
-	echo -e "$GREEN [+] Listed media/exec files. $COEND"
+	"[+] Listed all media files with the following extensions...""
 	read WAIT_FOR_USER
 }
 
-crontab(){
+accounts()
+{
+
+	# Disables the guest account
+	# Hides the userlist from the login screen.     THIS HAPPENS BY ADDING LINES INTO THE FILE, AS THEY'RE PROBABLY ABSENT.
+	# Changes the root password
+	# Disables the root account
+	
+	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	echo "[+] Lines added to file" 
+	sleep 3
+	
+	passwd root 
+	passwd -l root
+	echo "[+] New ROOT passwd and locked ROOT account."
+}
+
+rmhack()
+{
+
+	# Attempts to uninstall hacking tools that are currently existing.
+	
+	apt-get --purge autoremove john
+	apt-get --purge autoremove hydra
+	apt-get --purge autoremove nmap
+	apt-get --purge autoremove netcat
+	apt-get --purge autoremove aircrack-ng
+	apt-get --purge autoremove wireshark
+	apt-get --purge autoremove kismet
+}
+
+crontab()
+{
 
 	# Checks the scheduled jobs
 	echo "Listing /etc/cron* directories"
@@ -238,71 +134,99 @@ crontab(){
 	read WAIT_FOR_USER
 }
 
-updates(){
-	
-	# Makes sure sources are added
-    if grep -q "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" /etc/apt/sources.list; then
-        echo "[!] Security source already installed!"
-		read WAIT_FOR_USER
-    else
-        echo "deb http://security.ubuntu.com/ubuntu/ precise-security restricted main multiverse universe" >> /etc/apt/sources.list
-        echo "[+] Security source added"
-		read WAIT_FOR_USER
-    fi
+services()
+{
 
-    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" /etc/apt/sources.list; then
-        echo "[!] Updates source already installed!"
-		read WAIT_FOR_USER
-    else
-        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-updates restricted main multiverse universe" >> /etc/apt/sources.list
-        echo "[+] Updates source added"
-		read WAIT_FOR_USER
-    fi
-
-    if grep -q "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" /etc/apt/sources.list; then
-        echo "[!] Backports source already installed!"
-		read WAIT_FOR_USER
-    else
-        echo "deb http://us.archive.ubuntu.com/ubuntu/ precise-backports restricted main multiverse universe" >> /etc/apt/sources.list
-        echo "[+] Backports source added"
-		read WAIT_FOR_USER
-    fi
-
-    # Check for updates daily
+	# Prompts the user for removal of services.
 	
-    if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
-        echo "[!] Daily updates check already configured!"
-		read WAIT_FOR_USER
-    else
-        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
-        echo "[+] Daily updates configured"
-		read WAIT_FOR_USER
-    fi
-
-	# Updates and upgrades the system
+	echo "Would you like to remove bind9? -DNS Server- (y/n)"
+	read $REPLY
 	
-    apt-get update && apt-get dist-upgrade &>/dev/null
-	
-	if [ $? -eq 0 ]; then
-		echo -e "$GREEN [+] The system has been updated/upgraded. $COEND"
+	if [ $REPLY = 'y' ]; then
+		apt-get --purge autoremove bind9 &>/dev/null
+		echo "[+] Bind9 DNS Server has been removed"
 		read WAIT_FOR_USER
 	else
-		echo -e "$GREEN [!] The system has not been updated. $COEND"
+		echo "[!] Could not remove Bind9 or it isn't there."
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove apache2? (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get --purge autoremove apache2 &>/dev/null
+		echo "[+] Apache2 has been removed."
+		read WAIT_FOR_USER
+	else
+		echo "[!] Could not remove Apache2 / Apache2 isn't installed."
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove VSFTPD? -FTP- (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get --purge autoremove vsftpd &>/dev/null
+		echo "[+] VSFTPD has been removed."
+		read WAIT_FOR_USER
+	else
+		echo "[!] Could not remove VSFTPD / VSFTPD isn't installed."
+		read WAIT_FOR_USER
+	fi
+	
+	echo "Would you like to remove SSH? (y/n)"
+	read $REPLY
+	
+	if [ $REPLY = 'y' ]; then
+		apt-get --purge autoremove ssh &>/dev/null
+		echo "[+] SSH has been removed."
+		read WAIT_FOR_USER
+	else
+		echo "[!] Could not remove SSH / SSH isn't installed."
 		read WAIT_FOR_USER
 	fi
 }
 
+check()
+{
+	if [ $(dpkg-query -W -f='${Status}' chkrootkit 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo "dpkg-query: [+] Packages found matching 'chkrootkit'."
+	else
+		echo "[!] No packages found matching 'chkrootkit'."
+		apt-get install chkrootkit -y
+	fi
+	
+	if [ $(dpkg-query -W -f='${Status}' rkhunter 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo "dpkg-query: [+] Packages found matching 'rkhunter'."
+	else
+		echo "[!] No packages found matching 'rkhunter'."
+		apt-get install rkhunter -y
+	fi
+	
+	if [ $(dpkg-query -W -f='${Status}' tiger 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		dpkg-query -l htop
+		echo "dpkg-query: [+] Packages found matching 'tiger'."
+	else
+		echo "[!] No packages found matching 'tiger'."
+		apt-get install tiger -y
+	fi
+}
+
 if [ 1 = 1 ]; then
-	down
-	large_config
-	password_policy
-	ssh
-	firewall
-	services
-	ports
-	media
-	crontab
-	updates
+		ssh
+		firewall
+		updates
+		passwordpolicy
+		media
+		accounts
+		rmhack
+		crontab
+		#services
+		#check
 else
-	echo "Exit"
-	exit
+		echo "exit"
+		exit
+fi
