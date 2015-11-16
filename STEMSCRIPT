@@ -110,7 +110,6 @@ accounts()
 
 rmhack()
 {
-
 	# Attempts to uninstall hacking tools that are currently existing.
 	
 	apt-get --purge autoremove john
@@ -190,6 +189,7 @@ services()
 
 check()
 {
+
 	if [ $(dpkg-query -W -f='${Status}' chkrootkit 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		dpkg-query -l htop
 		echo "dpkg-query: [+] Packages found matching 'chkrootkit'."
