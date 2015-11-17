@@ -262,6 +262,16 @@ syncookies(){
 	cat /etc/sysctl.conf | grep tcp_syncookies >> /var/log/infosec.log
 }
 
+FTPanonup(){
+
+	# Deletes the user 'FTP'
+	# Prints the output of 'ls -la /etc/ftpusers/' to /var/log/infosec.log
+	
+	userdel ftp &>/dev/null
+	ls -la /etc/ftpusers/ >> /var/logs/infosec.log
+	echo $(date): "[~] Deleted FTP user and logged /etc/ftpusers/ to see users that have access to ftp" >> /var/log/infosec.log
+}
+
 # Calling the functions after user has 'approved script for launch'.
 
 	ssh
@@ -276,5 +286,5 @@ syncookies(){
 	tools
 	#hosts # Research is needed
 	syncookies
-	#FTPanon # Not defined
+	FTPanonup
 	#apache # Not defined
