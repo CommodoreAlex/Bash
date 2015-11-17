@@ -6,6 +6,16 @@
 # It's recommended to have paper out or a document to log some listed information of the output.
 # If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders' in general...
 # It is against the rules of the competition to use this script, so please, abide by this regulation...
+# It's preferred that you run this script in root.
+
+if [ $EUID -ne 0 ]; then
+    echo "[!] You are not Root! Quitting..."
+    exit
+else
+    echo "[+] Root detected, moving on."
+	sleep 1
+	clear
+fi
 
 # Creating and moving 'infosec.log' to /var/log/ for further usage/storage.
 touch infosec.log
@@ -405,7 +415,7 @@ apache(){
 # Calling the functions after user has 'approved script for launch'.
 
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
-	ssh		 #IGS /					{NIGS = Not_In_Good_Standing}
+	ssh			 #IGS /					{NIGS = Not_In_Good_Standing}
 	policy 		 #IGS /
 	media  		 #IGS /
 	accounts 	 #IGS / 
