@@ -1,16 +1,17 @@
 #!/bin/bash
-#V15
+#V1.0
 
 # This is here because in the CP comp, you'll read some things before you work. 
 # It wouldn't be good to potentially take something away / ruin something important.
 # It's recommended to have paper out or a document to log some listed information of the output.
-# If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders'...
-# It is against the rules of the competition to use this script, so please, abide by this regulation.
+# If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders' in general...
+# It is against the rules of the competition to use this script, so please, abide by this regulation...
 
 # Creating and moving 'infosec.log' to /var/log/ for further usage/storage.
 touch infosec.log
 mv infosec.log /var/log/
 
+echo "Make sure to go through everything outside of the script..."
 echo "Launch when ready."
 read WAIT_FOR_USER
 
@@ -144,6 +145,20 @@ policy(){
 media(){
 
 	# Finds and lists media files with the following extensions.
+	# There are two sections as one will list to the user / while one logs it to /var/log/infosec.log
+	
+	find / -name "*.mp3"
+	find / -name "*.mp4" 
+	find / -name "*.gif" 
+	find / -name "*.jpg"
+	find / -name "*.jpeg"
+	find / -name "*.png" 
+	find / -name "*.mov"
+	find / -name "*.wav"
+	find / -name "*.tiff"
+ 	find / -name "*.tif"
+ 	find / -name "*.wmv"
+ 	find / -name "*.avi"
 	
 	find / -name "*.mp3" >> /var/log/infosec.log
 	find / -name "*.mp4" >> /var/log/infosec.log 
@@ -160,7 +175,6 @@ media(){
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
-		echo ".mp3,.mp4,.gif,.jpg,.jpeg,.png,.mov,.wav,.tiff,.tif,.wmv, and .avi"
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -181,9 +195,9 @@ accounts(){
 	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	echo $(date): "[+] Guest account security lines added to '/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf'" >> /var/log/infosec.log
 	sleep 3
-	
-	passwd root 
-	#passwd -l root
+							# Uncomment these lines for the competition.
+	#passwd root 			# These are commented to save time in the testing phase.
+	#passwd -l root		    # The less there is to approve, the faster this goes.
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login!" >> /var/log/infosec.log
@@ -227,12 +241,10 @@ rmhack(){
 crontab(){
 
 	# Checks the scheduled jobs
-	echo "Listing /etc/cron* directories"
 	ls -la /etc/cron* >> /var/log/infosec.log
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
-	echo "Listing root crontab"
-	crontab -l
+	#echo "[!] PAUSE*"
+	#read WAIT_FOR_USER
+	#crontab -l
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -343,7 +355,7 @@ FTPanonup(){
 	# Prints the output of 'ls -la /etc/ftpusers/' to /var/log/infosec.log
 	
 	userdel ftp &>/dev/null
-	ls -la /etc/ftpusers/ >> /var/logs/infosec.log
+	ls -la /etc/ftpusers/ >> /var/log/infosec.log
 	echo $(date): "[~] Deleted FTP user and logged /etc/ftpusers/ to see users that have access to ftp" >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
