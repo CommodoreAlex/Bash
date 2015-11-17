@@ -246,9 +246,9 @@ hosts(){
 	#echo ff02::1 ip6-allnodes >> /etc/hosts
 	#echo ff02::2 ip6-allrouters >> /etc/hosts
 
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
-	clear
+	#echo "[!] PAUSE*"
+	#read WAIT_FOR_USER
+	#clear
 }
 
 syncookies(){
