@@ -424,7 +424,7 @@ apache(){
 	#hosts 		 #NIGS / Research
 	syncookies 	 #IGS /
 	FTPanonup	 #IGS /
-	#apache		 #IGS / Research
+	apache		 #IGS / Research
 	rmhack 		 #IGS /
 	tools 		 #IGS /
 	updates 	 #IGS /
