@@ -50,7 +50,13 @@ ssh(){
 		echo $(date): echo "[+] Protocol 1 changed to Protocol 2!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] SSH Configurations set!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!"
+	fi
+	
+ 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
 }	
@@ -66,6 +72,12 @@ firewall(){
 	ufw allow 80 >> /var/log/infosec.log 
 	ufw allow 443 >> /var/log/infosec.log 
 	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Firewall configurations set!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!"
+	fi
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -75,7 +87,7 @@ updates(){
 
 	# Updates and Upgrades
 	
-	apt-get update && apt-get dist-upgrade -y
+	apt-get update && apt-get dist-upgrade #-y
 	
 	# Checks for daily updates
 	
@@ -84,9 +96,16 @@ updates(){
 		read WAIT_FOR_USER
     else
         sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
-       echo $(date): echo "[+] Daily updates configured" >> /var/log/infosec.log
+		echo $(date): echo "[+] Daily updates configured" >> /var/log/infosec.log
 		read WAIT_FOR_USER
     fi
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Ran through updates and set daily updates!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!"
+	fi
+
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -110,6 +129,13 @@ policy(){
     sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
     sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
     echo $(date): echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs" >> /var/log/infosec.log
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Libpam-cracklib installed and password policy set!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -132,7 +158,13 @@ media(){
  	find / -name "*.wmv" >> /var/log/infosec.log
  	find / -name "*.avi" >> /var/log/infosec.log
 	
-	"[+] Listed all media files with the following extensions..."
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
+		echo ".mp3,.mp4,.gif,.jpg,.jpeg,.png,.mov,.wav,.tiff,.tif,.wmv, and .avi"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -152,7 +184,14 @@ accounts(){
 	
 	passwd root 
 	#passwd -l root
-	echo $(date): echo "[+] New ROOT passwd and locked ROOT account." >> /var/log/infosec.log
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -179,6 +218,7 @@ rmhack(){
 	apt-get --purge autoremove netcat-traditional
 	apt-get --purge autoremove ssh
 	apt-get --purge autoremove samba
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -188,7 +228,8 @@ crontab(){
 
 	# Checks the scheduled jobs
 	echo "Listing /etc/cron* directories"
-	ls -la /etc/cron*
+	ls -la /etc/cron* >> /var/log/infosec.log
+	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	echo "Listing root crontab"
 	crontab -l
@@ -208,6 +249,12 @@ crontab(){
 	#chown -R root:root /etc/apache2
 	#chown -R root:root /etc/apache2
 	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	#echo "[!] PAUSE*"
 	#read WAIT_FOR_USER
 	#clear
@@ -218,8 +265,19 @@ backdoors(){
 	# Potentially lists backdoors.
 	
 	netstat -tulpna | grep "LISTEN" >> /var/log/infosec.log
-	echo "[!] Results saved to '/var/log/infosec.log'"
-	sleep 3
+	
+	# Copy the contents of '/var/www/' to '/var/log/infosec.log'
+	
+	ls -la /var/www/ >> /var/log/infosec.log
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Copied the contents of /var/www/ and saved LISTENING PORTS to '/var/log/infosec.log'!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
 	clear
 }
 
@@ -230,12 +288,13 @@ tools(){
 	apt-get install chkrootkit
 	apt-get install tiger
 	apt-get install rkhunter
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
 }
 
-hosts(){
+#hosts(){
 
 	# Cleans the hosts file and then adds the necessary information.
 	
@@ -245,11 +304,17 @@ hosts(){
 	#echo ff00::0 ip6-mcastprefix >> /etc/hosts
 	#echo ff02::1 ip6-allnodes >> /etc/hosts
 	#echo ff02::2 ip6-allrouters >> /etc/hosts
-
+	
+	#if [ $? -eq 0 ]; then
+		#echo $(date):		echo "[+] Hosts file clear of any 'spooky stuff'" >> /var/log/infosec.log
+	#else
+		#echo $(date):		echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	#fi
+	
 	#echo "[!] PAUSE*"
 	#read WAIT_FOR_USER
 	#clear
-}
+#}
 
 syncookies(){
 
@@ -260,6 +325,16 @@ syncookies(){
 	echo $(date): "[!] Changing syncookie value to 1 and listing values in /var/log/infosec.log" >> /var/log/infosec.log
 	cat /proc/sys/net/ipv4/tcp_syncookies >> /var/log/infosec.log
 	cat /etc/sysctl.conf | grep tcp_syncookies >> /var/log/infosec.log
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Set the syncookie value to '1'!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
 }
 
 FTPanonup(){
@@ -270,21 +345,31 @@ FTPanonup(){
 	userdel ftp &>/dev/null
 	ls -la /etc/ftpusers/ >> /var/logs/infosec.log
 	echo $(date): "[~] Deleted FTP user and logged /etc/ftpusers/ to see users that have access to ftp" >> /var/log/infosec.log
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Deleted the user 'FTP' and logged '/etc/ftpusers/' to '/var/log/infosec.log'!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
 }
 
 # Calling the functions after user has 'approved script for launch'.
 
-	ssh
 	firewall
-	updates
+	ssh
 	policy
 	media
 	accounts
-	rmhack
-	#crontab # Research is needed
+	crontab # Research is needed
 	backdoors
-	tools
 	#hosts # Research is needed
 	syncookies
 	FTPanonup
 	#apache # Not defined
+	rmhack
+	tools
+	updates
