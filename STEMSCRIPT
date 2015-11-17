@@ -241,10 +241,15 @@ rmhack(){
 crontab(){
 
 	# Checks the scheduled jobs
+	
+	ls -la /etc/cron*
 	ls -la /etc/cron* >> /var/log/infosec.log
 	#echo "[!] PAUSE*"
 	#read WAIT_FOR_USER
-	#crontab -l
+	
+	# Lists the users crontab
+	
+	crontab -l
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -258,8 +263,8 @@ crontab(){
 	#/bin/chmod 400 cron.allow at.allow
 	
 	# Critical file permissions
-	#chown -R root:root /etc/apache2
-	#chown -R root:root /etc/apache2
+	chown -R root:root /etc/apache2
+	chown -R root:root /etc/apache
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'"
@@ -267,19 +272,22 @@ crontab(){
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	#echo "[!] PAUSE*"
-	#read WAIT_FOR_USER
-	#clear
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
 }
 
 backdoors(){
 	
 	# Potentially lists backdoors.
+	# Same principle is going on now, as in media()
 	
+	netstat -tulpna | grep "LISTEN"
 	netstat -tulpna | grep "LISTEN" >> /var/log/infosec.log
 	
 	# Copy the contents of '/var/www/' to '/var/log/infosec.log'
 	
+	ls -la /var/www/
 	ls -la /var/www/ >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
@@ -369,19 +377,44 @@ FTPanonup(){
 	clear
 }
 
+apache(){
+
+	# Apache2 security configurations
+	
+	if [ -e /etc/apache2/apache2.conf ]; then
+		echo \<Directory \> >> /etc/apache2/apache2.conf
+		echo -e ' \t AllowOverride None' >> /etc/apache2/apache2.conf
+		echo -e ' \t Order Deny,Allow' >> /etc/apache2/apache2.conf
+		echo -e ' \t Deny from all' >> /etc/apache2/apache2.conf
+		echo \<Directory \/\> >> /etc/apache2/apache2.conf
+		echo UserDir disabled root >> /etc/apache2/apache2.conf
+		echo $(date): Apache security measures enabled >> /var/log/infosec.log
+	fi
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Secured apache2!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
+}
+
 # Calling the functions after user has 'approved script for launch'.
 
-	firewall
-	ssh
-	policy
-	media
-	accounts
-	crontab # Research is needed
-	backdoors
-	#hosts # Research is needed
-	syncookies
-	FTPanonup
-	#apache # Not defined
-	rmhack
-	tools
-	updates
+	firewall 	 #IGS /					{IGS = In_Good_Standing}
+	ssh			 #IGS /					{NIGS = Not_In_Good_Standing}
+	policy 		 #IGS /
+	media  		 #IGS /
+	accounts 	 #IGS / 
+	crontab 	 #IGS / Research
+	backdoors 	 #IGS /
+	#hosts 		 #NIGS / Research
+	syncookies 	 #IGS /
+	FTPanonup	 #IGS /
+	#apache		 #IGS / Research
+	rmhack 		 #IGS /
+	tools 		 #IGS /
+	updates 	 #IGS /
