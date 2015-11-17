@@ -1,7 +1,6 @@
 if [ $EUID -ne 0 ]; then
-    echo -e "$RED [!] You are not Root! Quitting... $COEND"
-	sleep 1
-	exit
+    echo "[!] You are not Root! Quitting..."
+    exit
 else
-    echo -e "$GREEN [+] Root detected, moving on. COEND"
+    echo "[+] Root detected, moving on."
 fi
