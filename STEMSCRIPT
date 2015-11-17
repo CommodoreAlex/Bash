@@ -7,6 +7,10 @@
 # If you're of another CyberPatriot team, and aren't a member of the team 'Marine Raiders'...
 # It is against the rules of the competition to use this script, so please, abide by this regulation.
 
+# Creating and moving 'infosec.log' to /var/log/ for further usage/storage.
+touch infosec.log
+mv infosec.log /var/log/
+
 echo "Launch when ready."
 read WAIT_FOR_USER
 
@@ -14,22 +18,38 @@ ssh(){
 
 	# This will change the 'PermitRootLogin yes' to 'PermitRootLogin no'.
 	# This will also disallow X11 Forwarding.
+	# This will disallow 'PermitEmptyPasswords'
+	# This will change Protocol 1 to Protocol 2
 	
 		if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
-		echo "[!] SSH ROOT login is enabled!"
-		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
-		echo "[+] SSH ROOT login is disabled!"
+		echo $(date): echo "[!] SSH ROOT login is enabled!" >> /var/log/infosec.log
+		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log 
+		echo $(date): echo "[+] SSH ROOT login is disabled!" >> /var/log/infosec.log
 		sleep 3
 	
 	fi
 	
 		if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
-		echo "[!] X11 Forwarding is enabled!"
-		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null
-		echo "[+] X11 Forwarding has been disabled!"
+		echo $(date): echo "[!] X11 Forwarding is enabled!" >> /var/log/infosec.log
+		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log 
+		echo $(date): echo "[+] X11 Forwarding has been disabled!" >> /var/log/infosec.log
 		sleep 3
 	
 	fi
+	
+		if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
+		echo $(date): echo "[!] SSH PermitEmptyPasswords is enabled!" >> /var/log/infosec.log
+		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log
+		echo $(date): echo "[+] SSH PermitEmptyPasswords is disabled!" >> /var/log/infosec.log
+		sleep 3
+	fi
+	
+		if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
+		echo $(date): echo "[!] Protocol 1 is set!" >> /var/log/infosec.log
+		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log
+		echo $(date): echo "[+] Protocol 1 changed to Protocol 2!" >> /var/log/infosec.log
+	fi
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -38,10 +58,14 @@ ssh(){
 firewall(){
 
 	# Sets the firewall to default standards
-	# Enables the firewall
+	# Enables the firewall / Resets it / Allows port 80 and 443 from the start (HTTP/HTTPS)
 	
-	ufw enable
-	echo 'y' ufw reset
+	ufw enable >> /var/log/infosec.log 
+	echo 'y' ufw reset >> /var/log/infosec.log 
+	
+	ufw allow 80 >> /var/log/infosec.log 
+	ufw allow 443 >> /var/log/infosec.log 
+	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -56,11 +80,11 @@ updates(){
 	# Checks for daily updates
 	
     if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
-        echo "[!] Daily updates check already configured!"
+        echo $(date): echo "[!] Daily updates check already configured!" >> /var/log/infosec.log
 		read WAIT_FOR_USER
     else
-        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
-        echo "[+] Daily updates configured"
+        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
+       echo $(date): echo "[+] Daily updates configured" >> /var/log/infosec.log
 		read WAIT_FOR_USER
     fi
 	echo "[!] PAUSE*"
@@ -75,17 +99,17 @@ policy(){
 	
 	apt-get update && apt-get install libpam-cracklib -y
     if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
-        echo "[+] /etc/pam.d/common-password already configured"
+       echo $(date): echo "[+] /etc/pam.d/common-password already configured" >> /var/log/infosec.log
 		read WAIT_FOR_USER
     else
         echo "password   requisite    pam_cracklib.so retry=3 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
-		echo "[+] /etc/pam.d/common-password set."
+		echo $(date): echo "[+] /etc/pam.d/common-password set." >> /var/log/infosec.log
 		read WAIT_FOR_USER
     fi
 
     sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
     sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
-    echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs"
+    echo $(date): echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs" >> /var/log/infosec.log
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -95,12 +119,19 @@ media(){
 
 	# Finds and lists media files with the following extensions.
 	
-	find / -name "*.mp3"
-	find / -name "*.mp4"
-	find / -name "*.gif"
-	find / -name "*.jpg"
-	find / -name "*.jpeg"
-	find / -name "*.png"
+	find / -name "*.mp3" >> /var/log/infosec.log
+	find / -name "*.mp4" >> /var/log/infosec.log 
+	find / -name "*.gif" >> /var/log/infosec.log 
+	find / -name "*.jpg" >> /var/log/infosec.log
+	find / -name "*.jpeg" >> /var/log/infosec.log 
+	find / -name "*.png" >> /var/log/infosec.log 
+	find / -name "*.mov" >> /var/log/infosec.log
+	find / -name "*.wav" >> /var/log/infosec.log
+	find / -name "*.tiff" >> /var/log/infosec.log
+ 	find / -name "*.tif" >> /var/log/infosec.log
+ 	find / -name "*.wmv" >> /var/log/infosec.log
+ 	find / -name "*.avi" >> /var/log/infosec.log
+	
 	"[+] Listed all media files with the following extensions..."
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
@@ -116,12 +147,12 @@ accounts(){
 	
 	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	echo "[+] Lines added to file" 
+	echo $(date): "[+] Guest account security lines added to '/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf'" >> /var/log/infosec.log
 	sleep 3
 	
 	passwd root 
-	passwd -l root
-	echo "[+] New ROOT passwd and locked ROOT account."
+	#passwd -l root
+	echo $(date): echo "[+] New ROOT passwd and locked ROOT account." >> /var/log/infosec.log
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -147,6 +178,7 @@ rmhack(){
 	apt-get --purge autoremove netcat-openbsd
 	apt-get --purge autoremove netcat-traditional
 	apt-get --purge autoremove ssh
+	apt-get --purge autoremove samba
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
@@ -163,15 +195,31 @@ crontab(){
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	clear
+	
+	# Only allow root in cron*
+	#cd /etc/
+	#/bin/rm -f cron.deny at.deny				# More research must be done here.
+	#echo root >cron.allow
+	#echo root >at.allow
+	#/bin/chown root:root cron.allow at.allow
+	#/bin/chmod 400 cron.allow at.allow
+	
+	# Critical file permissions
+	#chown -R root:root /etc/apache2
+	#chown -R root:root /etc/apache2
+	
+	#echo "[!] PAUSE*"
+	#read WAIT_FOR_USER
+	#clear
 }
 
 backdoors(){
 	
 	# Potentially lists backdoors.
 	
-	netstat -tulpna | grep "LISTEN"
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
+	netstat -tulpna | grep "LISTEN" >> /var/log/infosec.log
+	echo "[!] Results saved to '/var/log/infosec.log'"
+	sleep 3
 	clear
 }
 
@@ -184,18 +232,49 @@ tools(){
 	apt-get install rkhunter
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
+	clear
+}
+
+hosts(){
+
+	# Cleans the hosts file and then adds the necessary information.
+	
+	#echo 127.0.0.1	localhost > /etc/hosts					# Could break the hosts file {a little}, be careful DO MORE RESEARCH
+	#echo ::1 ip6-localhost ip6-loopback >> /etc/hosts
+	#echo fe00::0 ip6-localnet >> /etc/hosts
+	#echo ff00::0 ip6-mcastprefix >> /etc/hosts
+	#echo ff02::1 ip6-allnodes >> /etc/hosts
+	#echo ff02::2 ip6-allrouters >> /etc/hosts
+
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
+}
+
+syncookies(){
+
+	# SYN cookie protection 
+	# The value should be set to '1' as this will protect us against DDOS attacks, theoretically.
+	
+	sysctl -w net.ipv4.tcp_syncookie=1
+	echo $(date): "[!] Changing syncookie value to 1 and listing values in /var/log/infosec.log" >> /var/log/infosec.log
+	cat /proc/sys/net/ipv4/tcp_syncookies >> /var/log/infosec.log
+	cat /etc/sysctl.conf | grep tcp_syncookies >> /var/log/infosec.log
 }
 
 # Calling the functions after user has 'approved script for launch'.
 
-	#ssh
-	#firewall
-	#updates
-	#policy
-	#media
-	#accounts
-	#rmhack
-	#crontab
-	#backdoors
-	#tools
-	#hosts
+	ssh
+	firewall
+	updates
+	policy
+	media
+	accounts
+	rmhack
+	#crontab # Research is needed
+	backdoors
+	tools
+	#hosts # Research is needed
+	syncookies
+	#FTPanon # Not defined
+	#apache # Not defined
