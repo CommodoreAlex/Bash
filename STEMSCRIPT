@@ -405,7 +405,7 @@ apache(){
 # Calling the functions after user has 'approved script for launch'.
 
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
-	ssh			 #IGS /					{NIGS = Not_In_Good_Standing}
+	ssh		 #IGS /					{NIGS = Not_In_Good_Standing}
 	policy 		 #IGS /
 	media  		 #IGS /
 	accounts 	 #IGS / 
