@@ -4,7 +4,7 @@
 # This is here because in the CP comp, you'll read some things before you work. 
 # It wouldn't be good to potentially take something away / ruin something important.
 # It's recommended to have paper out or a document to log some listed information of the output.
-# If you're of another CyberPatriot team, and aren't a member of the team 'Marine Raiders'...
+# If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders'...
 # It is against the rules of the competition to use this script, so please, abide by this regulation.
 
 # Creating and moving 'infosec.log' to /var/log/ for further usage/storage.
