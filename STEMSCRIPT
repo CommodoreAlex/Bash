@@ -21,6 +21,26 @@ fi
 touch infosec.log
 mv infosec.log /var/log/
 
+# Because I didn't specify some things to do with error logging, for now I'm using this system
+# You just follow down the list referencing the errors/successes
+
+echo -Order of Functions- >> /var/log/infosec.log
+echo firewall >> /var/log/infosec.log
+echo ssh >> /var/log/infosec.log
+echo policy >> /var/log/infosec.log
+echo audit >> /var/log/infosec.log
+echo media >> /var/log/infosec.log
+echo accounts >> /var/log/infosec.log
+echo cron >> /var/log/infosec.log
+echo backdoors >> /var/log/infosec.log
+echo hosts >> /var/log/infosec.log
+echo syncookies >> /var/log/infosec.log
+echo FTPanonup >> /var/log/infosec.log
+echo apache >> /var/log/infosec.log
+echo rmhack >> /var/log/infosec.log
+echo tools >> /var/log/infosec.log
+echo updates >> /var/log/infosec.log
+
 echo "Make sure to go through everything outside of the script..."
 echo "Launch when ready."
 read WAIT_FOR_USER
