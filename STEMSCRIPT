@@ -252,9 +252,9 @@ crontab(){
 
 	# Checks the scheduled jobs
 	
-	ls -la /etc/cron* >> /var/log/infosec.log
-	#echo "[!] PAUSE*"
-	#read WAIT_FOR_USER
+	ls -la /etc/cron* >> /var/log/infosec.log		# May want to do this outside of the script.
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
 	
 	# Lists the users crontab
 	
@@ -414,7 +414,7 @@ apache(){
 # Calling the functions after user has 'approved script for launch'.
 
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
-	ssh		 #IGS /					{NIGS = Not_In_Good_Standing}
+	ssh			 #IGS /					{NIGS = Not_In_Good_Standing}
 	policy 		 #IGS /
 	media  		 #IGS /
 	accounts 	 #IGS / 
