@@ -236,18 +236,18 @@ rmhack(){
 	clear
 }
 
-crontab(){
+cron(){
 
 	# Checks the scheduled jobs
 	
-	#ls -la /etc/cron*				# May want to do this outside of the script.
-	#read WAIT_FOR_USER
+	ls -la /etc/cron*				# May want to do this outside of the script.
+	read WAIT_FOR_USER
 	
 	# Lists the users crontab
 	
-	crontab -l
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
+	#crontab -l
+	#echo "[!] PAUSE*"
+	#read WAIT_FOR_USER
 	
 	# Only allow root in cron*
 	#cd /etc/
@@ -258,11 +258,11 @@ crontab(){
 	#/bin/chmod 400 cron.allow at.allow
 	
 	# Critical file permissions
-	chown -R root:root /etc/apache2
-	chown -R root:root /etc/apache
+	#chown -R root:root /etc/apache2
+	#chown -R root:root /etc/apache
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'"
+		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -421,7 +421,7 @@ audit(){
 	audit        #IGS /
 	#media		 #IGS /
 	accounts 	 #IGS / 
-	#crontab 	 #IGS / Research
+	cron	 	 #IGS / Research
 	backdoors 	 #IGS /
 	#hosts 		 #NIGS / Research
 	syncookies 	 #IGS /
@@ -430,3 +430,5 @@ audit(){
 	rmhack 		 #IGS /
 	tools 		 #IGS /
 	updates 	 #IGS /
+	
+# "Disreguard the oddly placed 'NIGS'" - Alex C~ 2015
