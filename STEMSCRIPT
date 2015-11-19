@@ -12,6 +12,7 @@ if [ $EUID -ne 0 ]; then
     echo "[!] You are not Root! Quitting..."
     exit
 else
+	clear
     echo "[+] Root detected, moving on."
 	sleep 1
 	clear
@@ -226,7 +227,7 @@ accounts(){
 	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	echo $(date): "[+] Guest account security lines added to '/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf'" >> /var/log/infosec.log
-	sleep 3
+	
 							# Uncomment these lines for the competition.
 	#passwd root 			# These are commented to save time in the testing phase.
 	#passwd -l root		    # The less there is to approve, the faster this goes.
@@ -346,7 +347,7 @@ tools(){
 	apt-get install samba
 	apt-get install bind9
 	apt-get install nmap
-	apt-get install top
+	apt-get install htop
 	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
