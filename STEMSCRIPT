@@ -478,17 +478,25 @@ pass(){
 	cat /etc/gshadow/ >> /var/log/sec.log
 	echo "---------------" >> /var/log/sec.log
 	cat /etc/shadow >> /var/log/sec.log
-
-
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] /etc/passwd|/etc/group/|/etc/gshadow/|/etc/shadow/ logged to '/var/log/sec.log'!"
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	echo "[!] PAUSE*"
+	read WAIT_FOR_USER
+	clear
 }
 
 # Calling the functions after user has 'approved script for launch'.
 
 	pass		 #IGS /
-	firewall 	 #IGS /					{IGS = In_Good_Standing}
-	ssh			 #IGS /
+	firewall 	 #IGS /			{IGS = In_Good_Standing}
+	ssh		 #IGS /
 	policy 		 #IGS /
-	audit        #IGS /
+	audit        	 #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
 	cron	 	 #IGS / Research
