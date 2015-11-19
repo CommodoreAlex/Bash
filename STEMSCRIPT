@@ -26,6 +26,7 @@ mv infosec.log /var/log/
 # You just follow down the list referencing the errors/successes
 
 echo -Order of Functions- >> /var/log/infosec.log
+echo pass >> /var/log/infosec.log
 echo firewall >> /var/log/infosec.log
 echo ssh >> /var/log/infosec.log
 echo policy >> /var/log/infosec.log
@@ -483,6 +484,7 @@ pass(){
 
 # Calling the functions after user has 'approved script for launch'.
 
+	pass		 #IGS /
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
 	ssh			 #IGS /
 	policy 		 #IGS /
