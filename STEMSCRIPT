@@ -257,6 +257,14 @@ rmhack(){
 	apt-get --purge autoremove wireshark
 	apt-get --purge autoremove kismet
 	apt-get --purge autoremove telnet
+	apt-get --purge autoremove VOMIT
+	apt-get --purge autoremove Yersina
+	apt-get --purge autoremove DISCO
+	apt-get --purge autoremove ICRACK
+	apt-get --purge autoremove bobkit
+	apt-get --purge autoremove woot-project
+	apt-get --purge autoremove Nikto
+	apt-get --purge autoremove pbnj
 	apt-get --purge autoremove bind9
 	apt-get --purge autoremove apache2
 	apt-get --purge autoremove vsftpd
@@ -461,19 +469,17 @@ audit(){
 # Calling the functions after user has 'approved script for launch'.
 
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
-	ssh			 #IGS /					{NIGS = Not_In_Good_Standing}
+	ssh			 #IGS /
 	policy 		 #IGS /
 	audit        #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
 	cron	 	 #IGS / Research
 	backdoors 	 #IGS /
-	#hosts 		 #NIGS / Research
+	#hosts 		 #Needs Work / Research
 	syncookies 	 #IGS /
 	FTPanonup	 #IGS /
 	apache		 #IGS / Research
 	rmhack 		 #IGS /
 	tools 		 #IGS /
 	updates 	 #IGS /
-	
-# "Disreguard the oddly placed 'NIGS'" - Alex C~ 2015
