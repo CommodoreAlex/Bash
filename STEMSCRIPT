@@ -40,6 +40,7 @@ echo apache >> /var/log/infosec.log
 echo rmhack >> /var/log/infosec.log
 echo tools >> /var/log/infosec.log
 echo updates >> /var/log/infosec.log
+echo ------------------------------- >> /var/log/infosec.log
 
 echo "Make sure to go through everything outside of the script..."
 echo "Launch when ready."
@@ -178,12 +179,25 @@ finder(){
 	# Finds and lists media files with the following extensions.
 	# There are two sections as one will list to the user / while one logs it to /var/log/infosec.log
 	
+	find / -name "*.mp3"
+	find / -name "*.mp4" 
+	find / -name "*.gif"
+	find / -name "*.jpg"
+	find / -name "*.jpeg"
+	#find / -name "*.png"
+	find / -name "*.mov"
+	find / -name "*.wav"
+	find / -name "*.tiff"
+ 	find / -name "*.tif"
+ 	find / -name "*.wmv"
+ 	find / -name "*.avi"
+	
 	find / -name "*.mp3" >> /var/log/infosec.log
 	find / -name "*.mp4" >> /var/log/infosec.log 
 	find / -name "*.gif" >> /var/log/infosec.log 
 	find / -name "*.jpg" >> /var/log/infosec.log
 	find / -name "*.jpeg" >> /var/log/infosec.log 
-	find / -name "*.png" >> /var/log/infosec.log 
+	#find / -name "*.png" >> /var/log/infosec.log		# Due to the substantial amount of .png files... This is commented out.
 	find / -name "*.mov" >> /var/log/infosec.log
 	find / -name "*.wav" >> /var/log/infosec.log
 	find / -name "*.tiff" >> /var/log/infosec.log
@@ -260,12 +274,14 @@ cron(){
 
 	# Checks the scheduled jobs
 	
-	ls -la /etc/cron*				# May want to do this outside of the script.
+	ls -la /etc/cron*
+	ls -la /etc/cron* >> /var/log/infosec.log
 	read WAIT_FOR_USER
 	
 	# Lists the users crontab
 	
 	crontab -l
+	crontab -l >> /var/log/infosec.log
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
 	
@@ -279,7 +295,9 @@ cron(){
 	
 	# Critical file permissions
 	chown -R root:root /etc/apache2
+	chown -R root:root /etc/apache2 >> /var/log/infosec.log
 	chown -R root:root /etc/apache
+	chown -R root:root /etc/apache >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'" >> /var/log/infosec.log
@@ -318,11 +336,17 @@ backdoors(){
 
 tools(){
 
-	# Installs some interesting tools that are helpful, all up to the user of course.
+	# Installs tools and other things by the users choice.
 	
 	apt-get install chkrootkit
 	apt-get install tiger
 	apt-get install rkhunter
+	apt-get install apache2
+	apt-get install ssh
+	apt-get install samba
+	apt-get install bind9
+	apt-get install nmap
+	apt-get install top
 	
 	echo "[!] PAUSE*"
 	read WAIT_FOR_USER
