@@ -466,6 +466,21 @@ audit(){
 	clear
 }
 
+pass(){
+
+	# Logs the contents of /etc/passwd, /etc/group/, /etc/gshadow/, and /etc/shadow to /var/log/sec.log
+	
+	cat /etc/passwd/ >> /var/log/sec.log
+	echo "---------------" >> /var/log/sec.log
+	cat /etc/group/ >> /var/log/sec.log
+	echo "---------------" >> /var/log/sec.log
+	cat /etc/gshadow/ >> /var/log/sec.log
+	echo "---------------" >> /var/log/sec.log
+	cat /etc/shadow >> /var/log/sec.log
+
+
+}
+
 # Calling the functions after user has 'approved script for launch'.
 
 	firewall 	 #IGS /					{IGS = In_Good_Standing}
