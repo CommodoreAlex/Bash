@@ -502,8 +502,8 @@ pass(){
 	cron	 	 #IGS / Research
 	backdoors 	 #IGS /
 	#hosts 		 #Needs Work / Research
-	syncookies 	 #IGS /
-	FTPanonup	 #IGS /
+	#syncookies 	 #IGS /
+	#FTPanonup	 #IGS /
 	#apache		 #IGS / Research
 	rmhack 		 #IGS /
 	tools 		 #IGS /
