@@ -189,8 +189,8 @@ finder(){
 	#find / -name "*.png"
 	find / -name "*.mov"
 	find / -name "*.wav"
-	find / -name "*.tiff"
- 	find / -name "*.tif"
+	#find / -name "*.tiff"
+ 	#find / -name "*.tif"
  	find / -name "*.wmv"
  	find / -name "*.avi"
 	
@@ -304,10 +304,10 @@ cron(){
 	#/bin/chmod 400 cron.allow at.allow
 	
 	# Critical file permissions
-	chown -R root:root /etc/apache2
-	chown -R root:root /etc/apache2 >> /var/log/infosec.log
-	chown -R root:root /etc/apache
-	chown -R root:root /etc/apache >> /var/log/infosec.log
+	#chown -R root:root /etc/apache2
+	#chown -R root:root /etc/apache2 >> /var/log/infosec.log
+	#chown -R root:root /etc/apache
+	#chown -R root:root /etc/apache >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'" >> /var/log/infosec.log
@@ -504,7 +504,7 @@ pass(){
 	#hosts 		 #Needs Work / Research
 	syncookies 	 #IGS /
 	FTPanonup	 #IGS /
-	apache		 #IGS / Research
+	#apache		 #IGS / Research
 	rmhack 		 #IGS /
 	tools 		 #IGS /
 	updates 	 #IGS /
