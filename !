@@ -1,4 +1,5 @@
 #!/bin/bash
+#https://www.sans.org/score/checklists/linux
 
 # exit out if we're not root
 if [[ $EUID -ne 0 ]]; then
