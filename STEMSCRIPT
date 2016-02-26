@@ -188,14 +188,22 @@ finder(){
 accounts(){
 
 	# Disables the guest account
-	# Hides the userlist from the login screen.     THIS HAPPENS BY ADDING LINES INTO THE FILE, AS THEY'RE PROBABLY ABSENT.
+	# Hides the userlist from the login screen.
 	# Changes the root password
 	# Disables the root account
 	
-	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf   #14.04
-	# sed -i 's/allow-guest=true/allow-guest-false/g' /etc/lightdm/lightdm.conf   #12.04
-	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf   #14.04
-	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf   #12.04
+	# Ubuntu Versions 14.04
+	# echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	# echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	# sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	
+	# Ubuntu Versions 12.04
+	# echo 'allow-guest=false' >> 
+	#
+	# sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf   # 12.04
+	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf   # 12.04
+	
 	echo $(date): "[+] Guest account security lines added to '/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf'" >> /var/log/infosec.log
 	
 							# Uncomment these lines for the competition.
