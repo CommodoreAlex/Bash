@@ -56,32 +56,27 @@ ssh(){
 	# This will disallow 'PermitEmptyPasswords'
 	# This will change Protocol 1 to Protocol 2
 	
-		if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
-		echo $(date): echo "[!] SSH ROOT login is enabled!" >> /var/log/infosec.log
-		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log 
+	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
 		echo $(date): echo "[+] SSH ROOT login is disabled!" >> /var/log/infosec.log
-		sleep 3
-	
 	fi
 	
-		if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
-		echo $(date): echo "[!] X11 Forwarding is enabled!" >> /var/log/infosec.log
-		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log 
+	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null 
 		echo $(date): echo "[+] X11 Forwarding has been disabled!" >> /var/log/infosec.log
-		sleep 3
-	
 	fi
 	
-		if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
-		echo $(date): echo "[!] SSH PermitEmptyPasswords is enabled!" >> /var/log/infosec.log
-		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log
+	### Permits empty passwords to 'NO' ###
+	
+	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
+		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &>/dev/null
 		echo $(date): echo "[+] SSH PermitEmptyPasswords is disabled!" >> /var/log/infosec.log
-		sleep 3
 	fi
 	
-		if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
-		echo $(date): echo "[!] Protocol 1 is set!" >> /var/log/infosec.log
-		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &>/dev/null >> /var/log/infosec.log
+	### Changes protocol 1 to 2 ###
+	
+	if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
+		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &>/dev/null
 		echo $(date): echo "[+] Protocol 1 changed to Protocol 2!" >> /var/log/infosec.log
 	fi
 	
@@ -91,21 +86,20 @@ ssh(){
 		echo $(date):	echo "[!] Could not set configurations!"
 	fi
 	
- 	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }	
 
 firewall(){
-
-	# Sets the firewall to default standards
-	# Enables the firewall / Resets it / Allows port 80 and 443 from the start (HTTP/HTTPS)
 	
-	ufw enable >> /var/log/infosec.log 
-	echo 'y' ufw reset >> /var/log/infosec.log 
+	### Enables the firewall ###
+	### Denies all ports other than the default standard ###
+	### Allows the ports (80,443) ###
 	
-	ufw allow 80 >> /var/log/infosec.log 
-	ufw allow 443 >> /var/log/infosec.log 
+	ufw enable
+	ufw default deny
+	
+	ufw allow 80 
+	ufw allow 443
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Firewall configurations set!"
@@ -120,20 +114,20 @@ firewall(){
 
 updates(){
 
-	# Updates and Upgrades
+	### Updates and Upgrades ###
 	
-	apt-get update && apt-get dist-upgrade #-y
+	apt-get update && apt-get dist-upgrade -y
 	
-	# Checks for daily updates
+	### Checks for daily updates ###
 	
-    if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
-        echo $(date): echo "[!] Daily updates check already configured!" >> /var/log/infosec.log
-		read WAIT_FOR_USER
-    else
-        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
+	if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
+        	echo $(date): echo "[!] Daily updates check already configured!" >> /var/log/infosec.log
+		read WAIT_FOR_USER	
+	else
+        	sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
 		echo $(date): echo "[+] Daily updates configured" >> /var/log/infosec.log
 		read WAIT_FOR_USER
-    fi
+	fi
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Ran through updates and set daily updates!"
@@ -148,22 +142,23 @@ updates(){
 
 policy(){
 
-	# This will set the password policy for common-password & login.defs.
-	# Also this will install libpam-cracklib for /etc/pam.d/common-password.
+	### Libpam Cracklib ###
 	
 	apt-get update && apt-get install libpam-cracklib -y
-    if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
-       echo $(date): echo "[+] /etc/pam.d/common-password already configured" >> /var/log/infosec.log
-		read WAIT_FOR_USER
-    else
+	
+	### Common-Password ###
+	
         echo "password   requisite    pam_cracklib.so retry=3 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
-		echo $(date): echo "[+] /etc/pam.d/common-password set." >> /var/log/infosec.log
-		read WAIT_FOR_USER
-    fi
+    	
+    	### Common-Auth ###
+    	
+    	echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
+    	
+    	### Login.defs ###
 
-    sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
-    sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
-    echo $(date): echo "[+] Password Policy set in /etc/pam.d/common-password and /etc/login.defs" >> /var/log/infosec.log
+    	sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS 150/g' /etc/login.defs
+    	sed -i 's/PASS_MIN_DAYS	0/PASS_MIN_DAYS	7/g' /etc/login.defs
+    	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7 /g' /etc/login.defs
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Libpam-cracklib installed and password policy set!"
@@ -171,8 +166,6 @@ policy(){
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
@@ -186,26 +179,11 @@ finder(){
 	find / -name "*.gif"
 	find / -name "*.jpg"
 	find / -name "*.jpeg"
-	#find / -name "*.png"
+	find / -name "*.png"
 	find / -name "*.mov"
 	find / -name "*.wav"
-	#find / -name "*.tiff"
- 	#find / -name "*.tif"
  	find / -name "*.wmv"
  	find / -name "*.avi"
-	
-	find / -name "*.mp3" >> /var/log/infosec.log
-	find / -name "*.mp4" >> /var/log/infosec.log 
-	find / -name "*.gif" >> /var/log/infosec.log 
-	find / -name "*.jpg" >> /var/log/infosec.log
-	find / -name "*.jpeg" >> /var/log/infosec.log 
-	#find / -name "*.png" >> /var/log/infosec.log		# Due to the substantial amount of .png files... This is commented out.
-	find / -name "*.mov" >> /var/log/infosec.log
-	find / -name "*.wav" >> /var/log/infosec.log
-	find / -name "*.tiff" >> /var/log/infosec.log
- 	find / -name "*.tif" >> /var/log/infosec.log
- 	find / -name "*.wmv" >> /var/log/infosec.log
- 	find / -name "*.avi" >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
