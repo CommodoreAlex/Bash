@@ -1,26 +1,20 @@
 #!/bin/bash
 #V1.0
 
-# This is here because in the CP comp, you'll read some things before you work. 
-# It wouldn't be good to potentially take something away / ruin something important.
-# It's recommended to have paper out or a document to log some listed information of the output.
-# If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders' in general...
-# It is against the rules of the competition to use this script, so please, abide by this regulation...
-# It's preferred that you run this script in root.
+# If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders' 08-8142.
+# It is against the rules of the competition to use this script, so please, abide by this regulation.
+
+### IT IS REQUIRED THAT YOU RUN THIS SCRIPT IN ROOT ###
 
 if [ $EUID -ne 0 ]; then
-    echo "[!] You are not Root! Quitting..."
-    exit
+	echo "[!] You are not Root! Quitting..."
+	exit
 else
-	clear
-    echo "[+] Root detected, moving on."
-	sleep 1
 	clear
 fi
 
-# Creating and moving 'infosec.log' to /var/log/ for further usage/storage.
-touch infosec.log
-mv infosec.log /var/log/
+### Creating our log file in the /var/log/ directory ###
+touch /var/log/infosec.log
 
 # Because I didn't specify some things to do with error logging, for now I'm using this system
 # You just follow down the list referencing the errors/successes
@@ -44,29 +38,23 @@ echo tools >> /var/log/infosec.log
 echo updates >> /var/log/infosec.log
 echo ------------------------------- >> /var/log/infosec.log
 
-echo "Make sure to go through everything outside of the script..."
-echo "Launch when ready."
-read WAIT_FOR_USER
-clear
-
 ssh(){
-
-	# This will change the 'PermitRootLogin yes' to 'PermitRootLogin no'.
-	# This will also disallow X11 Forwarding.
-	# This will disallow 'PermitEmptyPasswords'
-	# This will change Protocol 1 to Protocol 2
+	
+	### Permits root login from 'YES' to 'NO' ###
 	
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
 		echo $(date): echo "[+] SSH ROOT login is disabled!" >> /var/log/infosec.log
 	fi
 	
+	### Changes X11Forwarding from 'YES' to 'NO' ###
+	
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null 
 		echo $(date): echo "[+] X11 Forwarding has been disabled!" >> /var/log/infosec.log
 	fi
 	
-	### Permits empty passwords to 'NO' ###
+	### Permits empty passwords from 'YES' to 'NO' ###
 	
 	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &>/dev/null
@@ -93,10 +81,11 @@ firewall(){
 	
 	### Enables the firewall ###
 	### Denies all ports other than the default standard ###
-	### Allows the ports (80,443) ###
 	
 	ufw enable
 	ufw default deny
+	
+	### Allows the ports (80,443) ###
 	
 	ufw allow 80 
 	ufw allow 443
