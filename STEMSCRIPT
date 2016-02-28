@@ -17,7 +17,7 @@ fi
 
 touch /var/log/infosec.log  # Success / Fail file
 touch /var/log/infosec2.log # Pass function file
-touch /var/log/infosec4.log # List of all ftpusers
+touch /var/log/infosec3.log # List of all ftpusers
 
 ### This is the order of functions listed in the infosec.log file for organization ###
 
@@ -552,14 +552,14 @@ FTPanonup(){
 	
 	### Copies the contents of the 'ftpusers' file to /var/log/infosec4.log ###
 	
-	ls -la /etc/ftpusers/ >> /var/log/infosec4.log
+	ls -la /etc/ftpusers/ >> /var/log/infosec3.log
 	
 	### Deletes the FTP user ###
 	
 	userdel ftp &>/dev/null
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Logged /etc/ftpusers to /var/log/infosec4.log and deleted the FTP user!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Logged /etc/ftpusers to /var/log/infosec3.log and deleted the FTP user!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
