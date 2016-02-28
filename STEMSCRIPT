@@ -175,8 +175,16 @@ updates(){
 		echo $(date): echo "[+] Daily updates configured"
 	fi
 	
+	### Allow unattended updates ###
+	
+	apt-get install unattended-upgrades -y -qq
+	echo -e "APT::Periodic::Update-Package-Lists \"1\";"           >> /etc/apt/apt.conf.d/10periodic
+	echo -e "APT::Periodic::Download-Upgradeable-Packages \"1\";"  >> /etc/apt/apt.conf.d/10periodic
+	echo -e "APT::Periodic::AutocleanInterval \"7\";"              >> /etc/apt/apt.conf.d/10periodic
+	echo -e "APT::Periodic::Unattended-Upgrade \"1\";"             >> /etc/apt/apt.conf.d/10periodic
+	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Ran through updates and affirmed daily updates!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Ran through updates, affirmed daily updates, and allowed unattended updates!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
