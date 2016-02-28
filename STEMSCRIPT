@@ -39,8 +39,7 @@ echo FTPanonup >> /var/log/infosec.log
 echo disable_comp >> /var/log/infosec.log
 echo apache >> /var/log/infosec.log
 echo disable_avahi >> /var/log/infosec.log
-echo rmhack1 >> /var/log/infosec.log
-echo rmhack2 >> /var/log/infosec.log
+echo rmhack >> /var/log/infosec.log
 echo purge_nfs >> /var/log/infosec.log
 echo purge_whoopsie >>/var/log/infosec.log
 echo sud0ers >> /var/log/infosec.log
@@ -327,13 +326,13 @@ disable_avahi(){
 	clear
 }
 
-rmhack1(){
+rmhack(){
 
 	# Attempts to uninstall hacking tools that are currently existing / services ETC ETC ETC
 	# Anything listed that isn't present will output 'Package 'bind9' is not installed, so not removed'.
 	# So you'll have a pretty good idea of what is present or what should be present.
 	
-	apt-get --purge autoremove nmap		 # Scanning
+	apt-get --purge autoremove nmap	     # Scanning
 	apt-get --purge autoremove wireshark # Scanning
 	apt-get --purge autoremove kismet    # Wireless
 	apt-get --purge autoremove telnet    # Insecure Transfer
@@ -342,17 +341,6 @@ rmhack1(){
 	apt-get --purge autoremove vsftpd    # FTP
 	apt-get --purge autoremove ssh       # SecureShell
 	apt-get --purge autoremove samba     # File Sharing
-	
-	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed any of the potential hacking tools in 'rmhack1'" >> /var/log/infosec.log
-	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
-	fi
-	
-	clear
-}
-	
-rmhack2(){
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
@@ -384,9 +372,9 @@ rmhack2(){
 	t50 termineter thc-hydra thc-ipv6 thc-pptp-bruter thc-ssl-dos tnscmd10g truecrack theharverster tlssled twofi \
 	u3-pwn uatester urlcrazy uniscan unix-privesc-check vega w3af webscarab webshag webshells webslayer websploit weevely wfuzz wifi-honey \
 	wifitap wifite wireshark winexe wpscan wordlists valgrind volatility voiphopper wol-e xspy xplico xsser yara yersinia zaproxy
-
+	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed all present hacking tools in 'rmhack2'" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed any of the potential hacking tools present!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -650,8 +638,7 @@ evergreen(){
 	disable_comp     #IGS /
 	apache		 #IGS /
 	disable_avahi    #IGS /
-	rmhack1          #IGS /
-	rmhack2          #IGS /
+	rmhack           #IGS /
 	#purge_nfs       #IGS /
 	#purge_whoopsie  #IGS /
 	sud0ers          #IGS /
