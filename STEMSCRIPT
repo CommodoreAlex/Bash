@@ -29,6 +29,7 @@ echo policy >> /var/log/infosec.log
 echo audit >> /var/log/infosec.log
 echo media >> /var/log/infosec.log
 echo accounts >> /var/log/infosec.log
+echo purge_atd >> /var/log/infosec.log
 echo services >> /var/log/infosec.log
 echo cron >> /var/log/infosec.log
 echo backdoors >> /var/log/infosec.log
@@ -37,8 +38,11 @@ echo tuning >> /var/log/infosec.log
 echo FTPanonup >> /var/log/infosec.log
 echo disable_comp >> /var/log/infosec.log
 echo apache >> /var/log/infosec.log
+echo disable_avahi >> /var/log/infosec.log
 echo rmhack1 >> /var/log/infosec.log
 echo rmhack2 >> /var/log/infosec.log
+echo purge_nfs >> /var/log/infosec.log
+echo purge_whoopsie >>/var/log/infosec.log
 echo sud0ers >> /var/log/infosec.log
 echo updates >> /var/log/infosec.log
 echo ------------------------------- >> /var/log/infosec.log
@@ -77,6 +81,21 @@ ssh(){
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] SSH Configurations fully set!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
+purge_atd(){
+	
+	### Less layers ###
+	
+	apt-get --yes purge at
+
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Removed atd!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -144,6 +163,8 @@ updates(){
 	### Updates and Upgrades ###
 	
 	apt-get update && apt-get dist-upgrade -y
+	apt-get --yes --force-yes autoremove
+	apt-get --yes --force-yes autoclean
 	
 	### Checks for daily updates ###
 	
@@ -250,6 +271,55 @@ accounts(){
 		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login!" >> /var/log/infosec.log
 		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account!" >> /var/log/infosec.log
 		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
+purge_nfs() {
+	
+    	# This the standard network file sharing for Unix/Linux/BSD
+	# style operating systems.
+	# Unless you require to share data in this manner,
+	# less layers = more sec
+	
+	apt-get --yes purge nfs-kernel-server nfs-common portmap rpcbind autofs
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Removed standard network file sharing!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
+purge_whoopsie() {
+    
+        ### Less layers ### 
+    
+        apt-get --yes purge whoopsie
+    
+        if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Removed whoopsie!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
+disable_avahi(){
+	
+	### The Avahi daemon provides mDNS / DNS-SD discovery support ###
+	### (Bonjour/Zeroconf) allowing applications to discover services on the network. ###
+	
+        update-rc.d avahi-daemon disable
+        
+        if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Disables the Avahi daemon!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -559,8 +629,10 @@ pass(){
 	clear
 }
 
-### Calling out functions ###
+### Calling out main functions through 'evergreen' ###
 
+evergreen(){
+	
 	pass		 #IGS /
 	firewall 	 #IGS /
 	ssh		 #IGS /
@@ -568,6 +640,7 @@ pass(){
 	audit            #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
+	purge_atd        #IGS /
 	services         #IGS /
 	cron	 	 #IGS /
 	backdoors 	 #IGS /
@@ -576,7 +649,13 @@ pass(){
 	FTPanonup	 #IGS /
 	disable_comp     #IGS /
 	apache		 #IGS /
+	disable_avahi    #IGS /
 	rmhack1          #IGS /
 	rmhack2          #IGS /
+	#purge_nfs       #IGS /
+	#purge_whoopsie  #IGS /
 	sud0ers          #IGS /
 	updates 	 #IGS /
+}
+
+evergreen
