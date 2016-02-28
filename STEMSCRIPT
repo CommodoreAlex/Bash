@@ -1,5 +1,5 @@
 #!/bin/bash
-#V1.0
+#V3
 
 # If you're of another CyberPatriot team or aren't a member of the team 'Marine Raiders' 08-8142.
 # It is against the rules of the competition to use this script, so please, abide by this regulation.
@@ -14,10 +14,13 @@ else
 fi
 
 ### Creating our log file in the /var/log/ directory ###
-touch /var/log/infosec.log
 
-# Because I didn't specify some things to do with error logging, for now I'm using this system
-# You just follow down the list referencing the errors/successes
+touch /var/log/infosec.log  # Success / Fail file
+touch /var/log/infosec2.log # Pass function file
+touch /var/log/infosec3.log # List of all media files
+touch /var/log/infosec4.log # List of all ftpusers
+
+### This is the order of functions listed in the infosec.log file for organization ###
 
 echo -Order of Functions- >> /var/log/infosec.log
 echo pass >> /var/log/infosec.log
@@ -29,14 +32,16 @@ echo media >> /var/log/infosec.log
 echo accounts >> /var/log/infosec.log
 echo cron >> /var/log/infosec.log
 echo backdoors >> /var/log/infosec.log
-echo hosts >> /var/log/infosec.log
 echo syncookies >> /var/log/infosec.log
 echo FTPanonup >> /var/log/infosec.log
 echo apache >> /var/log/infosec.log
-echo rmhack >> /var/log/infosec.log
-echo tools >> /var/log/infosec.log
+echo rmhack1 >> /var/log/infosec.log
+echo rmhack2 >> /var/log/infosec.log
+echo sud0ers >> /var/log/infosec.log
 echo updates >> /var/log/infosec.log
 echo ------------------------------- >> /var/log/infosec.log
+
+### Functions ###
 
 ssh(){
 	
@@ -69,13 +74,28 @@ ssh(){
 	fi
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] SSH Configurations set!"
+		echo $(date):	echo "[+] SSH Configurations fully set!" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!"
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
 	clear
-}	
+}
+
+services(){
+
+	### Listing all services ###
+	service --status-all | less -P
+	read WAIT_FOR_USER
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] SSH Configurations set!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
 
 firewall(){
 	
@@ -110,18 +130,17 @@ updates(){
 	### Checks for daily updates ###
 	
 	if grep -q "APT::Periodic::Update-Package-Lists \"1\";" /etc/apt/apt.conf.d/10periodic; then
-        	echo $(date): echo "[!] Daily updates check already configured!" >> /var/log/infosec.log
-		read WAIT_FOR_USER	
+        echo $(date): echo "[!] Daily updates check already configured!"
+		sleep 3
 	else
-        	sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
-		echo $(date): echo "[+] Daily updates configured" >> /var/log/infosec.log
-		read WAIT_FOR_USER
+        sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic >> /var/log/infosec.log 
+		echo $(date): echo "[+] Daily updates configured"
 	fi
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Ran through updates and set daily updates!"
+		echo $(date):	echo "[+] Ran through updates and affirmed daily updates!" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!"
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 
 	echo "[!] PAUSE*"
@@ -131,7 +150,7 @@ updates(){
 
 policy(){
 
-	### Libpam Cracklib ###
+	### Libpam-Cracklib installation ###
 	
 	apt-get update && apt-get install libpam-cracklib -y
 	
@@ -139,18 +158,18 @@ policy(){
 	
         echo "password   requisite    pam_cracklib.so retry=3 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
     	
-    	### Common-Auth ###
+        ### Common-Auth ###
     	
-    	echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
+        echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
     	
-    	### Login.defs ###
+        ### Login.defs ###
 
-    	sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS 150/g' /etc/login.defs
-    	sed -i 's/PASS_MIN_DAYS	0/PASS_MIN_DAYS	7/g' /etc/login.defs
-    	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7 /g' /etc/login.defs
+        sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS 150/g' /etc/login.defs
+        sed -i 's/PASS_MIN_DAYS	0/PASS_MIN_DAYS	7/g' /etc/login.defs
+        sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7 /g' /etc/login.defs
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Libpam-cracklib installed and password policy set!"
+		echo $(date):	echo "[+] Libpam-cracklib installed and password policys set!"
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -160,8 +179,7 @@ policy(){
 
 finder(){
 
-	# Finds and lists media files with the following extensions.
-	# There are two sections as one will list to the user / while one logs it to /var/log/infosec.log
+	### Lists all media files for the user ###
 	
 	find / -name "*.mp3"
 	find / -name "*.mp4" 
@@ -174,23 +192,32 @@ finder(){
  	find / -name "*.wmv"
  	find / -name "*.avi"
 	
+	echo "[!] Press 'Enter' when ready."
+	read WAIT_FOR_USER
+	
+	### Lists all media files in a separate file ###
+	
+	find / -name "*.mp3" >> /var/log/infosec3.log
+	find / -name "*.mp4"  >> /var/log/infosec3.log
+	find / -name "*.gif" >> /var/log/infosec3.log
+	find / -name "*.jpg" >> /var/log/infosec3.log
+	find / -name "*.jpeg" >> /var/log/infosec3.log
+	find / -name "*.png" >> /var/log/infosec3.log
+	find / -name "*.mov" >> /var/log/infosec3.log
+	find / -name "*.wav" >> /var/log/infosec3.log
+ 	find / -name "*.wmv" >> /var/log/infosec3.log
+ 	find / -name "*.avi" >> /var/log/infosec3.log
+	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
 accounts(){
-
-	# Disables the guest account
-	# Hides the userlist from the login screen.
-	# Changes the root password
-	# Disables the root account
 	
 	# Ubuntu Versions 14.04
 	# echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
@@ -199,26 +226,34 @@ accounts(){
 	# sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	
 	# Ubuntu Versions 12.04
-	# echo 'allow-guest=false' >> 
-	#
-	# sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf   # 12.04
-	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf   # 12.04
+	echo 'allow-guest=false' >> /etc/lightdm/lightdm.conf
+	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+	sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
+
+	### Changes the root password ###
 	
-	echo $(date): "[+] Guest account security lines added to '/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf'" >> /var/log/infosec.log
+	passwd root
 	
-							# Uncomment these lines for the competition.
-	#passwd root 			# These are commented to save time in the testing phase.
-	#passwd -l root		    # The less there is to approve, the faster this goes.
+	### Locks the root account ###
+	
+	passwd -l root
+
+	### Changes all user passwords to 'Cyb3rP4tr10t5' ###
+
+        pass='Cyb3rP4tr10t5'
+
+        for i in $(ls /home); do
+        chpasswd <<< "$i:$pass"
+        done
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login!" >> /var/log/infosec.log
 		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account!" >> /var/log/infosec.log
+		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
@@ -228,36 +263,28 @@ rmhack1(){
 	# Anything listed that isn't present will output 'Package 'bind9' is not installed, so not removed'.
 	# So you'll have a pretty good idea of what is present or what should be present.
 	
-	apt-get --purge autoremove john
-	apt-get --purge autoremove hydra
-	apt-get --purge autoremove nmap
-	apt-get --purge autoremove aircrack-ng
-	apt-get --purge autoremove wireshark
-	apt-get --purge autoremove kismet
-	apt-get --purge autoremove telnet
-	apt-get --purge autoremove VOMIT
-	apt-get --purge autoremove Yersina
-	apt-get --purge autoremove DISCO
-	apt-get --purge autoremove ICRACK
-	apt-get --purge autoremove bobkit
-	apt-get --purge autoremove woot-project
-	apt-get --purge autoremove Nikto
-	apt-get --purge autoremove pbnj
-	apt-get --purge autoremove bind9
-	apt-get --purge autoremove apache2
-	apt-get --purge autoremove vsftpd
-	apt-get --purge autoremove netcat
-	apt-get --purge autoremove netcat-openbsd
-	apt-get --purge autoremove netcat-traditional
-	apt-get --purge autoremove ssh
-	apt-get --purge autoremove samba
+	apt-get --purge autoremove nmap		 # Scanning
+	apt-get --purge autoremove wireshark # Scanning
+	apt-get --purge autoremove kismet    # Wireless
+	apt-get --purge autoremove telnet    # Insecure Transfer
+	apt-get --purge autoremove bind9     # DNS 
+	apt-get --purge autoremove apache2   # Webserver
+	apt-get --purge autoremove vsftpd    # FTP
+	apt-get --purge autoremove ssh       # SecureShell
+	apt-get --purge autoremove samba     # File Sharing
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Removed any of the potential hacking tools in 'rmhack1'" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	clear
 }
 	
-rmhack(){
+rmhack2(){
+	
+	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
 	apt-get autoremove --purge --force-yes -y airbase-ng acccheck ace-voip amap apache-users arachni android-sdk apktool arduino armitage asleap automater \
 	backdoor-factory bbqsql bed beef bing-ip2hosts binwalk blindelephant bluelog bluemaho bluepot blueranger bluesnarfer bulk-extractor \
@@ -289,7 +316,7 @@ rmhack(){
 	wifitap wifite wireshark winexe wpscan wordlists valgrind volatility voiphopper wol-e xspy xplico xsser yara yersinia zaproxy
 
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed all present hacking tools" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed all present hacking tools in 'rmhack2'" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
@@ -297,122 +324,75 @@ rmhack(){
 	clear
 }
 	
-}
+sud0ers(){
 
-cron(){
+	### Removes Any Instances of 'NOPASSWD' in Sudoers ###
 
-	# Checks the scheduled jobs
-	
-	ls -la /etc/cron*
-	ls -la /etc/cron* >> /var/log/infosec.log
-	read WAIT_FOR_USER
-	
-	# Lists the users crontab
-	
-	crontab -l
-	crontab -l >> /var/log/infosec.log
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
-	
-	# Only allow root in cron*
-	#cd /etc/
-	#/bin/rm -f cron.deny at.deny				# More research must be done here.
-	#echo root >cron.allow
-	#echo root >at.allow
-	#/bin/chown root:root cron.allow at.allow
-	#/bin/chmod 400 cron.allow at.allow
-	
-	# Critical file permissions
-	#chown -R root:root /etc/apache2
-	#chown -R root:root /etc/apache2 >> /var/log/infosec.log
-	#chown -R root:root /etc/apache
-	#chown -R root:root /etc/apache >> /var/log/infosec.log
+       sed -i s/NOPASSWD:// /etc/sudoers
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Set critical file permissions and copied '/etc/cron/' to '/var/log/infosec.log/'" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed any instances of 'NOPASSWD' in Sudoers" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
+	clear
+}
+
+cron(){
+
+	### Checks the scheduled jobs ###
+	
+	ls -la /etc/cron*
+	echo "[!] Press 'Enter' when ready."
 	read WAIT_FOR_USER
+	clear
+	
+	### Lists the users crontab ###
+	
+	crontab -l
+	echo "[!] Press 'Enter' when ready."
+	read WAIT_FOR_USER
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Listed scheduled jobs and the users crontab" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
 	clear
 }
 
 backdoors(){
 	
-	# Potentially lists backdoors.
-	# Same principle is going on now, as in media()
+	### Lists potential backdoors ###
 	
 	netstat -tulpna | grep "LISTEN"
-	netstat -tulpna | grep "LISTEN" >> /var/log/infosec.log
+	echo "[!] Press 'Enter' when ready."
+	read WAIT_FOR_USER
+	clear
 	
-	# Copy the contents of '/var/www/' to '/var/log/infosec.log'
+	### Listing the contents of /var/www/ ###
 	
 	ls -la /var/www/
-	ls -la /var/www/ >> /var/log/infosec.log
+	echo "[!] Press 'Enter' when ready."
+	read WAIT_FOR_USER
+	clear
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Copied the contents of /var/www/ and saved LISTENING PORTS to '/var/log/infosec.log'!"
+		echo $(date):	echo "[+] Listed the requested items" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
-
-tools(){
-
-	# Installs tools and other things by the users choice.
-	
-	apt-get install chkrootkit
-	apt-get install tiger
-	apt-get install rkhunter
-	apt-get install apache2
-	apt-get install ssh
-	apt-get install samba
-	apt-get install bind9
-	apt-get install nmap
-	apt-get install htop
-	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
-	clear
-}
-
-#hosts(){
-
-	# Cleans the hosts file and then adds the necessary information.
-	
-	#echo 127.0.0.1	localhost > /etc/hosts					# Could break the hosts file {a little}, be careful DO MORE RESEARCH
-	#echo ::1 ip6-localhost ip6-loopback >> /etc/hosts
-	#echo fe00::0 ip6-localnet >> /etc/hosts
-	#echo ff00::0 ip6-mcastprefix >> /etc/hosts
-	#echo ff02::1 ip6-allnodes >> /etc/hosts
-	#echo ff02::2 ip6-allrouters >> /etc/hosts
-	
-	#if [ $? -eq 0 ]; then
-		#echo $(date):		echo "[+] Hosts file clear of any 'spooky stuff'" >> /var/log/infosec.log
-	#else
-		#echo $(date):		echo "[!] Could not set configurations!" >> /var/log/infosec.log
-	#fi
-	
-	#echo "[!] PAUSE*"
-	#read WAIT_FOR_USER
-	#clear
-#}
 
 syncookies(){
 
-	# SYN cookie protection 
-	# The value should be set to '1' as this will protect us against DDOS attacks, theoretically.
+	### Sets the syncookie value to '1' ###
 	
 	sysctl -w net.ipv4.tcp_syncookie=1
-	echo $(date): "[!] Changing syncookie value to 1 and listing values in /var/log/infosec.log" >> /var/log/infosec.log
-	cat /proc/sys/net/ipv4/tcp_syncookies >> /var/log/infosec.log
-	cat /etc/sysctl.conf | grep tcp_syncookies >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Set the syncookie value to '1'!" >> /var/log/infosec.log
@@ -420,34 +400,31 @@ syncookies(){
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
 FTPanonup(){
-
-	# Deletes the user 'FTP'
-	# Prints the output of 'ls -la /etc/ftpusers/' to /var/log/infosec.log
+	
+	### Copies the contents of the 'ftpusers' file to /var/log/infosec4.log ###
+	
+	ls -la /etc/ftpusers/ >> /var/log/infosec4.log
+	
+	### Deletes the FTP user ###
 	
 	userdel ftp &>/dev/null
-	ls -la /etc/ftpusers/ >> /var/log/infosec.log
-	echo $(date): "[~] Deleted FTP user and logged /etc/ftpusers/ to see users that have access to ftp" >> /var/log/infosec.log
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Deleted the user 'FTP' and logged '/etc/ftpusers/' to '/var/log/infosec.log'!"
+		echo $(date):	echo "[+] Logged /etc/ftpusers to /var/log/infosec4.log and deleted the FTP user!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
 apache(){
 
-	# Apache2 security configurations
+	### Apache2 security configurations ###
 	
 	if [ -e /etc/apache2/apache2.conf ]; then
 		echo \<Directory \> >> /etc/apache2/apache2.conf
@@ -464,66 +441,60 @@ apache(){
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
 audit(){
 
-	# Updates the audit policy
+	### Updates the audit policy ###
 	
-	apt-get install auditd
+	apt-get install auditd -y
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Audit policy updated!"
+		echo $(date):	echo "[+] Audit policy updated!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
 pass(){
 
-	# Logs the contents of /etc/passwd, /etc/group/, /etc/gshadow/, and /etc/shadow to /var/log/sec.log
+	### Logs the contents of the following below in /var/log/infosec2.log ###
 	
-	cat /etc/passwd/ >> /var/log/sec.log
-	echo "---------------" >> /var/log/sec.log
-	cat /etc/group/ >> /var/log/sec.log
-	echo "---------------" >> /var/log/sec.log
-	cat /etc/gshadow/ >> /var/log/sec.log
-	echo "---------------" >> /var/log/sec.log
-	cat /etc/shadow >> /var/log/sec.log
+	cat /etc/passwd >> /var/log/pass.log
+	echo "---------------" >> /var/log/infosec2.log
+	cat /etc/group >> /var/log/infosec2.log
+	echo "---------------" >> /var/log/infosec2.log
+	cat /etc/gshadow >> /var/log/infosec2.log
+	echo "---------------" >> /var/log/infosec2.log
+	cat /etc/shadow >> /var/log/infosec2.log
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] /etc/passwd|/etc/group/|/etc/gshadow/|/etc/shadow/ logged to '/var/log/sec.log'!"
+		echo $(date):	echo "[+] /etc/passwd|/etc/group/|/etc/gshadow/|/etc/shadow/ logged to '/var/log/infosec2.log'!" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
 	fi
 	
-	echo "[!] PAUSE*"
-	read WAIT_FOR_USER
 	clear
 }
 
-# Calling the functions after user has 'approved script for launch'.
+### Calling out functions ###
 
 	pass		 #IGS /
-	firewall 	 #IGS /			{IGS = In_Good_Standing}
-	ssh		 #IGS /
+	firewall 	 #IGS /
+	ssh		     #IGS /
 	policy 		 #IGS /
-	audit        	 #IGS /
+	audit        #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
-	cron	 	 #IGS / Research
+	cron	 	 #IGS /
 	backdoors 	 #IGS /
-	#hosts 		 #Needs Work / Research
-	#syncookies 	 #IGS /
-	#FTPanonup	 #IGS /
-	#apache		 #IGS / Research
-	#rmhack 		 #IGS /
-	#tools 		 #IGS /
+	syncookies   #IGS /
+	FTPanonup	 #IGS /
+	apache		 #IGS /
+	rmhack1      #IGS /
+	rmhack2      #IGS /
+	sud0ers      #IGS /
 	updates 	 #IGS /
