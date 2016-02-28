@@ -13,40 +13,43 @@ else
 	clear
 fi
 
-### Creating our log file in the /var/log/ directory ###
-
-touch /var/log/infosec.log  # Success / Fail file
-touch /var/log/infosec2.log # Pass function file
-touch /var/log/infosec3.log # List of all ftpusers
-
-### This is the order of functions listed in the infosec.log file for organization ###
-
-echo -Order of Functions- >> /var/log/infosec.log
-echo pass >> /var/log/infosec.log
-echo firewall >> /var/log/infosec.log
-echo ssh >> /var/log/infosec.log
-echo policy >> /var/log/infosec.log
-echo audit >> /var/log/infosec.log
-echo media >> /var/log/infosec.log
-echo accounts >> /var/log/infosec.log
-echo purge_atd >> /var/log/infosec.log
-echo services >> /var/log/infosec.log
-echo cron >> /var/log/infosec.log
-echo backdoors >> /var/log/infosec.log
-echo syncookies >> /var/log/infosec.log
-echo tuning >> /var/log/infosec.log
-echo FTPanonup >> /var/log/infosec.log
-echo disable_comp >> /var/log/infosec.log
-echo apache >> /var/log/infosec.log
-echo disable_avahi >> /var/log/infosec.log
-echo rmhack >> /var/log/infosec.log
-echo purge_nfs >> /var/log/infosec.log
-echo purge_whoopsie >>/var/log/infosec.log
-echo sud0ers >> /var/log/infosec.log
-echo updates >> /var/log/infosec.log
-echo ------------------------------- >> /var/log/infosec.log
-
 ### Functions ###
+
+start(){
+	
+	### Creating our log files in the /var/log/ directory ###
+
+	touch /var/log/infosec.log  # Success / Fail file
+	touch /var/log/infosec2.log # Pass function file
+	touch /var/log/infosec3.log # List of all ftpusers
+
+	### This is the order of functions listed in the infosec.log file for organization ###
+
+	echo -Order of Functions- >> /var/log/infosec.log
+	echo pass >> /var/log/infosec.log
+	echo firewall >> /var/log/infosec.log
+	echo ssh >> /var/log/infosec.log
+	echo policy >> /var/log/infosec.log
+	echo audit >> /var/log/infosec.log
+	echo media >> /var/log/infosec.log
+	echo accounts >> /var/log/infosec.log
+	echo purge_atd >> /var/log/infosec.log
+	echo services >> /var/log/infosec.log
+	echo cron >> /var/log/infosec.log
+	echo backdoors >> /var/log/infosec.log
+	echo syncookies >> /var/log/infosec.log
+	echo tuning >> /var/log/infosec.log
+	echo FTPanonup >> /var/log/infosec.log
+	echo disable_comp >> /var/log/infosec.log
+	echo apache >> /var/log/infosec.log
+	echo disable_avahi >> /var/log/infosec.log
+	echo rmhack >> /var/log/infosec.log
+	echo purge_nfs >> /var/log/infosec.log
+	echo purge_whoopsie >>/var/log/infosec.log
+	echo sud0ers >> /var/log/infosec.log
+	echo updates >> /var/log/infosec.log
+	echo ------------------------------- >> /var/log/infosec.log
+}
 
 ssh(){
 	
@@ -629,6 +632,7 @@ pass(){
 
 evergreen(){
 	
+	start            #IGS /
 	pass		 #IGS /
 	firewall 	 #IGS /
 	ssh		 #IGS /
@@ -647,8 +651,8 @@ evergreen(){
 	apache		 #IGS /
 	disable_avahi    #IGS /
 	rmhack           #IGS /
-	#purge_nfs       #IGS /
-	#purge_whoopsie  #IGS /
+	purge_nfs       #IGS /
+	purge_whoopsie  #IGS /
 	sud0ers          #IGS /
 	updates 	 #IGS /
 }
