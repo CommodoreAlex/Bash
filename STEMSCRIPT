@@ -22,6 +22,7 @@ start(){
 	touch /var/log/infosec.log  # Success / Fail file
 	touch /var/log/infosec2.log # Pass function file
 	touch /var/log/infosec3.log # List of all ftpusers
+	touch /var/log/infosec4.log # List of deleted media
 
 	### This is the order of functions listed in the infosec.log file for organization ###
 
@@ -228,16 +229,16 @@ finder(){
 
 	### Deletes all media files of the following listed types  ###
 	
-	find / -name "*.mp3" -type f -delete
-	find / -name "*.mp4"  -type f -delete
-	find / -name "*.gif" -type f -delete
-	find / -name "*.jpg" -type f -delete
-	find / -name "*.jpeg" -type f -delete
-	find / -name "*.png" -type f -delete
-	find / -name "*.mov" -type f -delete
-	find / -name "*.wav" -type f -delete
- 	find / -name "*.wmv" -type f -delete
- 	find / -name "*.avi" -type f -delete
+	find / -name "*.mp3" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.mp4"  -type f -delete >> /var/log/infosec4.log
+	find / -name "*.gif" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.jpg" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.jpeg" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.png" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.mov" -type f -delete >> /var/log/infosec4.log
+	find / -name "*.wav" -type f -delete >> /var/log/infosec4.log
+ 	find / -name "*.wmv" -type f -delete >> /var/log/infosec4.log
+ 	find / -name "*.avi" -type f -delete >> /var/log/infosec4.log
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
