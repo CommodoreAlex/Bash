@@ -29,6 +29,7 @@ echo policy >> /var/log/infosec.log
 echo audit >> /var/log/infosec.log
 echo media >> /var/log/infosec.log
 echo accounts >> /var/log/infosec.log
+echo services >> /var/log/infosec.log
 echo cron >> /var/log/infosec.log
 echo backdoors >> /var/log/infosec.log
 echo syncookies >> /var/log/infosec.log
@@ -85,6 +86,7 @@ services(){
 
 	### Listing all services ###
 	service --status-all | less -P
+	echo "[!] Press 'Enter' when ready."
 	read WAIT_FOR_USER
 	
 	if [ $? -eq 0 ]; then
@@ -476,17 +478,18 @@ pass(){
 
 	pass		 #IGS /
 	firewall 	 #IGS /
-	ssh		     #IGS /
+	ssh		 #IGS /
 	policy 		 #IGS /
-	audit        #IGS /
+	audit            #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
+	services         #IGS /
 	cron	 	 #IGS /
 	backdoors 	 #IGS /
-	syncookies   #IGS /
+	syncookies       #IGS /
 	FTPanonup	 #IGS /
 	apache		 #IGS /
-	rmhack1      #IGS /
-	rmhack2      #IGS /
-	sud0ers      #IGS /
+	rmhack1          #IGS /
+	rmhack2          #IGS /
+	sud0ers          #IGS /
 	updates 	 #IGS /
