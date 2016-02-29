@@ -23,6 +23,7 @@ start(){
 	touch /var/log/infosec2.log # Pass function file
 	touch /var/log/infosec3.log # List of all ftpusers
 	touch /var/log/infosec4.log # List of deleted media
+	touch /var/log/wtmp         # In relation to 'process_acct'
 
 	### This is the order of functions listed in the infosec.log file for organization ###
 
@@ -36,6 +37,7 @@ start(){
 	echo accounts >> /var/log/infosec.log
 	echo purge_atd >> /var/log/infosec.log
 	echo services >> /var/log/infosec.log
+	echo process_acct >> /var/log/infosec.log
 	echo cron >> /var/log/infosec.log
 	echo backdoors >> /var/log/infosec.log
 	echo syncookies >> /var/log/infosec.log
@@ -49,6 +51,7 @@ start(){
 	echo purge_whoopsie >>/var/log/infosec.log
 	echo sud0ers >> /var/log/infosec.log
 	echo updates >> /var/log/infosec.log
+	echo set_chkroot >> /var/log/infosec.log
 	echo ------------------------------- >> /var/log/infosec.log
 }
 
@@ -608,6 +611,26 @@ audit(){
 	clear
 }
 
+process_acct(){
+	
+	### Keeps track of all commands ran on a server, who ran them, when, etc. ###
+	
+	apt-get install acct
+	
+	# /var/log/wtmp was created for this
+	# To show user connect times, run ac.
+	# To show info about commands previously ran by users, run sa.
+	# To see the last commands ran, run lastcomm
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Installed acct tools!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
 pass(){
 
 	### Logs the contents of the following below in /var/log/infosec2.log ###
@@ -629,7 +652,25 @@ pass(){
 	clear
 }
 
-### Calling out main functions through 'evergreen' ###
+set_chkroot(){
+	
+	### Installs 'chkrootkit' and runs it through ###
+	
+	apt-get install chkrootkit
+	chkrootkit
+	echo "[!] Press 'Enter' when ready."
+	read WAIT_FOR_USER
+	
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] Installed 'chkrootkit' and ran through a scan successfully!" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+	fi
+	
+	clear
+}
+
+### Calling out functions through main 'evergreen' ###
 
 evergreen(){
 	
@@ -643,6 +684,7 @@ evergreen(){
 	accounts 	 #IGS / 
 	purge_atd        #IGS /
 	services         #IGS /
+	process_acct     #IGS /
 	cron	 	 #IGS /
 	backdoors 	 #IGS /
 	syncookies       #IGS /
@@ -652,10 +694,11 @@ evergreen(){
 	apache		 #IGS /
 	disable_avahi    #IGS /
 	rmhack           #IGS /
-	purge_nfs       #IGS /
-	purge_whoopsie  #IGS /
+	purge_nfs        #IGS /
+	purge_whoopsie   #IGS /
 	sud0ers          #IGS /
 	updates 	 #IGS /
+	set_chkroot      #IGS /
 }
 
 evergreen
