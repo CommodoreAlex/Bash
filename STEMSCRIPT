@@ -178,11 +178,11 @@ firewall(){
 
 updates(){
 
-	### Updates and Upgrades ###
+	### Updates, upgrades, autoremove, and autoclean ###
 	
 	apt-get update && apt-get dist-upgrade -y
-	apt-get --yes --force-yes autoremove
-	apt-get --yes --force-yes autoclean
+	apt-get autoremove
+	apt-get autoclean
 	
 	### Checks for daily updates ###
 	
