@@ -57,6 +57,14 @@ start(){
 
 ssh(){
 	
+	### In reality you wouldn't want the SSH port number as '22' due to attacks on SSH ###
+	### This is not to be used for competitions as they regularly have it as '22' ###
+	
+	# if grep -Fxq "Port 1337" /etc/ssh/sshd_config; then
+	#	sed -i 's/Port 22/Port 390/g' /etc/ssh/sshd_config &>/dev/null
+	#	echo $(date): echo "[+] Port number changed from regular '22' to '1337'!" >> /var/log/infosec.log
+	# fi
+	
 	### Permits root login from 'YES' to 'NO' ###
 	
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
@@ -84,6 +92,10 @@ ssh(){
 		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &>/dev/null
 		echo $(date): echo "[+] Protocol 1 changed to Protocol 2!" >> /var/log/infosec.log
 	fi
+	
+	### Reload SSH ###
+	
+	service ssh reload
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] SSH Configurations fully set!" >> /var/log/infosec.log
