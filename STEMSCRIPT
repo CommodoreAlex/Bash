@@ -734,7 +734,7 @@ evergreen(){
 	pass		 #IGS /
 	firewall 	 #IGS /
 	ssh		 #IGS /
-	policy 		 #IGS /
+	policy           #IGS /
 	audit            #IGS /
 	finder		 #IGS /
 	accounts 	 #IGS / 
@@ -758,4 +758,4 @@ evergreen(){
 	set_chkroot      #IGS /
 }
 
-evergreen
+#evergreen
