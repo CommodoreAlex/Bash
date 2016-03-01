@@ -651,7 +651,7 @@ audit(){
 
 	### Updates the audit policy ###
 	
-	apt-get install auditd -y
+	apt-get update && apt-get install libpam-cracklib -y
 	
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Audit policy updated! [5]" >> /var/log/infosec.log
