@@ -28,32 +28,33 @@ start(){
 	### This is the order of functions listed in the infosec.log file for organization ###
 
 	echo -Order of Functions- >> /var/log/infosec.log
-	echo pass >> /var/log/infosec.log
-	echo firewall >> /var/log/infosec.log
-	echo ssh >> /var/log/infosec.log
-	echo policy >> /var/log/infosec.log
-	echo audit >> /var/log/infosec.log
-	echo media >> /var/log/infosec.log
-	echo accounts >> /var/log/infosec.log
-	echo purge_atd >> /var/log/infosec.log
-	echo services >> /var/log/infosec.log
-	echo process_acct >> /var/log/infosec.log
-	echo cron >> /var/log/infosec.log
-	echo backdoors >> /var/log/infosec.log
-	echo syncookies >> /var/log/infosec.log
-	echo tuning >> /var/log/infosec.log
-	echo FTPanonup >> /var/log/infosec.log
-	echo disable_comp >> /var/log/infosec.log
-	echo disable_ipv6 >> /var/log/infosec.log
-	echo apache >> /var/log/infosec.log
-	echo disable_avahi >> /var/log/infosec.log
-	echo rmhack >> /var/log/infosec.log
-	echo purge_nfs >> /var/log/infosec.log
-	echo purge_whoopsie >>/var/log/infosec.log
-	echo sud0ers >> /var/log/infosec.log
-	echo updates >> /var/log/infosec.log
-	echo set_chkroot >> /var/log/infosec.log
-	echo ------------------------------- >> /var/log/infosec.log
+	echo start [0] >> /var/log/infosec.log
+	echo pass [1] >> /var/log/infosec.log
+	echo firewall [2] >> /var/log/infosec.log
+	echo ssh [3] >> /var/log/infosec.log
+	echo policy [4] >> /var/log/infosec.log
+	echo audit [5] >> /var/log/infosec.log
+	echo media [6] >> /var/log/infosec.log
+	echo accounts [7] >> /var/log/infosec.log
+	echo purge_atd [8] >> /var/log/infosec.log
+	echo services [9] >> /var/log/infosec.log
+	echo process_acct [10] >> /var/log/infosec.log
+	echo cron [11] >> /var/log/infosec.log
+	echo backdoors [12] >> /var/log/infosec.log
+	echo syncookies [13] >> /var/log/infosec.log
+	echo tuning [14] >> /var/log/infosec.log
+	echo FTPanonup [15] >> /var/log/infosec.log
+	echo disable_comp [16] >> /var/log/infosec.log
+	echo disable_ipv6 [17] >> /var/log/infosec.log
+	echo apache [18] >> /var/log/infosec.log
+	echo disable_avahi [19] >> /var/log/infosec.log
+	echo rmhack [20] >> /var/log/infosec.log
+	echo purge_nfs [21] >> /var/log/infosec.log
+	echo purge_whoopsie [22] >>/var/log/infosec.log
+	echo sud0ers [23] >> /var/log/infosec.log
+	echo updates [24] >> /var/log/infosec.log
+	echo set_chkroot [25] >> /var/log/infosec.log
+	echo ----------------[0]---------------- >> /var/log/infosec.log
 }
 
 ssh(){
@@ -63,35 +64,35 @@ ssh(){
 	
 	# if grep -Fxq "Port 1337" /etc/ssh/sshd_config; then
 	#	sed -i 's/Port 22/Port 390/g' /etc/ssh/sshd_config &>/dev/null
-	#	echo $(date): echo "[+] Port number changed from regular '22' to '1337'!" >> /var/log/infosec.log
+	#	echo $(date): echo "[+] Port number changed from regular '22' to '1337'! [3]" >> /var/log/infosec.log
 	# fi
 	
 	### Permits root login from 'YES' to 'NO' ###
 	
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &>/dev/null
-		echo $(date): echo "[+] SSH ROOT login is disabled!" >> /var/log/infosec.log
+		echo $(date): echo "[+] SSH ROOT login is disabled! [3]" >> /var/log/infosec.log
 	fi
 	
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 	
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &>/dev/null 
-		echo $(date): echo "[+] X11 Forwarding has been disabled!" >> /var/log/infosec.log
+		echo $(date): echo "[+] X11 Forwarding has been disabled! [3]" >> /var/log/infosec.log
 	fi
 	
 	### Permits empty passwords from 'YES' to 'NO' ###
 	
 	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &>/dev/null
-		echo $(date): echo "[+] SSH PermitEmptyPasswords is disabled!" >> /var/log/infosec.log
+		echo $(date): echo "[+] SSH PermitEmptyPasswords is disabled! [3]" >> /var/log/infosec.log
 	fi
 	
 	### Changes protocol 1 to 2 ###
 	
 	if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
 		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &>/dev/null
-		echo $(date): echo "[+] Protocol 1 changed to Protocol 2!" >> /var/log/infosec.log
+		echo $(date): echo "[+] Protocol 1 changed to Protocol 2! [3]" >> /var/log/infosec.log
 	fi
 	
 	### Reload SSH ###
@@ -99,9 +100,9 @@ ssh(){
 	service ssh reload
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] SSH Configurations fully set!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] SSH Configurations fully set! [3]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [3]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -114,9 +115,9 @@ purge_atd(){
 	apt-get --yes purge at
 
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed atd!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed atd! [8]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [8]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -130,9 +131,9 @@ services(){
 	read WAIT_FOR_USER
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] SSH Configurations set!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] SSH Configurations set! [9]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [9]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -169,9 +170,9 @@ firewall(){
         iptables -A INPUT -p all -s localhost  -i eth0 -j DROP            #Deny outside packets from internet which claim to be from your loopback interface.
   
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Firewall configurations set!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Firewall configurations set! [2]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [2]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -190,9 +191,9 @@ disable_ipv6(){
 	sysctl -p
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Diabled IPV6 and reloaded the configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Diabled IPV6 and reloaded the configurations! [17]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [17]" >> /var/log/infosec.log
 	fi
 
 	clear
@@ -227,9 +228,9 @@ updates(){
 	fi
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Ran through updates, affirmed daily updates, and allowed unattended updates!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Ran through updates, affirmed daily updates, and allowed unattended updates! [24]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [24]" >> /var/log/infosec.log
 	fi
 
 	clear
@@ -256,9 +257,9 @@ policy(){
         sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7 /g' /etc/login.defs
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Libpam-cracklib installed and password policys set!"
+		echo $(date):	echo "[+] Libpam-cracklib installed and password policys set! [4]"
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [4]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -280,9 +281,9 @@ finder(){
  	find / -name "*.avi" -type f -delete >> /var/log/infosec4.log
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Listed all media files with the following extenions!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Listed all media files with the following extenions! [6]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [6]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -323,11 +324,11 @@ accounts(){
         done
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login!" >> /var/log/infosec.log
-		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account!" >> /var/log/infosec.log
-		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login! [7]" >> /var/log/infosec.log
+		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account! [7]" >> /var/log/infosec.log
+		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5 [7]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [7]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -343,9 +344,9 @@ purge_nfs() {
 	apt-get --yes purge nfs-kernel-server nfs-common portmap rpcbind autofs
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed standard network file sharing!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed standard network file sharing! [21]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [21]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -358,9 +359,9 @@ purge_whoopsie() {
         apt-get --yes purge whoopsie
     
         if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed whoopsie!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed whoopsie! [22]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [22]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -374,9 +375,9 @@ disable_avahi(){
         update-rc.d avahi-daemon disable
         
         if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Disables the Avahi daemon!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Disables the Avahi daemon! [19]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [19]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -430,9 +431,9 @@ rmhack(){
 	wifitap wifite wireshark winexe wpscan wordlists valgrind volatility voiphopper wol-e xspy xplico xsser yara yersinia zaproxy
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed any of the potential hacking tools present!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed any of the potential hacking tools present! [20]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [20]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -445,9 +446,9 @@ sud0ers(){
        sed -i s/NOPASSWD:// /etc/sudoers
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Removed any instances of 'NOPASSWD' in Sudoers" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Removed any instances of 'NOPASSWD' in Sudoers [23]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [23]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -469,9 +470,9 @@ cron(){
 	read WAIT_FOR_USER
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Listed scheduled jobs and the users crontab" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Listed scheduled jobs and the users crontab! [11]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [11]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -494,9 +495,9 @@ backdoors(){
 	clear
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Listed the requested items" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Listed the requested items! [12]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [12]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -509,9 +510,9 @@ syncookies(){
 	sysctl -w net.ipv4.tcp_syncookie=1
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Set the syncookie value to '1'!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Set the syncookie value to '1'! [13]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [13]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -562,9 +563,9 @@ tuning(){
         sysctl -p
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Kernel tuning configurations are set and reloaded!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Kernel tuning configurations are set and reloaded! [14]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [14]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -588,9 +589,9 @@ disable_comp(){
         # unless you are working with a specific one
         
         if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Disabled compilers that are present!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Disabled compilers that are present! [16]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [16]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -607,9 +608,9 @@ FTPanonup(){
 	userdel ftp &>/dev/null
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Logged /etc/ftpusers to /var/log/infosec3.log and deleted the FTP user!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Logged /etc/ftpusers to /var/log/infosec3.log and deleted the FTP user! [15]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [15]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -634,9 +635,9 @@ apache(){
 	mount -a
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Secured apache2 / Secured shared memory!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Secured apache2 / Secured shared memory! [18]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [18]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -649,9 +650,9 @@ audit(){
 	apt-get install auditd -y
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Audit policy updated!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Audit policy updated! [5]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [5]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -669,9 +670,9 @@ process_acct(){
 	# To see the last commands ran, run lastcomm
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Installed acct tools!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Installed acct tools! [10]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [10]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -690,9 +691,9 @@ pass(){
 	cat /etc/shadow >> /var/log/infosec2.log
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] /etc/passwd|/etc/group/|/etc/gshadow/|/etc/shadow/ logged to '/var/log/infosec2.log'!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] /etc/passwd|/etc/group/|/etc/gshadow/|/etc/shadow/ logged to '/var/log/infosec2.log'! [1]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [1]" >> /var/log/infosec.log
 	fi
 	
 	clear
@@ -708,9 +709,9 @@ set_chkroot(){
 	read WAIT_FOR_USER
 	
 	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] Installed 'chkrootkit' and ran through a scan successfully!" >> /var/log/infosec.log
+		echo $(date):	echo "[+] Installed 'chkrootkit' and ran through a scan successfully! [25]" >> /var/log/infosec.log
 	else
-		echo $(date):	echo "[!] Could not set configurations!" >> /var/log/infosec.log
+		echo $(date):	echo "[!] Could not set configurations! [25]" >> /var/log/infosec.log
 	fi
 	
 	clear
