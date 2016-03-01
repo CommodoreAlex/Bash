@@ -290,24 +290,26 @@ finder(){
 
 accounts(){
 	
-	# Ubuntu Versions 14.04
-	# echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	# echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	### Ubuntu Versions 14.04 ###
+	# Maybe put an if statement in here
+	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	# sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	
-	# Ubuntu Versions 12.04
-	echo 'allow-guest=false' >> /etc/lightdm/lightdm.conf
-	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
-	sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
+	### Ubuntu Versions 12.04 ###
+	# echo 'allow-guest=false' >> /etc/lightdm/lightdm.conf
+	# echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	# sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
 
 	### Changes the root password ###
 	
-	passwd root
+	# passwd root
 	
 	### Locks the root account ###
 	
-	passwd -l root
+	# passwd -l root
 	
 	# If you need to re-enable the account...
 	# $ passwd -u root
