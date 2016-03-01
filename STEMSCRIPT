@@ -181,10 +181,12 @@ firewall(){
 disable_ipv6(){
 	
 	### Disable IPV6 ###
+	###
 	
 	echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.lo.disable_ipv6 = 1"  >> /etc/sysctl.conf
+	# sh -c 'echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6 # um idek
 	
 	### Reload the configuration ###
 	
@@ -203,7 +205,7 @@ updates(){
 
 	### Check for shellshock vuln prior to updates / upgrades ###
 	
-	sudo env i='() { :;}; echo Your system is Bash vulnerable' bash -c "echo Bash vulnerability test" >> /var/log/infosec.log
+	sudo env i='() { :;}; echo Your system is Bash vulnerable' bash -c "echo Bash vulnerability test +" >> /var/log/infosec.log
 
 	### Updates, upgrades, autoremove, and autoclean ###
 	
@@ -213,9 +215,10 @@ updates(){
 	
 	### Enable automatic security updates ###
 	### Creates the "/etc/apt/apt.conf.d/20auto-upgrades" file ###
+	### This can cause problems sometimes, however, that isn't an issue for the intended usage ###
 	
-	# sudo apt-get install unattended-upgrades
-	# sudo dpkg-reconfigure -plow unattended-upgrades
+	apt-get install unattended-upgrades
+	dpkg-reconfigure -plow unattended-upgrades
 	
 	### Checks for daily updates ###
 	
@@ -313,11 +316,13 @@ accounts(){
 	
 	### Changes the root password ###
 	
-	# passwd root
+	echo "[!] Please enter a new UNIX password"
+	passwd root
 	
 	### Locks the root account ###
 	### If you need to re-enable: passwd -u root ###
-	# passwd -l root
+	
+	passwd -l root
 
 	### Changes all user passwords to 'Cyb3rP4tr10t5' ###
 
