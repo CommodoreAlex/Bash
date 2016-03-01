@@ -292,28 +292,32 @@ finder(){
 accounts(){
 	
 	### Ubuntu Versions 14.04 ###
-	# Maybe put an if statement in here
-	echo 'allow-guest=false' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	# sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	
+	if grep -Fxq "allow-guest=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+		sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	fi
+	
+	if grep -Fxq "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+		sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	fi
 	
 	### Ubuntu Versions 12.04 ###
-	# echo 'allow-guest=false' >> /etc/lightdm/lightdm.conf
-	# echo 'greeter-hide-users=true' >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	# sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
-	# sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
-
+	
+	# if grep -Fxq "allow-guest=true" /etc/lightdm/lightdm.conf; then
+	#	sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+	# fi
+	
+	# if grep -Fxq "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
+	#	sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
+	# fi
+	
 	### Changes the root password ###
 	
 	# passwd root
 	
 	### Locks the root account ###
-	
+	### If you need to re-enable: passwd -u root ###
 	# passwd -l root
-	
-	# If you need to re-enable the account...
-	# $ passwd -u root
 
 	### Changes all user passwords to 'Cyb3rP4tr10t5' ###
 
@@ -326,7 +330,7 @@ accounts(){
 	if [ $? -eq 0 ]; then
 		echo $(date):	echo "[+] Disabled the guest user account and hid userlist from login! [7]" >> /var/log/infosec.log
 		echo $(date):	echo "[+] ROOT passwd set and locked the ROOT user account! [7]" >> /var/log/infosec.log
-		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5 [7]" >> /var/log/infosec.log
+		echo $(date):   echo "[+] All user passwords set to 'Cyb3rP4tr10t5! [7]" >> /var/log/infosec.log
 	else
 		echo $(date):	echo "[!] Could not set configurations! [7]" >> /var/log/infosec.log
 	fi
