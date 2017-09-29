@@ -1,5 +1,5 @@
 if grep -Fxq "STEM SCRIPT HAS BEEN RUN IN THIS FILE." /etc/sysctl.conf; then
-	print ""
+	echo "" &> /dev/null
 else
 	#SYSCTL SETTINGS:
 	#Navigate to $ nano /etc/sysctl.conf
