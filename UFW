@@ -1,7 +1,5 @@
 #!/bin/bash
-# UFW STATUS is ran, grep checks to see if the string matches
-# the output of the command and either enables the ufw or installs and enables
-# the ufw.
+
 # Aptitude is used to meet the goals of the operation - in the second if statement
 # choose what ports you want to allow prior to running this section of the script 
 
