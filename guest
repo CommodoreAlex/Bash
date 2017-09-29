@@ -1,5 +1,4 @@
-# This should print 'No LSB modules are available' but it does 
-# complete the task, ignore that output.
+#!/bin/bash
 
 if lsb_release -a | grep -q "Release:   16.04"; then
         mkdir /etc/lightdm/lightdm.conf.d/
@@ -29,7 +28,18 @@ fi
 
 ### Guest Account 12.04 ###
 if lsb_release -a | grep -q "Release:   12.04"; then
-        sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
-        #echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
+        ### Disable guest account ###
+        if grep -q "allow-guest=true" /etc/lightdm/lightdm.conf; then
+                echo "Changing allow-guest=true/allow-guest=false"
+                sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+        else
+                echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+        fi
+        ### Hide user at logon ###
+        if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
+                sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
+        else
+                echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
+        fi
         echo "RUNS"
 fi
