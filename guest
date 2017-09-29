@@ -7,14 +7,15 @@ if lsb_release -a | grep -q "Release:   16.04"; then
         echo "RUNS"
 fi
 
-
 ### Guest Account 14.04 ###
 if lsb_release -a | grep -q "Release:   14.04"; then
-        sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-        echo "Swig Swog"
-        #echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-        #echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-        echo "RUNS"
+        if grep -q "allow-guest=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+                echo "This already exists!"
+                sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        else
+                echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+                #echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        fi
 fi
 
 ### Guest Account 12.04 ###
