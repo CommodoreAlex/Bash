@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if lsb_release -a | grep -q "Release:   16.04"; then
         mkdir /etc/lightdm/lightdm.conf.d/
         sh -c 'printf"[SeatDefaults]\nallow-guest=fase\n" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'
@@ -7,14 +5,22 @@ if lsb_release -a | grep -q "Release:   16.04"; then
         echo "RUNS"
 fi
 
+
 ### Guest Account 14.04 ###
 if lsb_release -a | grep -q "Release:   14.04"; then
+        ### Disable guest account ###
         if grep -q "allow-guest=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-                echo "This already exists!"
+                echo "Changing allow-guest=true/allow-guest=false."
                 sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
         else
                 echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-                #echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        fi
+        ### Hide user at logon ###
+        if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightd.conf.d/50-ubuntu.conf; then
+                echo "Chaning users=false/users=true"
+                sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        else
+                echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
         fi
 fi
 
