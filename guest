@@ -1,3 +1,6 @@
+# This should print 'No LSB modules are available' but it does 
+# complete the task, ignore that output.
+
 if lsb_release -a | grep -q "Release:   16.04"; then
         mkdir /etc/lightdm/lightdm.conf.d/
         sh -c 'printf"[SeatDefaults]\nallow-guest=fase\n" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'
