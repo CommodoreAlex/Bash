@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # UFW STATUS is ran, grep checks to see if the string matches
 # the output of the command and either enables the ufw or installs and enables
@@ -6,12 +5,15 @@
 # If the UFW is enabled and present the else statement will tell the user
 apt-get install aptitude -y /dev/null
 
+if aptitude show ufw | grep -q "State: not installed"; then
+        apt-get install ufw -y
+fi
+
 if ufw status | grep -q "Status: inactive"; then
         ufw enable
-elif aptitude show ufw | grep -q "State: not installed"; then
-        apt-get install ufw -y
-        ufw enable
 else
-        echo "UFW is enabled and present."
+        echo "Could not enable UFW."
 fi
+
+
 
