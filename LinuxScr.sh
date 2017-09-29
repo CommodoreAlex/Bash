@@ -4,24 +4,22 @@ firewall(){
 
   # Aptitude is used to meet the goals of the operation - in the second if statement
   # choose what ports you want to allow prior to running this section of the script 
-
   apt-get install aptitude -y /dev/null
-
   if aptitude show ufw | grep -q "State: not installed"; then
           apt-get install ufw -y
           if ufw status | grep -q "Status: inactive"; then
-                  ufw default deny
-                  ufw enable
-                  #ufw allow 22 #SSH
-                  #ufw allow 25 #SMTP
-                  #ufw allow 110 #POP3
-                  #ufw allow 139 #Samba
-                  #ufw allow 445 #Samba
-                  #ufw allow 137 #Samba
-                  #ufw allow 138 #Samba
-                  ufw allow 3306 #Mysql
+          	ufw default deny
+          	ufw enable
+          	#ufw allow 22 #SSH
+          	#ufw allow 25 #SMTP
+          	#ufw allow 110 #POP3
+          	#ufw allow 139 #Samba
+          	#ufw allow 445 #Samba
+          	#ufw allow 137 #Samba
+          	#ufw allow 138 #Samba
+          	ufw allow 3306 #Mysql
           else
-                  echo "Could not enable UFW."
+          	echo "Could not enable UFW."
           fi
   fi
 }
@@ -74,19 +72,18 @@ sys(){
 }
 
 ssh(){
-
+	
 	### Enables and creates a MOTD Banner message ###
-   if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
-    sed -i 's/#Banner/etc/issue.net/Banner /etc/issue.net' /etc/ssh/sshd_config &> /dev/null
+	if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
+        	sed -i 's/#Banner/etc/issue.net/Banner /etc/issue.net' /etc/ssh/sshd_config &> /dev/null
 		echo "All connections are monitored and recorded" >> /etc/issue.net &> /dev/null
 		echo "Disconnect IMMEDIATELY if you are not an authorized user!" >> /etc/issue.net &> /dev/null
-   fi
+   	fi
 	### Enables IgnoreRhosts ###
 	if grep -Fxq "IgnoreRhosts no" /etc/ssh/sshd_config; then
-    sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
-  fi
+    		sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
+ 	fi
 	### Enables UsePAM ###
-
 	if grep -Fxq "UsePAM no" /etc/ssh/sshd_config; then
 		sed -i 's/UsePAM no/UsePAM yes/g' /etc/ssh/sshd_config &> /dev/null
 	fi
@@ -96,18 +93,16 @@ ssh(){
 	fi
 	### Enables UsePrivilegeSeparation ###
 	if grep -Fxq "UsePrivilegeSeparation no" /etc/ssh/sshd_config; then
-    sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
-  fi
+    		sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
+  	fi
 	### Permits root login from 'YES' to 'NO' ###
-
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 	fi
 	### PermitRootLogin without password to no ###
-
-  if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
-    sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
-  fi
+ 	if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
+    		sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+  	fi
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null 
