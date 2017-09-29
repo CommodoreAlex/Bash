@@ -24,6 +24,7 @@ if lsb_release -a | grep -q "Release:   14.04"; then
         else
                 echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
         fi
+        echo "RUNS"
 fi
 
 ### Guest Account 12.04 ###
