@@ -6,7 +6,6 @@ if lsb_release -a | grep -q "Release:   16.04"; then
 	echo "RUNS"
 fi
 
-
 ### Guest Account 14.04 ###
 if lsb_release -a | grep -q "Release:	14.04"; then
 	### Disable guest account ###
