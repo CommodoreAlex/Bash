@@ -1,110 +1,69 @@
-# user modified sshd_config
-# See the sshd(8) manpage for details
+ssh(){
 
-#### Networking options ####
+	### Enables and creates a MOTD Banner message ###
 
-# Listen on a non-standard port > 1024
-Port 50000
+        if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
+                sed -i 's/#Banner/etc/issue.net/Banner /etc/issue.net' /etc/ssh/sshd_config &> /dev/null
+		echo "All connections are monitored and recorded" >> /etc/issue.net &> /dev/null
+		echo "Disconnect IMMEDIATELY if you are not an authorized user!" >> /etc/issue.net &> /dev/null
+        fi
 
-# Restrict to IPv4. inet = IPv4, inet6 = IPv6, any = both 
-AddressFamily inet
+	### Enables IgnoreRhosts ###
 
-# Listen only on the internal network address
-ListenAddress 192.168.1.0
+	if grep -Fxq "IgnoreRhosts no" /etc/ssh/sshd_config; then
+                sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
+        fi
 
-# Only use protocol version 2
-Protocol 2
+	### Enables UsePAM ###
 
-# Disable XForwarding unless you need it
-X11Forwarding no
+	if grep -Fxq "UsePAM no" /etc/ssh/sshd_config; then
+		sed -i 's/UsePAM no/UsePAM yes/g' /etc/ssh/sshd_config &> /dev/null
+	fi
 
-# Disable TCPKeepAlive and use ClientAliveInterval instead to prevent TCP Spoofing attacks
-TCPKeepAlive no
-ClientAliveInterval 600
-ClientAliveCountMax 3
+	### Enables PrintMotd ###
 
-#### Networking options ####
+	if grep -Fxq "PrintMotd no" /etc/ssh/sshd_config; then
+		sed -i 's/PrintMotd no/PrintMotd yes/g' /etc/ssh/sshd_config &> /dev/null
+	fi
 
+	### Enables UsePrivilegeSeparation ###
 
-#### Key Configuration ####
+	if grep -Fxq "UsePrivilegeSeparation no" /etc/ssh/sshd_config; then
+                sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
+        fi
 
-# HostKeys for protocol version 2
-HostKey /etc/ssh/ssh_host_rsa_key
-HostKey /etc/ssh/ssh_host_dsa_key
+	### Permits root login from 'YES' to 'NO' ###
 
-#Privilege Separation is turned on for security
-UsePrivilegeSeparation yes
+	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
+		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+		#echo $(date): echo "[+] SSH ROOT login is disabled! [3]" >> /var/log/infosec.log
+	fi
 
-# Use public key authentication
-PubkeyAuthentication yes
-AuthorizedKeysFile      %h/.ssh/authorized_keys
+	### Changes X11Forwarding from 'YES' to 'NO' ###
 
-# Disable black listed key usage (update your keys!)
-PermitBlacklistedKeys no
+	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
+		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null 
+	fi
 
-#### Key Configuration ####
+	### Permits empty passwords from 'YES' to 'NO' ###
 
+	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
+		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &> /dev/null
+	fi
 
-#### Authentication ####
+	### Changes protocol 1 to 2 ###
 
-# Whitelist allowed users
-AllowUsers user1 user2
+	if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
+		sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &> /dev/null
+	fi
 
-# one minute to enter your key passphrase
-LoginGraceTime 60
+	service ssh reload
 
-# No root login
-PermitRootLogin no
+	if [ $? -eq 0 ]; then
+		echo $(date):	echo "[+] SSH Configurations fully set! [3]" >> /var/log/infosec.log
+	else
+		echo $(date):	echo "[!] Could not set configurations! [3]" >> /var/log/infosec.log
+	fi
 
-# Force permissions checks on keyfiles and directories
-StrictModes yes
-
-# Don't read the user's ~/.rhosts and ~/.shosts files
-IgnoreRhosts yes
-
-# similar for protocol version 2
-HostbasedAuthentication no
-
-# Don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication
-IgnoreUserKnownHosts yes
-
-# To enable empty passwords, change to yes (NOT RECOMMENDED)
-PermitEmptyPasswords no
-
-# Disable challenge and response auth. Unessisary when using keys
-ChallengeResponseAuthentication no
-
-# Disable the use of passwords completly, only use public/private keys
-PasswordAuthentication no
-
-# Using keys, no need for PAM. Also allows SSHD to be run as a non-root user
-UsePAM no
-
-# Don't use login(1)
-UseLogin no
-
-#### Authentication ####
-
-
-#### Misc ####
-
-# Logging
-SyslogFacility AUTH
-LogLevel INFO
-
-# Print the last time the user logged in
-PrintLastLog yes
-
-MaxAuthTries 2
-
-MaxStartups 10:30:60
-
-# Display login banner
-Banner /etc/issue.net
-
-# Allow client to pass locale environment variables
-AcceptEnv LANG LC_*
-
-Subsystem sftp /usr/lib/openssh/sftp-server
-
-#### Misc ####
+	clear
+}
