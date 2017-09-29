@@ -155,3 +155,57 @@ pam(){
 	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7/g' /etc/login.defs
 	echo "PASS_MIN_LEN 8" >> /etc/login.defs
 }
+
+guest(){
+
+	### Guest Account 16.04 ###
+	if lsb_release -a | grep -q "Release:   16.04"; then
+        	mkdir /etc/lightdm/lightdm.conf.d/
+		echo "allow-guest=false" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+        	echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		echo "RUNS"
+	fi
+
+	### Guest Account 14.04 ###
+	if lsb_release -a | grep -q "Release:	14.04"; then
+		### Disable guest account ###
+		if grep -q "allow-guest=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+			echo "Changing allow-guest=true/allow-guest=false."
+			sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+		else
+			echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+		fi
+	fi
+	### Hide user at logon ###
+	if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+		echo "Chaning users=false/users=true"
+		sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	else
+		echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	fi
+	echo "RUNS"
+
+	### Guest Account 12.04 ###
+	if lsb_release -a | grep -q "Release:   12.04"; then
+		### Disable guest account ###
+		if grep -q "allow-guest=true" /etc/lightdm/lightdm.conf; then
+			echo "Changing allow-guest=true/allow-guest=false"
+			sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+		else
+			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+		fi
+	fi
+	### Hide user at logon ###
+	if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
+		sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
+        else
+                echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
+        fi
+	echo "RUNS"
+}
+
+
+
+
+
+
