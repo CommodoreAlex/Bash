@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if lsb_release -a | grep -q "Release:   16.04"; then
+        mkdir /etc/lightdm/lightdm.conf.d/
+        sh -c 'printf"[SeatDefaults]\nallow-guest=fase\n" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'
+        #echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+        echo "RUNS"
+fi
+
+
+### Guest Account 14.04 ###
+if lsb_release -a | grep -q "Release:   14.04"; then
+        sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        echo "Swig Swog"
+        #echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        #echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+        echo "RUNS"
+fi
+
+### Guest Account 12.04 ###
+if lsb_release -a | grep -q "Release:   12.04"; then
+        sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
+        #echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
+        echo "RUNS"
+fi
