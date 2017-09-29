@@ -39,6 +39,13 @@ ssh(){
 		#echo $(date): echo "[+] SSH ROOT login is disabled! [3]" >> /var/log/infosec.log
 	fi
 
+	### PermitRootLogin without password to no ###
+
+        if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
+                sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+        fi
+
+
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
@@ -58,12 +65,7 @@ ssh(){
 	fi
 
 	service ssh reload
-
-	if [ $? -eq 0 ]; then
-		echo $(date):	echo "[+] SSH Configurations fully set! [3]" >> /var/log/infosec.log
-	else
-		echo $(date):	echo "[!] Could not set configurations! [3]" >> /var/log/infosec.log
-	fi
-
 	clear
 }
+
+ssh
