@@ -17,7 +17,7 @@ firewall(){
           	#ufw allow 445 #Samba
           	#ufw allow 137 #Samba
           	#ufw allow 138 #Samba
-          	ufw allow 3306 #Mysql
+          	#ufw allow 3306 #Mysql
           else
           	echo "Could not enable UFW."
           fi
