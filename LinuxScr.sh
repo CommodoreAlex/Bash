@@ -89,6 +89,21 @@ sys(){
   fi
 }
 
+media(){
+	
+	### Be sure to answer any media file related questions prior to running this ###
+	find / -name "*.mp3" -type f -delete
+	find / -name "*.mp4"  -type f -delete
+	find / -name "*.gif" -type f -delete
+	find / -name "*.jpg" -type f -delete
+	find / -name "*.jpeg" -type f -delete
+	find / -name "*.png" -type f -delete
+	find / -name "*.mov" -type f -delete
+	find / -name "*.wav" -type f -delete
+ 	find / -name "*.wmv" -type f -delete
+ 	find / -name "*.avi" -type f -delete
+}
+
 ssh(){
 	
 	### Enables and creates a MOTD Banner message ###
