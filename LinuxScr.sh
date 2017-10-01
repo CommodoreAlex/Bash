@@ -104,9 +104,20 @@ media(){
  	find / -name "*.avi" -type f -delete
 }
 
-hack(){
+file_sharing(){
+	
+	### SAMBA ###
+	service smbd stop
+	apt-get remove samba-common
+	apt-get remove samba
+	apt-get remove --purge smbclient libsmbclient
+	### NFS ###
+	service portmap stop
+	service nfs-kernel-server stop
+	apt-get --purge autoremove nfs-kernel-server nfs-common portmap -y
+}
 
-rmhack(){
+hack(){
 	
 	apt-get remove nmap	 # Scanning
 	apt-get remove dnmap     # Scanning
@@ -115,11 +126,12 @@ rmhack(){
 	apt-get remove apache2   # Webserver
 	apt-get remove vsftpd    # FTP
 	apt-get remove ssh       # SecureShell
-	apt-get remove samba     # File Sharinga
 	apt-get remove mysql     # Database
+	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
+	apt-get autoremove --purge john *    # Password-cracking
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
