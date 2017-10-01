@@ -1,5 +1,12 @@
 #!/bin/bash
 
+### The user must be logged in as root when running this script. ###
+
+if [ $EUID != 0 ]; then
+	echo "[!] You are not root."
+	exit
+fi
+
 firewall(){
 
 	# Aptitude is used to meet the goals of the operation - in the second if statement
