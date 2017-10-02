@@ -47,3 +47,34 @@ services(){
     echo "Moving on..."
   fi
 }
+
+### Separate prompting script ###
+#!/bin/bash
+
+prompt(){
+
+ssh(){
+
+  echo "The prompt works!"
+}
+
+while true; do
+  read -p "Does this image require Secure Shell 'SSH'?"
+  case $yn in
+    [Yy]* ) ssh; break;;
+    [Nn]* ) break;;
+    * ) echo "Answer yes or no.";;
+  esac
+done
+}
+
+
+
+
+
+
+
+
+
+
+
