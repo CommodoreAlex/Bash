@@ -107,10 +107,10 @@ media(){
 file_sharing(){
 	
 	### SAMBA ###
-	service smbd stop
-	apt-get remove samba-common
-	apt-get remove samba
-	apt-get remove --purge smbclient libsmbclient
+	#service smbd stop
+	#apt-get remove samba-common
+	#apt-get remove samba
+	#apt-get remove --purge smbclient libsmbclient
 	### NFS ###
 	service portmap stop
 	service nfs-kernel-server stop
@@ -123,9 +123,9 @@ hack(){
 	apt-get remove dnmap     # Scanning
 	apt-get remove telnet    # Insecure Transfer
 	apt-get remove bind9     # DNS 
-	apt-get remove apache2   # Webserver
+	#apt-get remove apache2   # Webserver
 	apt-get remove vsftpd    # FTP
-	apt-get remove ssh       # SecureShell
+	#apt-get remove ssh       # SecureShell
 	apt-get remove mysql     # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
