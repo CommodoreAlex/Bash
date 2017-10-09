@@ -23,7 +23,7 @@ firewall(){
         	if ufw status | grep -q "Status: inactive"; then
           		ufw default deny
           		ufw enable
-          		#ufw allow 22 #SSH
+          		ufw allow 22 #SSH
           		#ufw allow 25 #SMTP
           		#ufw allow 110 #POP3
           		#ufw allow 139 #Samba
@@ -131,10 +131,12 @@ file_sharing(){
 	#apt-get remove samba-common
 	#apt-get remove samba
 	#apt-get remove --purge smbclient libsmbclient
+	
 	### NFS ###
 	service portmap stop
 	service nfs-kernel-server stop
 	apt-get --purge autoremove nfs-kernel-server nfs-common portmap -y
+	update-rc.d avahi-daemon disable
 }
 
 hack(){
@@ -314,15 +316,18 @@ guest(){
 
 ### List of functions ###
 
+main(){
 
-firewall
-user_accounts
-sys
-media
-file_sharing
-hack
-ssh
-pam
-guest
+	firewall
+	user_accounts
+	sys
+	media
+	file_sharing
+	hack
+	ssh
+	pam
+	guest
+}
 
+main
 
