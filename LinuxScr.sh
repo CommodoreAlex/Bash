@@ -43,12 +43,18 @@ firewall(){
 }
 
 user_accounts(){
-
-	# Create a list of user accounts that need to be created
-	# Create and assign passwords to each account
 	
-	# Protects the root account
+	### Protects the root account ###
 	passwd root
+	
+	### Changes the password of all users in userlist to 'Cyb3rP4tr10t5' ###
+	for username in `more userlist `
+	do
+		echo "$username:Cyb3rP4tr10t5" | chpasswd
+		echo; echo "User $username's password changed!"
+	done
+}
+	
 
 sys(){
 
