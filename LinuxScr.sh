@@ -42,6 +42,14 @@ firewall(){
         iptables -A INPUT -p all -s localhost  -i eth0 -j DROP            #Deny outside packets from internet which claim to be from your loopback interface.
 }
 
+user_accounts(){
+
+	# Create a list of user accounts that need to be created
+	# Create and assign passwords to each account
+	
+	# Protects the root account
+	passwd root
+
 sys(){
 
   if grep -Fxq "STEM SCRIPT HAS BEEN RUN IN THIS FILE." /etc/sysctl.conf; then
