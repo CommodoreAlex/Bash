@@ -7,6 +7,12 @@ if [ $EUID != 0 ]; then
 	exit
 fi
 
+# Create the userlist for the user_accounts function
+touch userlist
+nano userlist
+echo "Userlist created - press enter"
+read WAIT_FOR_USER
+
 firewall(){
 
 	# Aptitude is used to meet the goals of the operation - in the second if statement
@@ -306,8 +312,17 @@ guest(){
         fi
 }
 
+### List of functions ###
 
 
-
+firewall
+user_accounts
+sys
+media
+file_sharing
+hack
+ssh
+pam
+guest
 
 
