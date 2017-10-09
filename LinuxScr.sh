@@ -125,7 +125,6 @@ hack(){
 	apt-get remove bind9     # DNS 
 	#apt-get remove apache2   # Webserver
 	apt-get remove vsftpd    # FTP
-	#apt-get remove ssh       # SecureShell
 	apt-get remove mysql     # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
@@ -166,6 +165,9 @@ hack(){
 }
 
 ssh(){
+	
+	### Installs SSH ###
+	apt-get install ssh -y
 	
 	### Enables and creates a MOTD Banner message ###
 	if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
@@ -225,13 +227,16 @@ pam(){
 	if grep -Fxq "password        requisite                       pam_cracklib.so" /etc/pam.d/common-password; then
         	sed -i 's/password        requisite                       pam_cracklib.so/password        requisite                       pam_cracklib.so retry=3 minlen=8 difok=3 reject_username minclass=3 maxrep$
 	fi
+	
 	if grep -Fxq "password        requisite                       pam_pwhistory.so" /etc/pam.d/common-password; then
         	sed -i 's/password        requisite                       pam_pwhistory.so/password        requisite                       pam_pwhistory.so use_authtok remember=24 enforce_for_root/g' /etc/pam.d/c$
 	fi
+	
 	### Common-auth ###
 	if grep -Fxq "auth    optional                        pam_cap.so" /etc/pam.d/common-auth; then
         	sed -i 's/auth    optional                        pam_cap.so/auth    optional                        pam_cap.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent/g' /etc/pam.d/$
 	fi
+	
 	### /etc/login.defs ### 
 	sed -i 's/PASS_MAX_DAYS 99999/PASS_MAX_DAYS 30/g' /etc/login.defs
 	sed -i 's/PASS_MIN_DAYS 0/PASS_MIN_DAYS 8/g' /etc/login.defs
@@ -258,6 +263,7 @@ guest(){
 		else
 			echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 		fi
+		echo "RUNS"
 	fi
 	### Hide user at logon ###
 	if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
@@ -266,7 +272,6 @@ guest(){
 	else
 		echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 	fi
-	echo "RUNS"
 
 	### Guest Account 12.04 ###
 	if lsb_release -a | grep -q "Release:   12.04"; then
@@ -277,6 +282,7 @@ guest(){
 		else
 			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
 		fi
+		echo "RUNS"
 	fi
 	### Hide user at logon ###
 	if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
@@ -284,7 +290,6 @@ guest(){
         else
                 echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
         fi
-	echo "RUNS"
 }
 
 
