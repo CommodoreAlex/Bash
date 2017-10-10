@@ -7,6 +7,8 @@ if [ $EUID != 0 ]; then
 	exit
 fi
 
+apt-get install aptitude -y &> /dev/null
+
 # Create the userlist for the user_accounts function
 touch userlist
 nano userlist
