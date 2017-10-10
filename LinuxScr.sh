@@ -319,7 +319,7 @@ net(){
 	rm /bin/netcat
 	rm /bin/nc.openbsd
 	rm /bin/nc.traditional
-	apt-get --purge autoremove netcat -y *
+	apt-get --purge autoremove netcat -y
 }
 
 ### List of functions ###
