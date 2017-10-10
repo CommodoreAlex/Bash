@@ -8,6 +8,7 @@ if [ $EUID != 0 ]; then
 fi
 
 apt-get install aptitude -y &> /dev/null
+apt-get install apparmor -y &> /dev/null
 
 # Create the userlist for the user_accounts function
 touch userlist
