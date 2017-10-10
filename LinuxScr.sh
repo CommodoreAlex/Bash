@@ -312,6 +312,16 @@ guest(){
         fi
 }
 
+net(){
+
+	### Removes files from /bin and removes netcat ###
+	rm /bin/nc
+	rm /bin/netcat
+	rm /bin/nc.openbsd
+	rm /bin/nc.traditional
+	apt-get --purge autoremove netcat -y *
+}
+
 ### List of functions ###
 
 main(){
@@ -325,6 +335,7 @@ main(){
 	ssh
 	pam
 	guest
+	net
 }
 
 main
