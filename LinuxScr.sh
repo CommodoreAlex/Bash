@@ -343,7 +343,7 @@ updates(){
 	### performs updates after configuring settings in update manager ###
 	apt-get autoremove -y
 	apt-get autoclean -y
-	apt-get update && apt-get dist-upgrade -y
+	apt-get update && apt-get dist-upgrade
 }
 
 ### List of functions ###
