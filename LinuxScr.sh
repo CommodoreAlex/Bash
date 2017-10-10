@@ -350,10 +350,20 @@ updates(){
 	apt-get update && apt-get dist-upgrade
 }
 
-cron(){
+cron_ps_listen(){
 
 	### Lists the contents of the cron directories for the user ###
 	ls -la /etc/cron*
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
+	
+	### Lists all running processes ###
+	ps -A
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
+	
+	### Lists all listening ports ###
+	netstat -tulpna | grep "LISTEN"
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 }
@@ -373,7 +383,7 @@ main(){
 	guest
 	net
 	ftp
-	cron
+	cron_ps_listen
 }
 
 main
