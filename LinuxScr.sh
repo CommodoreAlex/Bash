@@ -48,6 +48,19 @@ firewall(){
         iptables -A INPUT -p all -s localhost  -i eth0 -j DROP            #Deny outside packets from internet which claim to be from your loopback interface.
 }
 
+vis(){
+
+	### Prints the contents of the sudoers directory ###
+	ls -la /etc/sudoers.d/
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
+	
+	### Edits the VISUDO file ###
+	visudo
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
+}
+
 ftp(){
 	
 	### Makes changes to /etc/vsftpd.conf if able ###
@@ -385,6 +398,7 @@ main(){
 	net
 	ftp
 	cron_ps_listen
+	vis
 }
 
 main
