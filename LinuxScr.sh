@@ -341,6 +341,10 @@ net(){
 updates(){
 	
 	### performs updates after configuring settings in update manager ###
+	update-manager
+	echo "Updates have been configured, press enter."
+	read WAIT_FOR_USER
+	
 	apt-get autoremove -y
 	apt-get autoclean -y
 	apt-get update && apt-get dist-upgrade
