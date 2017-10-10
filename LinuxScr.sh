@@ -263,7 +263,6 @@ pam(){
 	sed -i 's/PASS_MAX_DAYS 99999/PASS_MAX_DAYS 30/g' /etc/login.defs
 	sed -i 's/PASS_MIN_DAYS 0/PASS_MIN_DAYS 8/g' /etc/login.defs
 	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7/g' /etc/login.defs
-	echo "PASS_MIN_LEN 8" >> /etc/login.defs
 }
 
 guest(){
