@@ -18,6 +18,17 @@ if aptitude show ufw | grep -q "State: not installed"; then
                 #ufw allow 137 #Samba
                 #ufw allow 138 #Samba
                 #ufw allow 3306 #Mysql
+        elif ufw status | grep -q "Status: active"; then
+                ufw default deny
+                ufw enable
+                #ufw allow 22 #SSH
+                #ufw allow 25 #SMTP
+                #ufw allow 110 #POP3
+                #ufw allow 139 #Samba
+                #ufw allow 445 #Samba
+                #ufw allow 137 #Samba
+                #ufw allow 138 #Samba
+                #ufw allow 3306 #Mysql
         else
                 echo "Could not enable UFW."
         fi
