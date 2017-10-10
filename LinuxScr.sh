@@ -350,6 +350,14 @@ updates(){
 	apt-get update && apt-get dist-upgrade
 }
 
+cron(){
+
+	### Lists the contents of the cron directories for the user ###
+	ls -la /etc/cron*
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
+}
+
 ### List of functions ###
 
 main(){
@@ -365,6 +373,7 @@ main(){
 	guest
 	net
 	ftp
+	cron
 }
 
 main
