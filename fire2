@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if aptitude show ufw | grep -q "State: not installed"; then
+        apt-get install ufw -y &> /dev/null
+        echo "Installing UFW..."
+fi
+
+if ufw status | grep 'Status: inactive'; then
+        ufw enable
+        ufw default deny
+        ufw allow 22
+        status = ufw status
+        echo $status
+elif ufw status | grep 'Status: active'; then
+        ufw default deny
+        ufw allow 22
+        status = ufw status
+        echo $status
+fi
+     
