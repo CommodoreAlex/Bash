@@ -17,26 +17,23 @@ read WAIT_FOR_USER
 
 firewall(){
 
-	# Aptitude is used to meet the goals of the operation - in the second if statement
-  	# choose what ports you want to allow prior to running this section of the script
-  	apt-get install aptitude -y /dev/null
-  	if aptitude show ufw | grep -q "State: not installed"; then
-        	apt-get install ufw -y
-        	if ufw status | grep -q "Status: inactive"; then
-          		ufw default deny
-          		ufw enable
-          		ufw allow 22 #SSH
-          		#ufw allow 25 #SMTP
-          		#ufw allow 110 #POP3
-          		#ufw allow 139 #Samba
-          		#ufw allow 445 #Samba
-          		#ufw allow 137 #Samba
-          		#ufw allow 138 #Samba
-          		#ufw allow 3306 #Mysql
-          	else
-          		echo "Could not enable UFW."
-          	fi
-  	fi
+	if aptitude show ufw | grep -q "State: not installed"; then
+        	apt-get install ufw -y &> /dev/null
+        	echo "Installing UFW..."
+	fi
+
+	if ufw status | grep 'Status: inactive'; then
+        	ufw enable
+        	ufw default deny
+        	ufw allow 22
+        	status = ufw status
+        	echo $status
+	elif ufw status | grep 'Status: active'; then
+        	ufw default deny
+        	ufw allow 22
+        	status = ufw status
+        	echo $status
+	fi
 	
   	iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 23 -j DROP         #Block Telnet
         iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 2049 -j DROP       #Block NFS
