@@ -47,6 +47,22 @@ firewall(){
         iptables -A INPUT -p all -s localhost  -i eth0 -j DROP            #Deny outside packets from internet which claim to be from your loopback interface.
 }
 
+ftp(){
+	
+	### Makes changes to /etc/vsftpd.conf if able ###
+	if grep -Fxq "anonymous_enable=YES" /etc/vsftpd.conf; then
+        	sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' /etc/vsftpd.conf &> /dev/null
+	fi
+
+	if grep -Fxq "write_enable=YES" /etc/vsftpd.conf; then
+        	sed -i 's/write_enable=YES/#write_enable=YES/g' /etc/vsftpd.conf &> /dev/null
+	fi
+
+	if grep -Fxq "local_enable=YES" /etc/vsftpd.conf; then
+        	sed -i 's/local_enable=YES/local_enable=NO/g' /etc/vsftpd.conf &> /dev/null
+	fi
+}
+
 user_accounts(){
 	
 	### Protects the root account ###
@@ -336,6 +352,7 @@ main(){
 	pam
 	guest
 	net
+	ftp
 }
 
 main
