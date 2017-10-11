@@ -193,21 +193,6 @@ media(){
  	find / -name "*.avi" -type f -delete
 }
 
-file_sharing(){
-	
-	### SAMBA ###
-	#service smbd stop
-	#apt-get remove samba-common
-	#apt-get remove samba
-	#apt-get remove --purge smbclient libsmbclient
-	
-	### NFS ###
-	service portmap stop
-	service nfs-kernel-server stop
-	apt-get --purge autoremove nfs-kernel-server nfs-common portmap -y
-	update-rc.d avahi-daemon disable
-}
-
 hack(){
 	
 	apt-get remove nmap	 # Scanning
@@ -219,6 +204,14 @@ hack(){
 	apt-get remove mysql     # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
+	service portmap stop
+	service nfs-kernel-server stop
+	apt-get remove samba # file sharing
+	apt-get remove samba-common # file sharing
+	apt-get remove --purge smbclient libsmbclient # file sharing
+	apt-get remove nfs-kernel-server # file sharing
+	apt-get remove nfs-common # file sharing
+	apt-get remove portmap # file sharing
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
 	apt-get remove john # Password-cracking
