@@ -336,11 +336,27 @@ guest(){
 
 	### Guest Account 16.04 ###
 	if lsb_release -a | grep -q "Release:   16.04"; then
-        	mkdir /etc/lightdm/lightdm.conf.d/
-		echo "allow-guest=false" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-        	echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		echo "RUNS"
+		echo "This is 16.04"
+        	mkdir /etc/lightdm/lightdm.conf.d/ &> /dev/null
+		touch /etc/lightdm/lightdm.conf.d/50-no-guest.conf &> /dev/null
+		if grep -q "allow-guest=true" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
+			sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		elif grep -q "allow-guest=false" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
+			cat /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		else
+			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		fi
+
+		### Hide user at logon ###
+		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
+			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		elif grep -q "greeter-hide-users=true" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
+			echo ""
+		else
+			echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
+		fi
 	fi
+	
 	### Guest Account 14.04 ###
 	if lsb_release -a | grep -q "Release:	14.04"; then
 		echo "This is 14.04"
