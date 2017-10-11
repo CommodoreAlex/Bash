@@ -221,8 +221,10 @@ hack(){
 	apt-get remove mariadb   # Database
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
-	apt-get autoremove --purge john *    # Password-cracking
-	
+	apt-get autoremove --purge john # Password-cracking
+	echo "Press enter when ready to continue..."
+        read WAIT_FOR_USER
+
 	### Opens software center for inspection ###
 	software-center
 	echo "Press enter when ready to continue..."
