@@ -430,19 +430,19 @@ cron_ps_listen_back(){
 main(){
 
 	firewall
-	user_accounts
 	sys
-	media
 	file_sharing
+	ftp
+	media
+	user_accounts
+	guest
+	homefolders
+	pam
+	vis
+	cron_ps_listen_back
 	hack
 	ssh
-	pam
-	guest
-	net
-	ftp
-	cron_ps_listen_back
-	vis
-	homefolders
+	updates
 }
 
 main
