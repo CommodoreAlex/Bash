@@ -408,16 +408,6 @@ guest(){
 	fi
 }
 
-net(){
-
-	### Removes files from /bin and removes netcat ###
-	rm /bin/nc
-	rm /bin/netcat
-	rm /bin/nc.openbsd
-	rm /bin/nc.traditional
-	apt-get --purge autoremove netcat -y
-}
-
 updates(){
 	
 	### performs updates after configuring settings in update manager ###
