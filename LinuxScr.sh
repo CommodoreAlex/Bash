@@ -325,7 +325,7 @@ pam(){
 	#fi
 	
 	### Common-auth ###
-	if grep -Fxq "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" /etc/pam.d/common-atuh; then
+	if grep -Fxq "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" /etc/pam.d/common-auth; then
 		echo ""
 	else
 		echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
