@@ -395,7 +395,7 @@ guest(){
 		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
 			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
         	elif grep -q "greeter-hide-useres=true" /etc/lightdm/lightdm.conf; then
-			cat /etc/lightdm/lightdm.conf
+			echo ""
 		else
                 	echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
 	 	fi
