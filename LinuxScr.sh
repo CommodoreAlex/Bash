@@ -25,15 +25,17 @@ firewall(){
 
 	if ufw status | grep 'Status: inactive'; then
         	ufw enable
-        	ufw default deny
+        	ufw default deny &> /dev/null
         	ufw allow 22
         	status = ufw status
         	echo $status
+		read WAIT_FOR_USER
 	elif ufw status | grep 'Status: active'; then
-        	ufw default deny
+        	ufw default deny &> /dev/null
         	ufw allow 22
         	status = ufw status
         	echo $status
+		read WAIT_FOR_USER
 	fi
 	
   	iptables -A INPUT -p tcp -s 0/0 -d 0/0 --dport 23 -j DROP         #Block Telnet
@@ -51,6 +53,8 @@ firewall(){
 vis(){
 
 	### Prints the contents of the sudoers directory ###
+	clear
+	echo "Sudoers directory"
 	ls -la /etc/sudoers.d/
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
