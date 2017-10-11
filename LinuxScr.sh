@@ -208,7 +208,7 @@ hack(){
 	service nfs-kernel-server stop
 	apt-get remove samba # file sharing
 	apt-get remove samba-common # file sharing
-	apt-get remove --purge smbclient libsmbclient # file sharing
+	apt-get remove smbclient # file sharing
 	apt-get remove nfs-kernel-server # file sharing
 	apt-get remove nfs-common # file sharing
 	apt-get remove portmap # file sharing
