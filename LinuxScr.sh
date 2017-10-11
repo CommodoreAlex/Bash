@@ -111,7 +111,14 @@ user_accounts(){
 		echo; echo "User $username's password changed!"
 	done
 	
-	echo "User will still have to manually configure user privileges, groups, search for hidden accounts"
+	read WAIT_FOR_USER
+	
+	### Configure the passwd, group, and shadow file ###
+	nano /etc/passwd
+	read WAIT_FOR_USER
+	nano /etc/group
+	read WAIT_FOR_USER
+	nano /etc/shadow
 	read WAIT_FOR_USER
 }
 	
