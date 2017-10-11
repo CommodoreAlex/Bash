@@ -423,6 +423,7 @@ updates(){
 cron_ps_listen_back(){
 	
 	### Lists the contents of the cron directories for the user ###
+	clear
 	ls -la /etc/cron*
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
@@ -438,9 +439,9 @@ cron_ps_listen_back(){
 	read WAIT_FOR_USER
 	
 	### Search for anything containing the phrase "backdoor" ###
-	grep -r "backdoor"
-	echo "Press enter when ready to continue..."
-	read WAIT_FOR_USER
+	#grep -r "backdoor"
+	#echo "Press enter when ready to continue..."
+	#read WAIT_FOR_USER
 }
 
 
