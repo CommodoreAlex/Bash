@@ -10,12 +10,6 @@ fi
 apt-get install aptitude -y &> /dev/null
 apt-get install apparmor -y &> /dev/null
 
-# Create the userlist for the user_accounts function
-touch userlist
-nano userlist
-echo "Userlist created - press enter"
-read WAIT_FOR_USER
-
 firewall(){
 
 	if aptitude show ufw | grep -q "State: not installed"; then
@@ -104,6 +98,12 @@ homefolders(){
 }
 
 user_accounts(){
+
+	### Create the userlist for the user_accounts function ###
+	touch userlist &> /dev/null
+	nano userlist
+	echo "Userlist created - press enter"
+	read WAIT_FOR_USER
 	
 	### Protects the root account ###
 	passwd root
