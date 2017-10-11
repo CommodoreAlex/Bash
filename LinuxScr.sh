@@ -310,23 +310,26 @@ pam(){
 
 	### Common-password ### 
 
-	if grep -Fxq "password        requisite                       pam_cracklib.so" /etc/pam.d/common-password; then
-        	sed -i 's/password        requisite                       pam_cracklib.so/password        requisite                       pam_cracklib.so retry=3 minlen=8 difok=3 reject_username minclass=3 maxrep$
-	fi
+	#if grep -Fxq "password requisite pam_cracklib.so" /etc/pam.d/common-password; then
+        #	sed -i 's/password requisite pam_cracklib.so/password requisite pam_cracklib.so retry=3 minlen=8 difok=3 reject_username minclass=3 maxrep$
+	#fi
 	
-	if grep -Fxq "password        requisite                       pam_pwhistory.so" /etc/pam.d/common-password; then
-        	sed -i 's/password        requisite                       pam_pwhistory.so/password        requisite                       pam_pwhistory.so use_authtok remember=24 enforce_for_root/g' /etc/pam.d/c$
-	fi
+	#if grep -Fxq "password requisite pam_pwhistory.so" /etc/pam.d/common-password; then
+        #	sed -i 's/password requisite pam_pwhistory.so/password requisite pam_pwhistory.so use_authtok remember=24 enforce_for_root/g' /etc/pam.d/c$
+	#fi
 	
 	### Common-auth ###
-	if grep -Fxq "auth    optional                        pam_cap.so" /etc/pam.d/common-auth; then
-        	sed -i 's/auth    optional                        pam_cap.so/auth    optional                        pam_cap.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent/g' /etc/pam.d/$
-	fi
+	#if grep -Fxq "auth optional pam_cap.so" /etc/pam.d/common-auth; then
+        #	sed -i 's/auth optional pam_cap.so/auth optional pam_cap.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent/g' /etc/pam.d/$
+	#fi
+	
 	
 	### /etc/login.defs ### 
 	sed -i 's/PASS_MAX_DAYS 99999/PASS_MAX_DAYS 30/g' /etc/login.defs
 	sed -i 's/PASS_MIN_DAYS 0/PASS_MIN_DAYS 8/g' /etc/login.defs
 	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7/g' /etc/login.defs
+	nano /etc/login.defs
+	read WAIT_FOR_USER
 }
 
 guest(){
