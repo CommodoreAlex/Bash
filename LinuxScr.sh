@@ -217,11 +217,6 @@ hack(){
 	apt-get remove john # Password-cracking
 	echo "Press enter when ready to continue..."
         read WAIT_FOR_USER
-
-	### Opens software center for inspection ###
-	software-center
-	echo "Press enter when ready to continue..."
-	read WAIT_FOR_USER
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
