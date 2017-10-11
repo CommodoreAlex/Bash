@@ -214,14 +214,14 @@ hack(){
 	apt-get remove dnmap     # Scanning
 	apt-get remove telnet    # Insecure Transfer
 	apt-get remove bind9     # DNS 
-	#apt-get remove apache2   # Webserver
+	apt-get remove apache2   # Webserver
 	apt-get remove vsftpd    # FTP
 	apt-get remove mysql     # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
-	apt-get autoremove --purge john # Password-cracking
+	apt-get remove john # Password-cracking
 	echo "Press enter when ready to continue..."
         read WAIT_FOR_USER
 
@@ -232,7 +232,7 @@ hack(){
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
-	apt-get autoremove --purge --force-yes -y airbase-ng acccheck ace-voip amap apache-users arachni android-sdk apktool arduino armitage asleap automater \
+	apt-get remove airbase-ng acccheck ace-voip amap apache-users arachni android-sdk apktool arduino armitage asleap automater \
 	backdoor-factory bbqsql bed beef bing-ip2hosts binwalk blindelephant bluelog bluemaho bluepot blueranger bluesnarfer bulk-extractor \
 	bully burpsuite braa \
 	capstone casefile cdpsnarf cewl chntpw cisco-auditing-tool cisco-global-exploiter cisco-ocs cisco-torch cisco-router-config cmospwd \
