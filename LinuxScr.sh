@@ -88,6 +88,9 @@ user_accounts(){
 		echo "$username:Cyb3rP4tr10t5" | chpasswd
 		echo; echo "User $username's password changed!"
 	done
+	
+	echo "User will still have to manually configure user privileges, groups, search for hidden accounts"
+	read WAIT_FOR_USER
 }
 	
 
@@ -182,6 +185,11 @@ hack(){
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
 	apt-get autoremove --purge john *    # Password-cracking
+	
+	### Opens software center for inspection ###
+	software-center
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
@@ -364,8 +372,8 @@ updates(){
 	apt-get update && apt-get dist-upgrade
 }
 
-cron_ps_listen(){
-
+cron_ps_listen_back(){
+	
 	### Lists the contents of the cron directories for the user ###
 	ls -la /etc/cron*
 	echo "Press enter when ready to continue..."
@@ -380,7 +388,13 @@ cron_ps_listen(){
 	netstat -tulpna | grep "LISTEN"
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
+	
+	### Search for anything containing the phrase "backdoor" ###
+	grep -r "backdoor"
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 }
+
 
 ### List of functions ###
 
@@ -397,7 +411,7 @@ main(){
 	guest
 	net
 	ftp
-	cron_ps_listen
+	cron_ps_listen_back
 	vis
 }
 
