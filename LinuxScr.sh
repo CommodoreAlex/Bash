@@ -214,7 +214,13 @@ hack(){
 	apt-get remove portmap # file sharing
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
-	apt-get remove john # Password-cracking
+	apt-get --purge autoremove remove john # Password-crackingnet(){
+	### Removes files from /bin and removes netcat ###
+	rm /bin/nc
+	rm /bin/netcat
+	rm /bin/nc.openbsd
+	rm /bin/nc.traditional
+	apt-get --purge autoremove netcat
 	echo "Press enter when ready to continue..."
         read WAIT_FOR_USER
 	
@@ -454,7 +460,6 @@ main(){
 
 	firewall
 	sys
-	file_sharing
 	ftp
 	media
 	user_accounts
