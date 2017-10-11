@@ -368,14 +368,15 @@ guest(){
 		else
 			echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 		fi
-	fi
-	### Hide user at logon ###
-	if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-		sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	elif grep -q "greeter-hide-useres=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-		cat /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-	else
-		echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+
+		### Hide user at logon ###
+		if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+		elif grep -q "greeter-hide-users=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
+			echo ""
+		else
+			echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+		fi
 	fi
 
 	### Guest Account 12.04 ###
