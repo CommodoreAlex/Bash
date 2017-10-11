@@ -77,6 +77,28 @@ ftp(){
 	fi
 }
 
+homefolders(){
+
+	### Searchs the home directories and subdirectories of all user accounts ###
+	for username in `more userlist `
+	do
+        	clear
+        	echo "-----------------------------------------------"
+        	ls -la /home/$username/
+        	echo "-----------------------------------------------"
+        	ls -la /home/$username/Desktop
+        	ls -la /home/$username/Documents
+        	ls -la /home/$username/Downloads
+        	ls -la /home/$username/Music
+        	ls -la /home/$username/Pictures
+        	ls -la /home/$username/Public
+        	ls -la /home/$username/Templates
+        	ls -la /home/$username/Videos
+        	read WAIT_FOR_USER
+        	clear
+	done
+}
+
 user_accounts(){
 	
 	### Protects the root account ###
@@ -413,6 +435,7 @@ main(){
 	ftp
 	cron_ps_listen_back
 	vis
+	homefolders
 }
 
 main
