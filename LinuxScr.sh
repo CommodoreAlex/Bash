@@ -73,6 +73,10 @@ ftp(){
 	if grep -Fxq "local_enable=YES" /etc/vsftpd.conf; then
         	sed -i 's/local_enable=YES/local_enable=NO/g' /etc/vsftpd.conf &> /dev/null
 	fi
+	
+	echo "If grep did not find the vsftpd.conf file then these configurations were not necessary"
+	read WAIT_FOR_USER
+	clear
 }
 
 homefolders(){
