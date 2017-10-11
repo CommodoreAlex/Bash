@@ -325,10 +325,13 @@ pam(){
 	#fi
 	
 	### Common-auth ###
-	#if grep -Fxq "auth optional pam_cap.so" /etc/pam.d/common-auth; then
-        #	sed -i 's/auth optional pam_cap.so/auth optional pam_cap.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent/g' /etc/pam.d/$
-	#fi
-	
+	if grep -Fxq "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" /etc/pam.d/common-atuh; then
+		echo ""
+	else
+		echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
+	fi
+	nano /etc/pam.d/common-auth
+	read WAIT_FOR_USER
 	
 	### /etc/login.defs ### 
 	sed -i 's/PASS_MAX_DAYS 99999/PASS_MAX_DAYS 30/g' /etc/login.defs
