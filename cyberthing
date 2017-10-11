@@ -1,0 +1,13 @@
+for username in `more userlist `
+do
+        ls -a /home/$username/
+        ls -la /home/$username/Desktop
+        ls -la /home/$username/Documents
+        ls -la /home/$username/Downloads
+        ls -la /home/$username/Music
+        ls -la /home/$username/Pictures
+        ls -la /home/$username/Public
+        ls -la /home/$username/Templates
+        ls -la /home/$username/Videos
+done
+
