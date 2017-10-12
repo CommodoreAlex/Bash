@@ -64,7 +64,8 @@ vis(){
 }
 
 ftp(){
-	
+
+	clear
 	### Makes changes to /etc/vsftpd.conf if able ###
 	if grep -Fxq "anonymous_enable=YES" /etc/vsftpd.conf; then
         	sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' /etc/vsftpd.conf &> /dev/null
