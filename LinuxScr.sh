@@ -7,8 +7,8 @@ if [ $EUID != 0 ]; then
 	exit
 fi
 
-apt-get install aptitude -y &> /dev/null
-apt-get install apparmor -y &> /dev/null
+apt-get install aptitude -y
+apt-get install apparmor
 
 firewall(){
 
