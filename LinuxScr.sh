@@ -15,6 +15,8 @@ firewall(){
 	if aptitude show ufw | grep -q "State: not installed"; then
         	apt-get install ufw -y &> /dev/null
         	echo "Installing UFW..."
+		echo "Press enter when ready to continue..."
+		READ WAIT_FOR_USER
 	fi
 
 	if ufw status | grep 'Status: inactive'; then
@@ -23,12 +25,14 @@ firewall(){
         	ufw allow 22
         	status = ufw status
         	echo $status
+		echo "Press enter when ready to continue..."
 		read WAIT_FOR_USER
 	elif ufw status | grep 'Status: active'; then
         	ufw default deny &> /dev/null
         	ufw allow 22
         	status = ufw status
         	echo $status
+		echo "Press enter when ready to continue..."
 		read WAIT_FOR_USER
 	fi
 	
@@ -96,6 +100,7 @@ homefolders(){
         	ls -la /home/$username/Public
         	ls -la /home/$username/Templates
         	ls -la /home/$username/Videos
+		echo "Press enter when ready to continue..."
         	read WAIT_FOR_USER
         	clear
 	done
@@ -111,6 +116,8 @@ user_accounts(){
 	
 	### Protects the root account ###
 	passwd root
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 	
 	### Changes the password of all users in userlist to 'Cyb3rP4tr10t5' ###
 	for username in `more userlist `
@@ -119,6 +126,7 @@ user_accounts(){
 		echo; echo "User $username's password changed!"
 	done
 	
+	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 	
 	### Configure the passwd, group, and shadow file ###
@@ -137,8 +145,6 @@ sys(){
 	  echo "" &> /dev/null
   else
 	  #SYSCTL SETTINGS:
-	  #Navigate to $ nano /etc/sysctl.conf
-	  #Edit the file and uncomment or add the following lines…
 	  echo "STEM SCRIPT HAS BEEN RUN IN THIS FILE." >> /etc/sysctl.conf &> /dev/null
 	  # IP Spoofing protection
 	  echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.conf
@@ -175,6 +181,8 @@ sys(){
 	  echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.d/99-sysctl.conf
 	  echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.d/99-sysctl.conf
 	  sysctl -p
+	  echo "Press enter when ready to continue..."
+	  read WAIT_FOR_USER
   fi
 }
 
@@ -191,6 +199,9 @@ media(){
 	find / -name "*.wav" -type f -delete
  	find / -name "*.wmv" -type f -delete
  	find / -name "*.avi" -type f -delete
+	
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 }
 
 hack(){
@@ -221,6 +232,7 @@ hack(){
 	rm /bin/nc.openbsd
 	rm /bin/nc.traditional
 	apt-get --purge autoremove netcat
+	echo "-------------------------------------"
 	echo "Press enter when ready to continue..."
         read WAIT_FOR_USER
 	
@@ -254,12 +266,18 @@ hack(){
 	t50 termineter thc-hydra thc-ipv6 thc-pptp-bruter thc-ssl-dos tnscmd10g truecrack theharverster tlssled twofi \
 	u3-pwn uatester urlcrazy uniscan unix-privesc-check vega w3af webscarab webshag webshells webslayer websploit weevely wfuzz wifi-honey \
 	wifitap wifite wireshark winexe wpscan wordlists valgrind volatility voiphopper wol-e xspy xplico xsser yara yersinia zaproxy
+	
+	echo "-------------------------------------"
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 }
 
 ssh(){
 	
 	### Installs SSH ###
-	apt-get install ssh -y
+	apt-get install ssh
+	echo "Press enter when ready to continue..."
+	READ WAIT_FOR_USER
 	
 	### Enables and creates a MOTD Banner message ###
 	if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
@@ -316,19 +334,22 @@ ssh(){
 
 pam(){
 
-	apt-get install libpam-cracklib -y
-	apt-get install auditd -y
+	apt-get install libpam-cracklib
+	apt-get install auditd
 	auditctl -e 1
+	
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 
 	### Common-password ### 
-
-	#if grep -Fxq "password requisite pam_cracklib.so" /etc/pam.d/common-password; then
-        #	sed -i 's/password requisite pam_cracklib.so/password requisite pam_cracklib.so retry=3 minlen=8 difok=3 reject_username minclass=3 maxrep$
-	#fi
-	
-	#if grep -Fxq "password requisite pam_pwhistory.so" /etc/pam.d/common-password; then
-        #	sed -i 's/password requisite pam_pwhistory.so/password requisite pam_pwhistory.so use_authtok remember=24 enforce_for_root/g' /etc/pam.d/c$
-	#fi
+	if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
+        	echo ""
+        else
+        	echo "password   requisite    pam_cracklib.so retry=3 remember=5 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
+        fi
+	nano /etc/pam.d/common-auth
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 	
 	### Common-auth ###
 	if grep -Fxq "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" /etc/pam.d/common-auth; then
@@ -337,6 +358,7 @@ pam(){
 		echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
 	fi
 	nano /etc/pam.d/common-auth
+	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 	
 	### /etc/login.defs ### 
@@ -362,7 +384,6 @@ guest(){
 		else
 			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
 		fi
-
 		### Hide user at logon ###
 		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
 			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf.d/50-no-guest.conf
@@ -371,6 +392,8 @@ guest(){
 		else
 			echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
 		fi
+		echo "Press enter when ready to continue..."
+		read WAIT_FOR_USER
 	fi
 	
 	### Guest Account 14.04 ###
@@ -384,7 +407,6 @@ guest(){
 		else
 			echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 		fi
-
 		### Hide user at logon ###
 		if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
 			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
@@ -393,6 +415,8 @@ guest(){
 		else
 			echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 		fi
+		echo "Press enter when ready to continue..."
+		read WAIT_FOR_USER
 	fi
 	
 	### Guest Account 12.04 ###
@@ -406,7 +430,6 @@ guest(){
 		else
 			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
 		fi
-
 		### Hide user at logon ###
 		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
 			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
@@ -415,6 +438,8 @@ guest(){
 		else
                 	echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
 	 	fi
+		echo "Press enter when ready to continue..."
+		read WAIT_FOR_USER
 	fi
 }
 
@@ -422,12 +447,18 @@ updates(){
 	
 	### performs updates after configuring settings in update manager ###
 	update-manager
-	echo "Updates have been configured, press enter."
+	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 	
 	apt-get autoremove
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 	apt-get autoclean
+	echo "Press enter when ready to continue..."
+	read WAIT_FOR_USER
 	apt-get update && apt-get dist-upgrade
+	echo "Exit"
+	READ WAIT_FOR_USER
 }
 
 cron_ps_listen_back(){
