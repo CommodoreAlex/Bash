@@ -340,17 +340,8 @@ pam(){
 	read WAIT_FOR_USER
 	
 	### /etc/login.defs ### 
-	if grep -Fxq "PASS_MAX_DAYS   99999" /etc/login.defs; then
-		sed -i 's/PASS_MAX_DAYS   99999/PASS_MAX_DAYS   30/g' /etc/login.defs &> /dev/null
-	fi
-	
-	if grep -Fxq "PASS_MIN_DAYS   0" /etc/login.defs; then
-		sed -i 's/PASS_MIN_DAYS   0/PASS_MIN_DAYS   8/g' /etc/login.defs &> /dev/null
-	fi
-	
-	if grep -Fxq "PASS_WARN_AGE   7" /etc/login.defs; then
-		sed -i 's/PASS_WARN_AGE   7/PASS_WARN_AGE   3/g' /etc/login.defs &> /dev/null
-	fi
+	sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
+        sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
 	
 	nano /etc/login.defs
 	read WAIT_FOR_USER
