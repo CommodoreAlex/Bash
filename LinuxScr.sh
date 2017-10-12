@@ -139,7 +139,7 @@ sys(){
 	  #SYSCTL SETTINGS:
 	  #Navigate to $ nano /etc/sysctl.conf
 	  #Edit the file and uncomment or add the following lines…
-	  echo "STEM SCRIPT HAS BEEN RUN IN THIS FILE." >> /etc/sysctl.conf
+	  echo "STEM SCRIPT HAS BEEN RUN IN THIS FILE." >> /etc/sysctl.conf &> /dev/null
 	  # IP Spoofing protection
 	  echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.conf
 	  echo "net.ipv4.conf.default.rp_filter = 1" >> /etc/sysctl.conf
