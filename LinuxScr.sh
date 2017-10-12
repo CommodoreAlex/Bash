@@ -200,6 +200,7 @@ media(){
 	find / -name "*.wav" -type f -delete
  	find / -name "*.wmv" -type f -delete
  	find / -name "*.avi" -type f -delete
+	find / -name "*.ogg" -type f -delete
 	
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
