@@ -291,6 +291,12 @@ ssh(){
  	if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
     		sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
   	fi
+	
+	### PermitRootLogin prohibit-password to no ###
+	if grep -Fxq "PermitRootLogin prohibit-password" /etc/ssh/sshd_config; then
+        	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+	fi
+	
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null 
@@ -334,11 +340,21 @@ pam(){
 	read WAIT_FOR_USER
 	
 	### /etc/login.defs ### 
-	sed -i 's/PASS_MAX_DAYS 99999/PASS_MAX_DAYS 30/g' /etc/login.defs
-	sed -i 's/PASS_MIN_DAYS 0/PASS_MIN_DAYS 8/g' /etc/login.defs
-	sed -i 's/PASS_WARN_AGE 0/PASS_WARN_AGE 7/g' /etc/login.defs
+	if grep -Fxq "PASS_MAX_DAYS   99999" /etc/login.defs; then
+		sed -i 's/PASS_MAX_DAYS   99999/PASS_MAX_DAYS   30/g' /etc/login.defs &> /dev/null
+	fi
+	
+	if grep -Fxq "PASS_MIN_DAYS   0" /etc/login.defs; then
+		sed -i 's/PASS_MIN_DAYS   0/PASS_MIN_DAYS   8/g' /etc/login.defs &> /dev/null
+	fi
+	
+	if grep -Fxq "PASS_WARN_AGE   7" /etc/login.defs; then
+		sed -i 's/PASS_WARN_AGE   7/PASS_WARN_AGE   3/g' /etc/login.defs &> /dev/null
+	fi
+	
 	nano /etc/login.defs
 	read WAIT_FOR_USER
+	clear
 }
 
 guest(){
@@ -418,8 +434,8 @@ updates(){
 	echo "Updates have been configured, press enter."
 	read WAIT_FOR_USER
 	
-	apt-get autoremove -y
-	apt-get autoclean -y
+	apt-get autoremove
+	apt-get autoclean
 	apt-get update && apt-get dist-upgrade
 }
 
