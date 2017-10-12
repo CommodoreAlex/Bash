@@ -451,15 +451,13 @@ updates(){
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 	
-	apt-get autoremove
-	echo "Press enter when ready to continue..."
-	read WAIT_FOR_USER
 	apt-get autoclean
 	echo "Press enter when ready to continue..."
 	read WAIT_FOR_USER
 	apt-get update && apt-get dist-upgrade
-	echo "Exit"
-	READ WAIT_FOR_USER
+	echo "[+]"
+	read WAIT_FOR_USER
+	echo "End."
 }
 
 cron_ps_listen_back(){
