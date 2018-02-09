@@ -14,8 +14,8 @@ nano ~/.bash_history
 echo "BASH history printed, press enter when ready to continue."
 read WAIT_FOR_USER
 
-apt-get install aptitude
-apt-get install apparmor
+apt-get install aptitude -y
+apt-get install apparmor -y
 
 firewall(){
   
@@ -260,7 +260,7 @@ hack(){
 ssh(){
 	
 	### Installs SSH ###
-	apt-get install ssh openssh-server
+	apt-get install ssh openssh-server -y
 	echo "Client and server installed, press enter when ready to continue."
 	READ WAIT_FOR_USER
 	
@@ -366,21 +366,6 @@ pam(){
 	read WAIT_FOR_USER
 }
 
-updates(){
-	
-	### performs updates after configuring settings in update manager ###
-	
-	echo "Before updating any software, look at software-center"
-	software-center
-	echo "This will bring you to the update manager, configure the updates and install them."
-	echo "Press enter when ready to continue."
-	read WAIT_FOR_USER
-	
-	update-manager
-	
-	echo "Final operation of updates are complete, exit script."
-}
-
 cron_ps_listen_back(){
 	
 	### Lists the contents of the cron directories for the user ###
@@ -431,7 +416,6 @@ main(){
 	cron_ps_listen_back
 	hack
 	ssh
-	updates
 }
 
 main
