@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ### The user must be logged in as root when running this script. ###
+### Configure the guest account before running this script. ###
 
 if [ $EUID != 0 ]; then
 	echo "[!] You are not root. Login as root"
@@ -365,22 +366,6 @@ pam(){
 	read WAIT_FOR_USER
 }
 
-guest(){
-
-	### Guest Account 16.04 ###
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	echo "Guest account is configured, press enter when ready to continue."
-	read WAIT_FOR_USER
-}
-
 updates(){
 	
 	### performs updates after configuring settings in update manager ###
@@ -439,7 +424,6 @@ main(){
 	ftp
 	media
 	user_accounts
-	guest
 	homefolders
 	pam
 	host
