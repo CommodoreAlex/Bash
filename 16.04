@@ -7,6 +7,12 @@ if [ $EUID != 0 ]; then
 	exit
 fi
 
+### Check BASH history before beginning ###
+
+nano ~/.bash_history
+echo "BASH history printed, press enter when ready to continue."
+read WAIT_FOR_USER
+
 apt-get install aptitude
 apt-get install apparmor
 
@@ -97,8 +103,8 @@ user_accounts(){
 
 	### Create the userlist for the user_accounts function ###
 	touch userlist &> /dev/null
-  nano userlist
-  echo "Userlist created, press enter when ready to continue."
+  	nano userlist
+  	echo "Userlist created, press enter when ready to continue."
 	
 	### Protects the root account ###
 	passwd root
@@ -108,91 +114,81 @@ user_accounts(){
 	### Changes the password of all users in userlist to 'Cyb3rP4tr10t5' ###
 	for username in `more userlist `
 	do
+		chage -w 7 -m 10 -M 90 $username
+		echo; echo "User $username's expirey changed!"
 		echo "$username:Cyb3rP4tr10t5" | chpasswd
-		echo; echo "User $username's password and expirey changed!"
+		echo; echo "User $username's password changed!"
 	done
 	
-	echo "Press enter when ready to continue..."
+	echo "User passwords and expirey configured, press enter when ready to continue."
 	read WAIT_FOR_USER
 	
 	### Configure the passwd, group, and shadow file ###
 	nano /etc/passwd
+	echo "/etc/passwd changed, press enter when ready to continue."
 	read WAIT_FOR_USER
+	
 	nano /etc/group
+	echo "/etc/group changed, press enter when ready to continue."
 	read WAIT_FOR_USER
+	
 	nano /etc/shadow
+	echo "/etc/shadow changed, press enter when ready to continue."
 	read WAIT_FOR_USER
 }
 	
 
 sys(){
-
-  if grep -Fxq "STEM SCRIPT HAS BEEN RUN IN THIS FILE." /etc/sysctl.conf; then
-	  echo "" &> /dev/null
-  else
-	  #SYSCTL SETTINGS:
-	  echo "STEM SCRIPT HAS BEEN RUN IN THIS FILE." >> /etc/sysctl.conf &> /dev/null
-	  # IP Spoofing protection
-	  echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.conf
-	  echo "net.ipv4.conf.default.rp_filter = 1" >> /etc/sysctl.conf
-	  # Ignore ICMP broadcast requests
-	  echo "net.ipv4.icmp_echo_ignore_broadcasts = 1" >> /etc/sysctl.conf
-	  # Disable source packet routing
-	  echo "net.ipv4.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
-	  echo "net.ipv6.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
-	  echo "net.ipv4.conf.default.accept_source_route = 0" >> /etc/sysctl.conf
-	  echo "net.ipv6.conf.default.accept_source_route = 0" >> /etc/sysctl.conf
-	  # Ignore send redirects
-	  echo "net.ipv4.conf.all.send_redirects = 0" >> /etc/sysctl.conf
-	  echo "net.ipv4.conf.default.send_redirects = 0" >> /etc/sysctl.conf
-	  # Block SYN attacks
-	  echo "net.ipv4.tcp_syncookies = 1" >> /etc/sysctl.conf
-	  echo "net.ipv4.tcp_max_syn_backlog = 2048" >> /etc/sysctl.conf
-	  echo "net.ipv4.tcp_synack_retries = 2" >> /etc/sysctl.conf
-	  echo "net.ipv4.tcp_syn_retries = 5" >> /etc/sysctl.conf
-	  # Log Martians
-	  echo "net.ipv4.conf.all.log_martians = 1" >> /etc/sysctl.conf
-	  echo "net.ipv4.icmp_ignore_bogus_error_responses = 1" >> /etc/sysctl.conf
-	  # Ignore ICMP redirects
-	  echo "net.ipv4.conf.all.accept_redirects = 0" >> /etc/sysctl.conf
-	  echo "net.ipv6.conf.all.accept_redirects = 0" >> /etc/sysctl.conf
-	  echo "net.ipv4.conf.default.accept_redirects = 0 " >> /etc/sysctl.conf
-	  echo "net.ipv6.conf.default.accept_redirects = 0" >> /etc/sysctl.conf
-	  # Ignore Directed pings
-	  echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf
-	  #Then reload sysctl with the latest changes…
-	  sysctl -p
-	  # Disable IPv6 on Ubuntu all-together
-	  echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.d/99-sysctl.conf
-	  echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.d/99-sysctl.conf
-	  echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.d/99-sysctl.conf
-	  sysctl -p
-	  echo "Press enter when ready to continue..."
-	  read WAIT_FOR_USER
-  fi
+	
+	nano /etc/sysctl.conf
+	sysctl -p
+	echo "Sysctl settings updated, press enter to configure."
+	read WAIT_FOR_USER
 }
 
 media(){
+	echo "Pressing enter will show mp3, mp4, gif, jpg, jpeg, and png in sections."
+	echo "Press enter when ready to begin media file process, MP3"
+	read WAIT_FOR_USER
 	
 	### Be sure to answer any media file related questions prior to running this ###
-	find / -name "*.mp3" -type f -delete
-	find / -name "*.mp4"  -type f -delete
-	find / -name "*.gif" -type f -delete
-	find / -name "*.jpg" -type f -delete
-	find / -name "*.jpeg" -type f -delete
-	find / -name "*.png" -type f -delete
+	find / -name "*.mp3"
+	echo "Press enter to proceed to next section, MP4"
+	read WAIT_FOR_USER
+	
+	find / -name "*.mp4"
+	echo "Press enter to proceed to next section, GIF"
+	read WAIT_FOR_USER
+	
+	find / -name "*.gif"
+	echo "Press enter to proceed to next section, JPG"
+	read WAIT_FOR_USER
+	
+	find / -name "*.jpg"
+	echo "Press enter to proceed to next section, JPEG"
+	read WAIT_FOR_USER
+	
+	find / -name "*.jpeg"
+	echo "Press enter to proceed to next section, PNG."
+	read WAIT_FOR_USER
+	
+	find / -name "*.png"
+	echo "Press enter to delete files mov, wav, wmv, avi, and ogg in next section."
+	read WAIT_FOR_USER
+	
 	find / -name "*.mov" -type f -delete
 	find / -name "*.wav" -type f -delete
  	find / -name "*.wmv" -type f -delete
  	find / -name "*.avi" -type f -delete
 	find / -name "*.ogg" -type f -delete
 	
-	echo "Press enter when ready to continue..."
+	echo "Media files done, press enter when ready to continue."
 	read WAIT_FOR_USER
 }
 
 hack(){
 	
+	### Edit this prior to running script, add in services seen ###
 	apt-get remove nmap	 # Scanning
 	apt-get remove dnmap     # Scanning
 	apt-get remove telnet    # Insecure Transfer
@@ -202,8 +198,6 @@ hack(){
 	apt-get remove mysql     # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
-	service portmap stop
-	service nfs-kernel-server stop
 	apt-get remove samba # file sharing
 	apt-get remove samba-common # file sharing
 	apt-get remove smbclient # file sharing
@@ -212,20 +206,20 @@ hack(){
 	apt-get remove portmap # file sharing
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
-	apt-get --purge autoremove remove john # Password-crackingnet(){
+	echo "Initial service section complete, press enter when ready to continue."
+	
 	### Removes files from /bin and removes netcat ###
 	rm /bin/nc
 	rm /bin/netcat
 	rm /bin/nc.openbsd
 	rm /bin/nc.traditional
 	apt-get --purge autoremove netcat
-	echo "-------------------------------------"
-	echo "Press enter when ready to continue..."
+	echo "Netcat section complete, press enter when ready to continue."
         read WAIT_FOR_USER
 	
 	### Removes all of the hacking tools associated with the kali-linux operating system ###
 	
-	apt-get remove airbase-ng acccheck ace-voip amap apache-users arachni android-sdk apktool arduino armitage asleap automater \
+	apt-get remove john airbase-ng acccheck ace-voip amap apache-users arachni android-sdk apktool arduino armitage asleap automater \
 	backdoor-factory bbqsql bed beef bing-ip2hosts binwalk blindelephant bluelog bluemaho bluepot blueranger bluesnarfer bulk-extractor \
 	bully burpsuite braa \
 	capstone casefile cdpsnarf cewl chntpw cisco-auditing-tool cisco-global-exploiter cisco-ocs cisco-torch cisco-router-config cmospwd \
