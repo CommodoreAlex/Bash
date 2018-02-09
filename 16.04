@@ -384,7 +384,11 @@ guest(){
 updates(){
 	
 	### performs updates after configuring settings in update manager ###
+	
+	echo "Before updating any software, look at software-center"
+	software-center
 	echo "This will bring you to the update manager, configure the updates and install them."
+	echo "Press enter when ready to continue."
 	read WAIT_FOR_USER
 	
 	update-manager
@@ -396,29 +400,35 @@ cron_ps_listen_back(){
 	
 	### Lists the contents of the cron directories for the user ###
 	ls -la /etc/cron*
-	echo "Cron directories listed, press enter to check crontab."
+	echo "Cron directories listed, press enter to check crontab file."
 	read WAIT_FOR_USER
 	
 	crontab -e
-	echo "Press enter to list all running processes."
+	echo "Press enter to check the root crontab."
+	read WAIT_FOR_USER
+	
+	crontab -l
+	echo "Press enter to continue to check running processes."
 	read WAIT_FOR_USER
 	
 	### Lists all running processes ###
 	ps -A
-	echo "Press enter when ready to continue..."
+	echo "Processes listed, press enter when ready to continue."
 	read WAIT_FOR_USER
 	
 	### Lists all listening ports ###
 	netstat -tulpna | grep "LISTEN"
-	echo "Press enter when ready to continue..."
+	echo "Listening ports listed, press entere when ready to continue."
 	read WAIT_FOR_USER
-	
-	### Search for anything containing the phrase "backdoor" ###
-	#grep -r "backdoor"
-	#echo "Press enter when ready to continue..."
-	#read WAIT_FOR_USER
 }
 
+host(){
+
+	### This will list the host file to confirm there are no abnormalities. ###
+	nano /etc/hosts
+	echo "Host file was listed, when ready press enter to continue."
+	read WAIT_FOR_USER
+}
 
 ### List of functions ###
 
@@ -432,6 +442,7 @@ main(){
 	guest
 	homefolders
 	pam
+	host
 	vis
 	cron_ps_listen_back
 	hack
