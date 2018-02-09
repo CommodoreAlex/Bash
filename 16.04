@@ -94,7 +94,7 @@ homefolders(){
         	ls -la /home/$username/Public
         	ls -la /home/$username/Templates
         	ls -la /home/$username/Videos
-		      echo "Press enter when ready to continue..."
+		echo "Press enter when ready to continue..."
         	read WAIT_FOR_USER
 	done
 }
@@ -147,6 +147,7 @@ sys(){
 }
 
 media(){
+
 	echo "Pressing enter will show mp3, mp4, gif, jpg, jpeg, and png in sections."
 	echo "Press enter when ready to begin media file process, MP3"
 	read WAIT_FOR_USER
@@ -195,7 +196,7 @@ hack(){
 	apt-get remove bind9     # DNS 
 	apt-get remove apache2   # Webserver
 	apt-get remove vsftpd    # FTP
-	apt-get remove mysql     # Database
+	apt-get remove mysql-client mysql-server # Database
 	apt-get remove mongodb   # Database
 	apt-get remove mariadb   # Database
 	apt-get remove samba # file sharing
@@ -206,7 +207,10 @@ hack(){
 	apt-get remove portmap # file sharing
 	apt-get remove jetty     # Webserver
 	apt-get remove nginx     # Webserver
-	echo "Initial service section complete, press enter when ready to continue."
+	#apt-get remove x
+	#apt-get remove x
+	#apt-get remove x
+	echo "Initial services section complete, press enter when ready to continue."
 	
 	### Removes files from /bin and removes netcat ###
 	rm /bin/nc
@@ -248,16 +252,15 @@ hack(){
 	u3-pwn uatester urlcrazy uniscan unix-privesc-check vega w3af webscarab webshag webshells webslayer websploit weevely wfuzz wifi-honey \
 	wifitap wifite wireshark winexe wpscan wordlists valgrind volatility voiphopper wol-e xspy xplico xsser yara yersinia zaproxy
 	
-	echo "-------------------------------------"
-	echo "Press enter when ready to continue..."
+	echo "All possile hacking tools ran through, press enter when ready to continue."
 	read WAIT_FOR_USER
 }
 
 ssh(){
 	
 	### Installs SSH ###
-	apt-get install ssh
-	echo "Press enter when ready to continue..."
+	apt-get install ssh openssh-server
+	echo "Client and server installed, press enter when ready to continue."
 	READ WAIT_FOR_USER
 	
 	### Enables and creates a MOTD Banner message ###
@@ -265,186 +268,139 @@ ssh(){
         	sed -i 's/#Banner/etc/issue.net/Banner /etc/issue.net' /etc/ssh/sshd_config &> /dev/null
 		echo "All connections are monitored and recorded" >> /etc/issue.net &> /dev/null
 		echo "Disconnect IMMEDIATELY if you are not an authorized user!" >> /etc/issue.net &> /dev/null
+		echo "MOTD Banner created and configured"
    	fi
+	
 	### Enables IgnoreRhosts ###
 	if grep -Fxq "IgnoreRhosts no" /etc/ssh/sshd_config; then
     		sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
+		echo "Enabled IgnoreRHosts."
  	fi
+	
 	### Enables UsePAM ###
 	if grep -Fxq "UsePAM no" /etc/ssh/sshd_config; then
 		sed -i 's/UsePAM no/UsePAM yes/g' /etc/ssh/sshd_config &> /dev/null
+		echo "UsePAM is set to yes."
 	fi
+	
 	### Enables PrintMotd ###
 	if grep -Fxq "PrintMotd no" /etc/ssh/sshd_config; then
 		sed -i 's/PrintMotd no/PrintMotd yes/g' /etc/ssh/sshd_config &> /dev/null
+		echo "PrintMOTD is configured"
 	fi
+	
 	### Enables UsePrivilegeSeparation ###
 	if grep -Fxq "UsePrivilegeSeparation no" /etc/ssh/sshd_config; then
     		sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
+		echo "Enabled UsePrivilegeSeparation"
   	fi
+	
 	### Permits root login from 'YES' to 'NO' ###
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+		echo "First conditional for PermitRootLogin was ran."
 	fi
+	
 	### PermitRootLogin without password to no ###
  	if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
     		sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+		echo "Second conditional for PermitRootLogin was ran."
   	fi
 	
 	### PermitRootLogin prohibit-password to no ###
 	if grep -Fxq "PermitRootLogin prohibit-password" /etc/ssh/sshd_config; then
         	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
+		echo "Prohibit-password was set to no."
 	fi
 	
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
-		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null 
+		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null
+		echo "X11 Forwarding is not allowed."
 	fi
+	
 	### Permits empty passwords from 'YES' to 'NO' ###
 	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &> /dev/null
+		echo "Empty passwords is set to no."
 	fi
+	
 	### Changes protocol 1 to 2 ###
 	if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
 	  sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &> /dev/null
+	  echo "Protocol is set to 2."
 	fi
-  
+	
+  	echo "Press enter to confirm changes."
+	read WAIT_FOR_USER
+	nano /etc/ssh/sshd_config
+	
 	service ssh reload
-	clear
+	echo "SSH configured and reloaded, press enter when ready to continue."
+	read WAIT_FOR_USER
 }
 
 pam(){
 
-	apt-get install libpam-cracklib
-	apt-get install auditd
+	apt-get install libpam-cracklib -y
+	apt-get install auditd -y
 	auditctl -e 1
 	
-	echo "Press enter when ready to continue..."
+	echo "Audit policy items libpam and auditd added, press enter when ready to continue."
 	read WAIT_FOR_USER
 
 	### Common-password ### 
-	if grep -q "ucredit=-1 lcredit=-2 dcredit=-1" /etc/pam.d/common-password; then
-        	echo ""
-        else
-        	echo "password   requisite    pam_cracklib.so retry=3 remember=5 minlen=10 difok=3 ucredit=-1 lcredit=-2 dcredit=-1" >> /etc/pam.d/common-password
-        fi
 	nano /etc/pam.d/common-auth
-	echo "Press enter when ready to continue..."
+	echo "Common-password file configured, press enter when ready to continue."
 	read WAIT_FOR_USER
 	
 	### Common-auth ###
-	if grep -Fxq "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" /etc/pam.d/common-auth; then
-		echo ""
-	else
-		echo "auth optional pam_tally.so deny=5 unlock_time=900 onerr=fail audit even_deny_root_account silent" >> /etc/pam.d/common-auth
-	fi
 	nano /etc/pam.d/common-auth
-	echo "Press enter when ready to continue..."
+	echo "Common-auth file configured, press enter when ready to continue."
 	read WAIT_FOR_USER
 	
 	### /etc/login.defs ### 
-	sed -i 's/PASS_MAX_DAYS	99999/PASS_MAX_DAYS	150/g' /etc/login.defs
-        sed -i 's/PASS_MIN_DAYS	0/PASS_MAX_DAYS	7/g' /etc/login.defs
-	
 	nano /etc/login.defs
+	echo "Login file configured, press enter when ready to continue."
 	read WAIT_FOR_USER
-	clear
 }
 
 guest(){
 
 	### Guest Account 16.04 ###
-	if lsb_release -a | grep -q "Release:   16.04"; then
-		echo "This is 16.04"
-        	mkdir /etc/lightdm/lightdm.conf.d/ &> /dev/null
-		touch /etc/lightdm/lightdm.conf.d/50-no-guest.conf &> /dev/null
-		if grep -q "allow-guest=true" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
-			sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		elif grep -q "allow-guest=false" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
-			cat /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		else
-			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		fi
-		### Hide user at logon ###
-		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
-			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		elif grep -q "greeter-hide-users=true" /etc/lightdm/lightdm.conf.d/50-no-guest.conf; then
-			echo ""
-		else
-			echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf.d/50-no-guest.conf
-		fi
-		echo "Press enter when ready to continue..."
-		read WAIT_FOR_USER
-	fi
 	
-	### Guest Account 14.04 ###
-	if lsb_release -a | grep -q "Release:	14.04"; then
-		echo "This is 14.04"
-		### Disable guest account ###
-		if grep -q "allow-guest=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-			sed -i 's/allow-guest=true/allow-guest=false/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-		elif grep -q "allow-guest=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-			cat /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-		else
-			echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-		fi
-		### Hide user at logon ###
-		if grep -q "greeter-hide-users=false" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-		elif grep -q "greeter-hide-users=true" /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; then
-			echo ""
-		else
-			echo "greeter-hide-users=true" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-		fi
-		echo "Press enter when ready to continue..."
-		read WAIT_FOR_USER
-	fi
 	
-	### Guest Account 12.04 ###
-	if lsb_release -a | grep -q "Release:   12.04"; then
-		echo "This is 12.04"
-		### Disable guest account ###
-		if grep -q "allow-guest=true" /etc/lightdm/lightdm.conf; then
-			sed -i 's/allow-guest=true/allow-guest=false/g' /etc/lightdm/lightdm.conf
-		elif grep -q "allow-guest=false" /etc/lightdm/lightdm.conf; then
-			cat /etc/lightdm/lightdm.conf
-		else
-			echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
-		fi
-		### Hide user at logon ###
-		if grep -q "greeter-hide-users=false" /etc/lightdm/lightdm.conf; then
-			sed -i 's/greeter-hide-users=false/greeter-hide-users=true/g' /etc/lightdm/lightdm.conf
-        	elif grep -q "greeter-hide-useres=true" /etc/lightdm/lightdm.conf; then
-			echo ""
-		else
-                	echo "greeter-hide-users=true" >> /etc/lightdm/lightdm.conf
-	 	fi
-		echo "Press enter when ready to continue..."
-		read WAIT_FOR_USER
-	fi
+	
+	
+	
+	
+	
+	
+	
+	echo "Guest account is configured, press enter when ready to continue."
+	read WAIT_FOR_USER
 }
 
 updates(){
 	
 	### performs updates after configuring settings in update manager ###
-	update-manager
-	echo "Press enter when ready to continue..."
+	echo "This will bring you to the update manager, configure the updates and install them."
 	read WAIT_FOR_USER
 	
-	apt-get autoclean
-	echo "Press enter when ready to continue..."
-	read WAIT_FOR_USER
-	apt-get update && apt-get dist-upgrade
-	echo "[+] Exit"
-	read WAIT_FOR_USER
+	update-manager
+	
+	echo "Final operation of updates are complete, exit script."
 }
 
 cron_ps_listen_back(){
 	
 	### Lists the contents of the cron directories for the user ###
-	clear
 	ls -la /etc/cron*
-	echo "Press enter when ready to continue..."
+	echo "Cron directories listed, press enter to check crontab."
+	read WAIT_FOR_USER
+	
+	crontab -e
+	echo "Press enter to list all running processes."
 	read WAIT_FOR_USER
 	
 	### Lists all running processes ###
