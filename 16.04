@@ -221,6 +221,7 @@ hack(){
 	#apt-get remove x
 	#apt-get remove x
 	echo "Initial services section complete, press enter when ready to continue."
+	read WAIT_FOR_USER
 	
 	### Removes files from /bin and removes netcat ###
 	rm /bin/nc
