@@ -14,15 +14,19 @@ nano ~/.bash_history
 echo "BASH history printed, press enter when ready to continue."
 read WAIT_FOR_USER
 
+echo "You will install aptitude, apparmor, libreoffice, firefox, and ufw."
+echo "Press enter when ready to continue."
+read WAIT_FOR_USER
+
 apt-get install aptitude -y
 apt-get install apparmor -y
 add-apt-repository ppa:libreoffice/ppa
 apt-get install libreoffice -y
 apt-get install firefox -y
+apt-get install ufw -y
 
 firewall(){
   
-  apt-get install ufw -y
   ufw enable
   ufw default deny
   ufw allow 22
