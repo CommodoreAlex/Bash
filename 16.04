@@ -272,7 +272,7 @@ ssh(){
 	### Installs SSH ###
 	apt-get install ssh openssh-server -y
 	echo "Client and server installed, press enter when ready to continue."
-	READ WAIT_FOR_USER
+	read WAIT_FOR_USER
 	
 	### Enables and creates a MOTD Banner message ###
 	if grep -Fxq "#Banner /etc/issue.net" /etc/ssh/sshd_config; then
@@ -289,7 +289,7 @@ ssh(){
     		sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Enabled IgnoreRHosts."
 	else
-                echo "Could not enable IgnoreRHosts."	
+                echo "IgnoreRHosts was not set to yes."	
  	fi
 	
 	### Enables UsePAM ###
@@ -303,7 +303,7 @@ ssh(){
 	### Enables PrintMotd ###
 	if grep -Fxq "PrintMotd no" /etc/ssh/sshd_config; then
 		sed -i 's/PrintMotd no/PrintMotd yes/g' /etc/ssh/sshd_config &> /dev/null
-		echo "PrintMOTD is configured"
+		echo "PrintMOTD is set from no"
 	else
                 echo "PrintMOTD was not configured."
 	fi
@@ -311,7 +311,7 @@ ssh(){
 	### Enables UsePrivilegeSeparation ###
 	if grep -Fxq "UsePrivilegeSeparation no" /etc/ssh/sshd_config; then
     		sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
-		echo "Enabled UsePrivilegeSeparation"
+		echo "Enabled UsePrivilegeSeparation from no."
 	else
                 echo "UsePrivilegeSeparation not configured."
   	fi
@@ -321,7 +321,7 @@ ssh(){
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "First conditional for PermitRootLogin was ran."
 	else
-                echo "First conditional not ran."
+                echo "First conditional not ran, from yes to no."
 	fi
 	
 	### PermitRootLogin without password to no ###
@@ -329,7 +329,7 @@ ssh(){
     		sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Second conditional for PermitRootLogin was ran."
 	else
-                echo "Second conditional not ran."
+                echo "Second conditional not ran, from without-password to no."
   	fi
 	
 	### PermitRootLogin prohibit-password to no ###
@@ -337,7 +337,7 @@ ssh(){
         	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Prohibit-password was set to no."
 	else
-                echo "Prohibit password was not set to no."
+                echo "Prohibit password was not set from prohibit-password to no."
 	fi
 	
 	### Changes X11Forwarding from 'YES' to 'NO' ###
@@ -345,7 +345,7 @@ ssh(){
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "X11 Forwarding is not allowed."
 	else
-                echo "X11 Forwarding was not changed."
+                echo "X11 Forwarding was not set from yes to no."
 	fi
 	
 	### Permits empty passwords from 'YES' to 'NO' ###
@@ -353,7 +353,7 @@ ssh(){
 		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Empty passwords is set to no."
 	else
-                echo "Empty passwords was not set to no."
+                echo "Empty passwords was not set from yes to no."
 	fi
 	
 	### Changes protocol 1 to 2 ###
@@ -361,7 +361,7 @@ ssh(){
 	  sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &> /dev/null
 	  echo "Protocol is set to 2."
 	else
-                echo "Protocol is not set to 2."
+                echo "Protocol was not set from 1 to 2."
 	fi
 	
   	echo "Press enter to confirm changes."
