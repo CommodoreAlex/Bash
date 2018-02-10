@@ -25,6 +25,8 @@ apt-get install libreoffice -y
 apt-get install firefox -y
 apt-get install ufw -y
 
+echo "Software packages installed, press enter when ready to continue."
+
 firewall(){
   
   ufw enable
