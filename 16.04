@@ -16,6 +16,9 @@ read WAIT_FOR_USER
 
 apt-get install aptitude -y
 apt-get install apparmor -y
+add-apt-repository ppa:libreoffice/ppa
+apt-get install libreoffice -y
+apt-get install firefox -y
 
 firewall(){
   
@@ -270,66 +273,88 @@ ssh(){
 		echo "All connections are monitored and recorded" >> /etc/issue.net &> /dev/null
 		echo "Disconnect IMMEDIATELY if you are not an authorized user!" >> /etc/issue.net &> /dev/null
 		echo "MOTD Banner created and configured"
+	else
+                echo "MOTD Banner was not created."
    	fi
 	
 	### Enables IgnoreRhosts ###
 	if grep -Fxq "IgnoreRhosts no" /etc/ssh/sshd_config; then
     		sed -i 's/IgnoreRhosts no/IgnoreRhosts yes/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Enabled IgnoreRHosts."
+	else
+                echo "Could not enable IgnoreRHosts."	
  	fi
 	
 	### Enables UsePAM ###
 	if grep -Fxq "UsePAM no" /etc/ssh/sshd_config; then
 		sed -i 's/UsePAM no/UsePAM yes/g' /etc/ssh/sshd_config &> /dev/null
 		echo "UsePAM is set to yes."
+	else
+                echo "UsePAM was not set to yes."
 	fi
 	
 	### Enables PrintMotd ###
 	if grep -Fxq "PrintMotd no" /etc/ssh/sshd_config; then
 		sed -i 's/PrintMotd no/PrintMotd yes/g' /etc/ssh/sshd_config &> /dev/null
 		echo "PrintMOTD is configured"
+	else
+                echo "PrintMOTD was not configured."
 	fi
 	
 	### Enables UsePrivilegeSeparation ###
 	if grep -Fxq "UsePrivilegeSeparation no" /etc/ssh/sshd_config; then
     		sed -i 's/UsePrivilegeSeparation no/UsePrivilegeSeparation yes/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Enabled UsePrivilegeSeparation"
+	else
+                echo "UsePrivilegeSeparation not configured."
   	fi
 	
 	### Permits root login from 'YES' to 'NO' ###
 	if grep -Fxq "PermitRootLogin yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "First conditional for PermitRootLogin was ran."
+	else
+                echo "First conditional not ran."
 	fi
 	
 	### PermitRootLogin without password to no ###
  	if grep -Fxq "PermitRootLogin without-password" /etc/ssh/sshd_config; then
     		sed -i 's/PermitRootLogin without-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Second conditional for PermitRootLogin was ran."
+	else
+                echo "Second conditional not ran."
   	fi
 	
 	### PermitRootLogin prohibit-password to no ###
 	if grep -Fxq "PermitRootLogin prohibit-password" /etc/ssh/sshd_config; then
         	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Prohibit-password was set to no."
+	else
+                echo "Prohibit password was not set to no."
 	fi
 	
 	### Changes X11Forwarding from 'YES' to 'NO' ###
 	if grep -Fxq "X11Forwarding yes" /etc/ssh/sshd_config; then
 		sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "X11 Forwarding is not allowed."
+	else
+                echo "X11 Forwarding was not changed."
 	fi
 	
 	### Permits empty passwords from 'YES' to 'NO' ###
 	if grep -Fxq "PermitEmptyPasswords yes" /etc/ssh/sshd_config; then
 		sed -i 's/PermitEmptyPasswords yes/PermitEmpyPasswords no/g' /etc/ssh/sshd_config &> /dev/null
 		echo "Empty passwords is set to no."
+	else
+                echo "Empty passwords was not set to no."
 	fi
 	
 	### Changes protocol 1 to 2 ###
 	if grep -Fxq "Protocol 1" /etc/ssh/sshd_config; then
 	  sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config &> /dev/null
 	  echo "Protocol is set to 2."
+	else
+                echo "Protocol is not set to 2."
 	fi
 	
   	echo "Press enter to confirm changes."
