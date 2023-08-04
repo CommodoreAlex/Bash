@@ -20,3 +20,10 @@ cat $url/recon/assets.txt | grep $1 >> $url/recon/final.txt
 rm $url/recon/assets.txt
 
 # this has a final text stored in that folder
+
+# below if you want amass
+
+#echo "[+] Harvesting subdomains with Amass..."
+#amass enum -d $url >> $url/recon/f.txt
+#sort -u $url/recon/f.txt >> $url/recon/final.txt
+#rm $url/recon/f.txt
