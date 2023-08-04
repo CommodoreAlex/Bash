@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$url=$1
+url=$1
 
 # running assetfinder and putting everything into assets.txt
 
