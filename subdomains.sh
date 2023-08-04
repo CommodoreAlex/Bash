@@ -27,3 +27,6 @@ rm $url/recon/assets.txt
 #amass enum -d $url >> $url/recon/f.txt
 #sort -u $url/recon/f.txt >> $url/recon/final.txt
 #rm $url/recon/f.txt
+
+#echo "[+] Probing for alive domains..."
+#cat $url/recon/final.txt | sort -u httprobe -s -p https:443 | sed 's/https\?:\/\///' | tr -d ':443' >> $url/recon/alive.txt
