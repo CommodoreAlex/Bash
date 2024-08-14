@@ -12,5 +12,4 @@ do_spray (){
         done
 }
 
-echo -e "Enter the password to spray: "
 do_spray $1
