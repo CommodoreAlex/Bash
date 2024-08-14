@@ -1,4 +1,6 @@
 #!/bin/bash
+# Password spraying tool 
+# Usage: bash spray.sh passwordhere
 
 do_spray (){
         users=$(awk -F: '{ if ($NF ~ /sh$/) print $1}' /etc/passwd)
