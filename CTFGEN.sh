@@ -1,125 +1,120 @@
 #!/bin/bash
 
-# Colors for terminal output
+# Color Variables for aesthetic output
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m' # No color
 
-# Function to create directories
-create_directories() {
-    local ctfname=$1
-    echo -e "${YELLOW}[*] Creating directories for $ctfname...${NC}"
-    mkdir -p "$ctfname"/{enumeration/{nmap,smb,http,nc},loot,exploit,report,downloaded_files,notes}
-    echo -e "${GREEN}[+] Directories created under $ctfname:${NC}"
+# Function to display usage
+usage() {
+    echo -e "${YELLOW}Usage: $0 --ctfname <CTF-Name> --target <Target-IP>${NC}"
+    exit 1
 }
 
-# Function to perform ping check
-ping_target() {
-    local ip=$1
-    echo -e "${YELLOW}[*] Pinging $ip (4 counts)...${NC}"
-    ping -c 4 $ip
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[+] Host $ip is reachable.${NC}"
-    else
-        echo -e "${RED}[-] Host $ip is unreachable.${NC}"
-    fi
-}
-
-# Function for netcat banner grabbing with a timeout (non-blocking)
-netcat_scan() {
-    local ip=$1
-    local ports=(22 53 80 445)
-    local timeout=3
-    echo -e "${YELLOW}[*] Performing netcat banner grabbing for ports 22, 53, 80, 445 on $ip...${NC}"
-    for port in "${ports[@]}"; do
-        echo -e "${YELLOW}[*] Grabbing banner on port $port (timeout: ${timeout}s)...${NC}"
-        # Non-blocking banner grabbing with timeout and no user input
-        (echo -e "GET / HTTP/1.0\r\n" | nc -nv -w $timeout $ip $port) > "$ctfname/enumeration/nc/banner_$port.txt" 2>&1
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}[+] Banner grabbed for port $port. Saved to banner_$port.txt.${NC}"
-        else
-            echo -e "${RED}[-] Failed to grab banner for port $port.${NC}"
-        fi
-    done
-}
-
-# Function to perform nmap scan
+# Function to perform Nmap scan
 nmap_scan() {
     local ip=$1
+    local ctfname=$2
     echo -e "${YELLOW}[*] Running Nmap scan on $ip...${NC}"
+
+    # Run the Nmap scan and save the output to a file
     nmap -p- -sC -sV -Pn --open $ip -oN "$ctfname/enumeration/nmap/initial_scan.txt"
+
     echo -e "${GREEN}[+] Nmap scan completed. Output saved to $ctfname/enumeration/nmap/initial_scan.txt${NC}"
-}
 
-# Function to check if port 445 is open and run smbclient if true
-smb_check() {
-    local ip=$1
-    local ctfname=$2
-    echo -e "${YELLOW}[*] Checking if port 445 is open on $ip...${NC}"
-    
-    nc -zv $ip 445 2>&1 | grep -q succeeded
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[+] Port 445 is open. Running smbclient...${NC}"
-        mkdir -p "$ctfname/enumeration/smb"
-        smbclient -L \\\\$ip\\ > "$ctfname/enumeration/smb/smb_enum.txt"
-        echo -e "${GREEN}[+] SMB client enumeration saved to $ctfname/enumeration/smb/smb_enum.txt${NC}"
+    # Debugging: Display the relevant Nmap output
+    echo -e "${YELLOW}[*] Nmap output for open ports:${NC}"
+    cat "$ctfname/enumeration/nmap/initial_scan.txt"
+
+    # Check if port 445 is open
+    if grep -q "445/tcp[[:space:]]*open" "$ctfname/enumeration/nmap/initial_scan.txt"; then
+        echo -e "${GREEN}[+] Port 445 is open. Running SMB enumeration...${NC}"
+        smb_check "$ip" "$ctfname"
     else
-        echo -e "${RED}[-] Port 445 is not open. Skipping SMB client enumeration.${NC}"
+        echo -e "${RED}[-] Port 445 is not open. Skipping SMB and SID enumeration.${NC}"
     fi
-}
 
-# Function to check if port 80 is open and download the entire website using wget if true
-http_check() {
-    local ip=$1
-    local ctfname=$2
-    echo -e "${YELLOW}[*] Checking if port 80 is open on $ip using Nmap...${NC}"
-    
-    # Check if port 80 is open using nmap
-    nmap -p 80 --open $ip | grep "80/tcp open" > /dev/null
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[+] Port 80 is open. Downloading website using wget...${NC}"
-        mkdir -p "$ctfname/enumeration/http"
-        wget -r -P "$ctfname/enumeration/http" http://$ip
-        echo -e "${GREEN}[+] Website downloaded and saved to $ctfname/enumeration/http${NC}"
+    # Check if port 80 is open and download the website
+    if grep -q "80/tcp[[:space:]]*open" "$ctfname/enumeration/nmap/initial_scan.txt"; then
+        echo -e "${GREEN}[+] Port 80 is open. Downloading website...${NC}"
+        curl_website "$ip" "$ctfname"
     else
         echo -e "${RED}[-] Port 80 is not open. Skipping website download.${NC}"
     fi
 }
 
-# Parse arguments
-while [[ "$#" -gt 0 ]]; do
+# Function to check SMB and SID enumeration
+smb_check() {
+    local ip=$1
+    local ctfname=$2
+    echo -e "${YELLOW}[*] Running SMB enumeration...${NC}"
+
+    # Run smbclient and save the output
+    smbclient -L "\\\\$ip\\" -N > "$ctfname/enumeration/smb/smbclient_output.txt"
+    echo -e "${GREEN}[+] SMB client output saved to $ctfname/enumeration/smb/smbclient_output.txt${NC}"
+
+    # Run impacket-lookupsid and save the output
+    impacket-lookupsid anonymous@$ip -no-pass > "$ctfname/enumeration/smb/lookupsid_output.txt"
+    echo -e "${GREEN}[+] SID enumeration output saved to $ctfname/enumeration/smb/lookupsid_output.txt${NC}"
+}
+
+# Function to download website using curl
+curl_website() {
+    local ip=$1
+    local ctfname=$2
+    echo -e "${YELLOW}[*] Downloading entire website from port 80...${NC}"
+
+    # Run curl --mirror to download the website
+    mkdir -p "$ctfname/enumeration/http"
+    curl --mirror http://$ip -o "$ctfname/enumeration/http/site_download"
+    echo -e "${GREEN}[+] Website downloaded and saved to $ctfname/enumeration/http/site_download${NC}"
+}
+
+# Function to perform netcat banner grabbing
+banner_grab() {
+    local ip=$1
+    local port=$2
+    echo -e "${YELLOW}[*] Grabbing banner on $ip:$port...${NC}"
+    nc -nv -w 3 $ip $port > "$ctfname/enumeration/nc/$port.txt"
+    echo -e "${GREEN}[+] Banner for $ip:$port saved to $ctfname/enumeration/nc/$port.txt${NC}"
+}
+
+# Parse command-line arguments
+while [ "$1" != "" ]; do
     case $1 in
-        --ctfname) ctfname="$2"; shift ;;
-        --target) ip="$2"; shift ;;
-        --scan-target) scan_target=true ;;
-        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+        --ctfname ) shift
+            ctfname=$1
+            ;;
+        --target ) shift
+            target=$1
+            ;;
+        * ) usage
+            ;;
     esac
     shift
 done
 
-# Ensure ctfname and target IP are provided
-if [[ -z "$ctfname" || -z "$ip" ]]; then
-    echo -e "${RED}Usage: ctfgen --ctfname <name> --target <ip> [--scan-target]${NC}"
-    exit 1
+# Validate inputs
+if [ -z "$ctfname" ] || [ -z "$target" ]; then
+    usage
 fi
 
-# Create directories
-create_directories "$ctfname"
+# Create necessary directories
+echo -e "${YELLOW}[*] Creating directory structure for $ctfname...${NC}"
+mkdir -p "$ctfname/enumeration/nmap" "$ctfname/enumeration/smb" "$ctfname/enumeration/http" "$ctfname/enumeration/nc" \
+         "$ctfname/loot" "$ctfname/exploit" "$ctfname/report" "$ctfname/downloaded_files" "$ctfname/notes"
+echo -e "${GREEN}[+] Directory structure created.${NC}"
 
-# Ping the target
-ping_target "$ip"
+# Ping target to check connectivity
+echo -e "${YELLOW}[*] Pinging $target to check connectivity...${NC}"
+ping -c 4 $target
 
-# Run netcat scans
-netcat_scan "$ip"
+# Run Nmap scan and follow up with SMB or web checks based on results
+nmap_scan $target $ctfname
 
-# Optionally run nmap scan
-if [[ "$scan_target" = true ]]; then
-    nmap_scan "$ip"
-fi
-
-# Check port 445 and run smbclient if open
-smb_check "$ip" "$ctfname"
-
-# Check port 80 and download website if open
-http_check "$ip" "$ctfname"
+# Perform banner grabbing on key ports
+echo -e "${YELLOW}[*] Starting banner grabbing...${NC}"
+for port in 22 53 80 445; do
+    banner_grab $target $port
+done
