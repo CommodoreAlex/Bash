@@ -3,6 +3,7 @@
 Welcome to my technical portfolio for Bash projects. This repository features a collection of Bash scripts designed for automation, security tasks, and system administration. Each script is created to address specific use cases and demonstrates my expertise in shell scripting and system operations.
 ## Projects and Files Overview
 
+
 ### **CTF & Penetration Testing Tools**
 
 
@@ -11,7 +12,7 @@ Welcome to my technical portfolio for Bash projects. This repository features a 
 
 **spray.sh**  
 * A password spraying script that attempts to authenticate with a specified password for all users with a shell assigned in `/etc/passwd`. The script runs the `whoami` command under each user and halts upon detecting a successful login.
-* 
+
 ### **System Administration & Network Tools**
 
 **Cyber.sh**  - A script created for the Cyber Patriot competition back in 2017, to assist with workflows and now is open-source to the public:
